@@ -3533,10 +3533,10 @@
     "@typescript-eslint/types" "4.33.0"
     eslint-visitor-keys "^2.0.0"
 
-"@voila-dashboards/voila@^0.5.0-alpha.0":
-  version "0.5.0-alpha.0"
-  resolved "https://registry.yarnpkg.com/@voila-dashboards/voila/-/voila-0.5.0-alpha.0.tgz#19b6a56eac4c596e096d3b94d24737d2345652b1"
-  integrity sha512-U0ErzxLXvWIN0kWzLO12k7KadxBUFhgVcTDXSc0D/Zs4qD/i9g4vxrc4vdGoOGicc30idkXEJFFO+U/ZER2nBA==
+"@voila-dashboards/voila@^0.5.0-alpha.1":
+  version "0.5.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/@voila-dashboards/voila/-/voila-0.5.0-alpha.1.tgz#9feaddfb825e2f3132ab24ccb4109a7a03d2d039"
+  integrity sha512-jPrOJy4mmmBNj3BvwlNeDAiCItN+YKW4ykXZKBrlGGwuTChIUX+F4+G0J+vDnp4kWdoJwm5HyP3L01G5gJlupg==
   dependencies:
     "@jupyter-widgets/base" "^6.0.1"
     "@jupyter-widgets/controls" "^5.0.1"
@@ -11859,9 +11859,9 @@ yargs@^16.2.0:
     yargs-parser "^20.2.2"
 
 yjs@^13.5.17, yjs@^13.5.40:
-  version "13.5.46"
-  resolved "https://registry.yarnpkg.com/yjs/-/yjs-13.5.46.tgz#b58de4e34f1525d463f4b1fda26ff30b9928b5b3"
-  integrity sha512-KIY4BEWYCm79Sr4JTDvgirXmz3lVZ5n7h6nKlsBYu97f/HDQo+XSoq92RqBiybejF9E/L5Iz+56zZrSfBKZ5DQ==
+  version "13.5.47"
+  resolved "https://registry.yarnpkg.com/yjs/-/yjs-13.5.47.tgz#9eeb8425da581f7a599bbcf7550f7fa8d6765dd0"
+  integrity sha512-F7BZ+Bt36OAt+bdSQS7TN43KSxsHjfXWfcLC526tJ3mctO1FYHGEtOrUqpLC7pSp4jPn4rKSYHv1PVQcdb/vIQ==
   dependencies:
     lib0 "^0.2.49"
 

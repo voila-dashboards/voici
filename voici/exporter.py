@@ -87,6 +87,9 @@ class VoiciExporter(VoilaExporter):
 
         extra_context = dict(
             frontend='voici',
+            main_js='voici.js',
+            voila_process=r'(cell_index, cell_count) => {}',
+            voila_finish=r'() => {}',
             kernel_start=self.kernel_start,
             cell_generator=self.cell_generator,
             notebook_execute=notebook_execute,
