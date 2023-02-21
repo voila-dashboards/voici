@@ -19,10 +19,11 @@ from traitlets.config.loader import Config
 
 from voila.configuration import VoilaConfiguration
 from voila.paths import ROOT, collect_static_paths, collect_template_paths
-from voila.utils import DateTimeEncoder, find_all_lab_theme, get_page_config
+from voila.utils import get_page_config
 
+from .utils import DateTimeEncoder, find_all_lab_theme
 from .exporter import VoiciExporter
-from .voici_tree_exporter import VoiciTreeExporter
+from .tree_exporter import VoiciTreeExporter
 from ._version import __version__
 
 

@@ -7,7 +7,9 @@ from jupyter_server.services.contents.largefilemanager import LargeFileManager
 from jupyter_server.utils import url_path_join, url_escape
 
 from voila.configuration import VoilaConfiguration
-from voila.utils import find_all_lab_theme, create_include_assets_functions
+from voila.utils import create_include_assets_functions
+
+from .utils import find_all_lab_theme
 
 
 class VoiciTreeExporter:
