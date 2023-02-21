@@ -1,0 +1,121 @@
+[build-system]
+requires = [
+    "hatchling>=1.8.1",
+    "jupyterlab~=3.0",
+    "jupyter_core",
+]
+build-backend = "hatchling.build"
+
+[project]
+name = "voici"
+description = "Voici turns Jupyter notebooks into static web applications"
+readme = "README.md"
+requires-python = ">=3.7"
+authors = [
+    { name = "Voila Development Team" },
+]
+keywords = [
+    "Jupyter",
+    "JupyterLab",
+    "JupyterLite",
+    "Emscripten",
+    "Voila",
+    "Voici",
+]
+classifiers = [
+    "Framework :: Jupyter",
+    "Framework :: Jupyter :: JupyterLab",
+    "Framework :: Jupyter :: JupyterLab :: 3",
+    "Framework :: Jupyter :: JupyterLab :: Extensions",
+    "Framework :: Jupyter :: JupyterLab :: Extensions :: Prebuilt",
+    "License :: OSI Approved :: BSD License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+]
+dependencies = [
+    "voila>=0.5.0a1,<=0.6.0",
+]
+dynamic = [
+    "version",
+]
+
+[project.license]
+file = "LICENSE"
+
+[project.optional-dependencies]
+dev = [
+    "black",
+    "hatch",
+    "jupyter_releaser",
+]
+
+[project.scripts]
+voici = "voici.app:main"
+
+[project.urls]
+Homepage = "https://github.com/voila-dashboards/voici"
+
+[tool.hatch.version]
+path = "voici/_version.py"
+
+[tool.hatch.build]
+artifacts = [
+    "voici/static",
+]
+
+[tool.hatch.build.targets.sdist]
+exclude = [
+    ".github",
+    "*.gif",
+]
+
+[tool.hatch.build.hooks.jupyter-builder]
+dependencies = [
+    "hatch-jupyter-builder>=0.5.3",
+]
+build-function = "hatch_jupyter_builder.npm_builder"
+ensured-targets = [
+    "voici/static/voilite.js",
+]
+skip-if-exists = [
+    "voici/static/voilite.js",
+]
+
+[tool.hatch.build.hooks.jupyter-builder.editable-build-kwargs]
+build_cmd = "build"
+npm = [
+    "jlpm",
+]
+force = true
+
+[tool.hatch.build.hooks.jupyter-builder.build-kwargs]
+build_cmd = "build:prod"
+npm = [
+    "jlpm",
+]
+
+[tool.jupyter-releaser]
+skip = [
+    "check-links",
+]
+
+[tool.jupyter-releaser.hooks]
+before-bump-version = [
+    "python -m pip install hatch jupyterlab~=3.0",
+]
+before-build-npm = [
+    "python -m pip install jupyterlab~=3.0",
+    "jlpm clean",
+    "jlpm build:prod",
+]
+before-build-python = [
+    "jlpm clean",
+]
+after-draft-release = "bash ./scripts/reset-stable.sh"
+
+[tool.jupyter-releaser.options]
+version-cmd = "python scripts/bump-version.py --force"
