@@ -55,7 +55,6 @@ const distRoot = path.resolve(
   __dirname,
   '..',
   '..',
-  'voila',
   'voici',
   'static'
 );
