@@ -1,0 +1,27 @@
+name: Build And Check Frontend Packages
+
+on:
+  push:
+    branches:
+    - '*'
+  pull_request:
+    branches:
+    - '*'
+  schedule:
+  - cron: "0 2 * * 1-5"  # run on weekdays at 2:00am UTC
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Base Setup
+      uses: jupyterlab/maintainer-tools/.github/actions/base-setup@v1
+
+    - name: Lint
+      run: |
+        jlpm
+        jlpm run eslint:check
+        jlpm run prettier:check
