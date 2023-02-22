@@ -22,7 +22,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, win-latest]
+        os: [ubuntu-latest]
         python_version: ['3.10']
 
     steps:
@@ -40,10 +40,43 @@ jobs:
     - name: Install voici
       run: pip install .
 
-    - name: Run voici
-      run: voici
-      working-directory: examples
+    - name: Install browser
+      run: |
+        yarn
+        yarn playwright install chromium
+      working-directory: ui-tests
 
-    - name: Assert voici output
-      run: test -d _output
-      working-directory: examples
+    - name: Run UI tests
+      run: yarn run start:detached
+      working-directory: ui-tests
+
+    - name: Wait for Voici
+      uses: ifaxity/wait-on-action@v1
+      with:
+        resource: http-get://localhost:8866/
+        timeout: 360000
+
+    - name: Test
+      run: yarn run test
+      working-directory: ui-tests
+
+    - name: Upload Playwright Test assets
+      if: always()
+      uses: actions/upload-artifact@v2
+      with:
+        name: voici-test-assets
+        path: ui-tests/test-results
+
+    - name: Upload Playwright Benchmark report
+      if: always()
+      uses: actions/upload-artifact@v2
+      with:
+        name: voici-benchmark-report
+        path: ui-tests/benchmark-results
+
+    - name: Upload Playwright Test report
+      if: always()
+      uses: actions/upload-artifact@v2
+      with:
+        name: voici-test-report
+        path: ui-tests/playwright-report

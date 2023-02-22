@@ -25,3 +25,5 @@ coverage
 .vscode/
 
 ui-tests/playwright-report
+
+**/_output
