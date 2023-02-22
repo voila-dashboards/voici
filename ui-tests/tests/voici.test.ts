@@ -13,16 +13,20 @@ test.describe('Voici Tests', () => {
 
   test('Render Tree', async ({ page, browserName }, testInfo) => {
     await page.goto('');
-    // wait for page to load
+    // Wait for page to load
     await page.waitForSelector('a');
+    // Wait a bit for the theme to be applied
+    await page.waitForTimeout(1000);
 
     expect(await page.screenshot()).toMatchSnapshot('voici-tree.png');
   });
 
   test('Render Simple Notebook', async ({ page, browserName }, testInfo) => {
     await page.goto('voila/render/test.html');
-    // wait for page to load
+    // Wait for page to load
     await page.waitForSelector('pre');
+    // Wait a bit for the theme to be applied
+    await page.waitForTimeout(1000);
 
     expect(await page.screenshot()).toMatchSnapshot('voici-simple.png');
   });
