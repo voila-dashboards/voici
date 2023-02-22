@@ -113,3 +113,6 @@ after-draft-release = "bash ./scripts/reset-stable.sh"
 
 [tool.jupyter-releaser.options]
 version-cmd = "python scripts/bump-version.py --force"
+
+[tool.check-wheel-contents]
+ignore = ["W002"]
