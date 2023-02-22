@@ -1,5 +1,5 @@
 <!--
-Thanks for contributing to Voilà!
+Thanks for contributing to Voici!
 Please fill out the following items to submit a pull request.
 See the contributing guidelines for more information:
 https://github.com/voila-dashboards/voila/blob/main/CONTRIBUTING.md
@@ -28,4 +28,4 @@ you can do this automatically by commenting "Please update galata references" in
 
 ## Backwards-incompatible changes
 
-<!-- Describe any backwards-incompatible changes to Voilà public APIs. -->
+<!-- Describe any backwards-incompatible changes to Voici public APIs. -->

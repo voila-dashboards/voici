@@ -14,6 +14,8 @@ from typing import List, Tuple
 
 from jupyter_core.paths import jupyter_path
 
+from nbconvert.exporters.html import find_lab_theme
+
 
 def find_all_lab_theme() -> List[Tuple[str, str]]:
 
