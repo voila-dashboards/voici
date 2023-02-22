@@ -74,10 +74,10 @@ dependencies = [
 ]
 build-function = "hatch_jupyter_builder.npm_builder"
 ensured-targets = [
-    "voici/static/voilite.js",
+    "voici/static/voici.js",
 ]
 skip-if-exists = [
-    "voici/static/voilite.js",
+    "voici/static/voici.js",
 ]
 
 [tool.hatch.build.hooks.jupyter-builder.editable-build-kwargs]
