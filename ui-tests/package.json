@@ -1,0 +1,19 @@
+{
+  "name": "voici-ui-tests",
+  "version": "1.0.0",
+  "description": "Voici UI Tests",
+  "private": true,
+  "scripts": {
+    "start": "voici ../examples && python -m http.server 8866",
+    "start:detached": "yarn run start&",
+    "test": "playwright test",
+    "test:debug": "PWDEBUG=1 playwright test",
+    "test:report": "http-server ./playwright-report -a localhost -o",
+    "test:update": "playwright test --update-snapshots"
+  },
+  "author": "Project Jupyter",
+  "license": "BSD-3-Clause",
+  "dependencies": {
+    "@playwright/test": "^1.31.0"
+  }
+}
