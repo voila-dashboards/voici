@@ -41,7 +41,9 @@ jobs:
       run: pip install .
 
     - name: Install browser
-      run: yarn playwright install chromium
+      run: |
+        yarn
+        yarn playwright install chromium
       working-directory: ui-tests
 
     - name: Run UI tests
