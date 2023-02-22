@@ -1,7 +1,6 @@
 [build-system]
 requires = [
     "hatchling>=1.8.1",
-    "jupyterlab~=3.0",
     "jupyter_core",
     "voila>=0.5.0a1,<0.6.0",
 ]
@@ -17,7 +16,6 @@ authors = [
 ]
 keywords = [
     "Jupyter",
-    "JupyterLab",
     "JupyterLite",
     "Emscripten",
     "Voila",
@@ -25,10 +23,6 @@ keywords = [
 ]
 classifiers = [
     "Framework :: Jupyter",
-    "Framework :: Jupyter :: JupyterLab",
-    "Framework :: Jupyter :: JupyterLab :: 3",
-    "Framework :: Jupyter :: JupyterLab :: Extensions",
-    "Framework :: Jupyter :: JupyterLab :: Extensions :: Prebuilt",
     "License :: OSI Approved :: BSD License",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
@@ -89,14 +83,14 @@ skip-if-exists = [
 [tool.hatch.build.hooks.jupyter-builder.editable-build-kwargs]
 build_cmd = "build"
 npm = [
-    "jlpm",
+    "yarn",
 ]
 force = true
 
 [tool.hatch.build.hooks.jupyter-builder.build-kwargs]
 build_cmd = "build:prod"
 npm = [
-    "jlpm",
+    "yarn",
 ]
 
 [tool.jupyter-releaser]
@@ -106,15 +100,14 @@ skip = [
 
 [tool.jupyter-releaser.hooks]
 before-bump-version = [
-    "python -m pip install hatch jupyterlab~=3.0",
+    "python -m pip install hatch",
 ]
 before-build-npm = [
-    "python -m pip install jupyterlab~=3.0",
-    "jlpm clean",
-    "jlpm build:prod",
+    "yarn clean",
+    "yarn build:prod",
 ]
 before-build-python = [
-    "jlpm clean",
+    "yarn clean",
 ]
 after-draft-release = "bash ./scripts/reset-stable.sh"
 
