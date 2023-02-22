@@ -12,12 +12,18 @@ test.describe('Voici Tests', () => {
   });
 
   test('Render Tree', async ({ page, browserName }, testInfo) => {
-    const testFunction = async () => {
-      await page.goto('');
-      // wait for page to load
-      await page.waitForSelector('.list-header');
-    };
+    await page.goto('');
+    // wait for page to load
+    await page.waitForSelector('a');
 
-    expect(await page.screenshot()).toMatchSnapshot('voici-tree-classic.png');
+    expect(await page.screenshot()).toMatchSnapshot('voici-tree.png');
+  });
+
+  test('Render Simple Notebook', async ({ page, browserName }, testInfo) => {
+    await page.goto('voila/render/test.html');
+    // wait for page to load
+    await page.waitForSelector('pre');
+
+    expect(await page.screenshot()).toMatchSnapshot('voici-simple.png');
   });
 });
