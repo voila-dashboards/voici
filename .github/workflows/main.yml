@@ -42,8 +42,8 @@ jobs:
 
     - name: Run voici
       run: voici
-      working-directory: examples
+      working-directory: notebooks
 
     - name: Assert voici output
       run: test -d _output
-      working-directory: examples
+      working-directory: notebooks
