@@ -7,12 +7,17 @@ import jinja2
 
 from traitlets.config.application import Application
 
+import nbformat
+
 from jupyter_server.config_manager import recursive_update
 
 from voila.configuration import VoilaConfiguration
 from voila.paths import ROOT, collect_static_paths, collect_template_paths
 
 from jupyterlite.addons.base import BaseAddon
+
+from .exporter import VoiciExporter
+from .tree_exporter import VoiciTreeExporter
 
 
 class VoiciAddon(BaseAddon):
@@ -25,6 +30,8 @@ class VoiciAddon(BaseAddon):
 
         self.voici_configuration = VoilaConfiguration(parent=self)
         self.setup_template_dirs()
+
+        self.base_url = '/voici/'
 
     @property
     def output_files_dir(self):
@@ -74,11 +81,11 @@ class VoiciAddon(BaseAddon):
         self.jinja2_env.install_gettext_translations(nbui, newstyle=False)
 
     def post_build(self, manager):
-        """copies the Voici application files to the JupyterLite output."""
+        """copies the Voici application files to the JupyterLite output and generate static dashboards."""
 
         # Do nothing if Voici is disabled
-        # if self.manager.apps and "voici" not in self.manager.apps:
-        #     return
+        if self.manager.apps and "voici" not in self.manager.apps:
+            return
 
         # TODO Setup page_config (how do we get the page_config from jupyterlite?)
 
@@ -90,3 +97,20 @@ class VoiciAddon(BaseAddon):
                 self.manager.output_dir / 'voici' / 'static'
             ])],
         )
+
+        # Convert Notebooks content into static dashboards
+        tree_exporter = VoiciTreeExporter(
+            jinja2_env=self.jinja2_env,
+            voici_configuration=self.voici_configuration,
+            base_url=self.base_url,
+            # page_config=page_config,
+        )
+
+        for file_path, generated_file in tree_exporter.generate_contents(str(self.output_files_dir)):
+            yield dict(
+                name=f"voici:generate:{file_path}",
+                actions=[(self.copy_one, [
+                    generated_file,
+                    self.manager.output_dir / 'voici' / file_path
+                ])],
+            )

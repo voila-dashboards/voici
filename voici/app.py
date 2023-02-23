@@ -35,18 +35,6 @@ class Voici(Application):
     name = 'voici'
     version = __version__
 
-    description = Unicode(
-        """voila [OPTIONS] NOTEBOOK_FILENAME
-
-        This launches a stand-alone server for read-only notebooks.
-        """
-    )
-    option_description = Unicode(
-        """
-        notebook_path:
-            File name of the Jupyter notebook to display.
-        """
-    )
     base_url = Unicode('/', config=True, help=_('Base URL'))
     notebook_filename = Unicode()
     root_dir = Unicode(

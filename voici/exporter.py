@@ -22,7 +22,7 @@ from voila.paths import collect_template_paths
 
 class VoiciExporter(VoilaExporter):
     def __init__(self, *args, **kwargs):
-        kwargs.setdefault('base_url', '/')
+        kwargs.setdefault('base_url', '/voici/')
         kwargs.setdefault('contents_manager', LargeFileManager())
 
         super().__init__(*args, **kwargs)
