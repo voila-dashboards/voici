@@ -42,3 +42,4 @@ ui-tests/jlab_root
 
 _output
 ui-tests/notebooks
+.jupyterlite.doit.db
