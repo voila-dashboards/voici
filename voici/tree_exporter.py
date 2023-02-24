@@ -47,17 +47,19 @@ class VoiciTreeExporter:
         jinja2_env: jinja2.Environment,
         voici_configuration: VoilaConfiguration,
         base_url: str,
+        page_config: Dict,
         **kwargs,
     ):
         self.jinja2_env = jinja2_env
-        self.base_url = base_url
         self.voici_configuration = voici_configuration
+        self.base_url = base_url
+        self.page_config = page_config
+
         self.theme = voici_configuration.theme
         self.template_name = voici_configuration.template
 
         self.notebook_paths = []
 
-        self.page_config = kwargs.get('page_config', {})
 
     def allowed_content(self, content: Dict) -> bool:
         return content['type'] == 'notebook' or content['type'] == 'directory'
@@ -126,7 +128,7 @@ class VoiciTreeExporter:
 
                 voici_exporter = VoiciExporter(
                     voici_config=self.voici_configuration,
-                    # page_config=page_config,
+                    page_config=self.page_config,
                     base_url=self.base_url,
                     nb_src=nb_src,
                 )

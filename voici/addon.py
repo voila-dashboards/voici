@@ -17,6 +17,11 @@ from voila.configuration import VoilaConfiguration
 from voila.paths import ROOT, collect_static_paths, collect_template_paths
 
 from jupyterlite.addons.base import BaseAddon
+from jupyterlite.constants import (
+    JUPYTER_CONFIG_DATA,
+    JUPYTERLITE_JSON,
+    UTF8,
+)
 
 from .exporter import VoiciExporter
 from .tree_exporter import VoiciTreeExporter
@@ -32,8 +37,6 @@ class VoiciAddon(BaseAddon):
 
         self.voici_configuration = VoilaConfiguration(parent=self)
         self.setup_template_dirs()
-
-        self.base_url = '/'
 
     @property
     def output_files_dir(self):
@@ -89,14 +92,26 @@ class VoiciAddon(BaseAddon):
         if self.manager.apps and "voici" not in self.manager.apps:
             return
 
-        # TODO Setup page_config (how do we get the page_config from jupyterlite?)
+        # Get page_config
+        jupyterlite_json = manager.output_dir / JUPYTERLITE_JSON
+        if not jupyterlite_json.exists():
+            config = {}
+        else:
+            config = json.loads(jupyterlite_json.read_text(**UTF8))
+        page_config = config.get(JUPYTER_CONFIG_DATA, {})
+
+        # TODO Check why we need this
+        page_config['baseUrl'] = '/'
+        page_config['fullStaticUrl'] = '/build'
+
+        print('--- PAGE CONFIG', page_config)
 
         # Copy static files
         yield dict(
             name=f"voici:copy:{self.voici_static_path}",
             actions=[(self.copy_one, [
                 self.voici_static_path,
-                self.manager.output_dir / 'voila' / 'static'
+                self.manager.output_dir / 'build'
             ])],
         )
 
@@ -104,8 +119,8 @@ class VoiciAddon(BaseAddon):
         tree_exporter = VoiciTreeExporter(
             jinja2_env=self.jinja2_env,
             voici_configuration=self.voici_configuration,
-            base_url=self.base_url,
-            # page_config=page_config,
+            base_url=page_config.get('baseUrl'),
+            page_config=page_config,
         )
 
         for file_path, generated_file in tree_exporter.generate_contents(str(self.output_files_dir)):
