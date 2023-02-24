@@ -100,7 +100,9 @@ class VoiciAddon(BaseAddon):
             config = json.loads(jupyterlite_json.read_text(**UTF8))
         page_config = config.get(JUPYTER_CONFIG_DATA, {})
 
-        # TODO Check why we need this
+        # TODO Update Voila templates so we don't need this,
+        # the following monkey patch will not work if lite is served
+        # in a sub directory
         page_config['baseUrl'] = '/'
         page_config['fullStaticUrl'] = '/build'
 
