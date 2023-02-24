@@ -32,67 +32,65 @@ def _(x):
 
 
 class Voici(Application):
-    name = 'voici'
+    name = "voici"
     version = __version__
 
-    base_url = Unicode('/', config=True, help=_('Base URL'))
+    base_url = Unicode("/", config=True, help=_("Base URL"))
     notebook_filename = Unicode()
-    root_dir = Unicode(
-        config=True, help=_('The directory to use for notebooks.')
-    )
+    root_dir = Unicode(config=True, help=_("The directory to use for notebooks."))
 
     notebook_path = Unicode(
         None,
         config=True,
         allow_none=True,
-        help=_('path to notebook to serve with Voici'),
+        help=_("path to notebook to serve with Voici"),
     )
 
-    template_paths = List([], config=True, help=_('path to jinja2 templates'))
+    template_paths = List([], config=True, help=_("path to jinja2 templates"))
 
     classes = [VoilaConfiguration]
 
     aliases = {
-        'strip_sources': 'VoilaConfiguration.strip_sources',
-        'template': 'VoilaConfiguration.template',
-        'theme': 'VoilaConfiguration.theme',
-        'base_url': 'Voici.base_url',
-        'contents': 'Voici.contents',
-        'packages': 'Voici.packages',
+        "strip_sources": "VoilaConfiguration.strip_sources",
+        "template": "VoilaConfiguration.template",
+        "theme": "VoilaConfiguration.theme",
+        "base_url": "Voici.base_url",
+        "contents": "Voici.contents",
+        "packages": "Voici.packages",
     }
 
     output_prefix = Unicode(
-        '_output',
+        "_output",
         config=True,
-        help=_('Path to the output directory'),
+        help=_("Path to the output directory"),
     )
 
     contents = Unicode(
-        'files', config=True, help=_('Name of the user contents directory')
+        "files", config=True, help=_("Name of the user contents directory")
     )
 
     packages = List(
         [],
         config=True,
-        help=_('List of packages to be installed in the voici enviroment'),
+        help=_("List of packages to be installed in the voici enviroment"),
     )
 
     config_file_paths = List(
-        Unicode(), config=True, help=_('Paths to search for voici.(py|json)')
+        Unicode(), config=True, help=_("Paths to search for voici.(py|json)")
     )
 
-    @default('log_level')
+    @default("log_level")
     def _default_log_level(self):
         return logging.INFO
 
-    @default('root_dir')
+    @default("root_dir")
     def _default_root_dir(self):
         if self.notebook_path:
             return os.path.dirname(os.path.abspath(self.notebook_path))
         else:
             return os.getcwd()
 
-    @default('config_file_paths')
+    @default("config_file_paths")
     def _config_file_paths_default(self):
         return [os.getcwd()]
 
@@ -100,14 +98,12 @@ class Voici(Application):
         if self.voici_configuration.template:
             template_name = self.voici_configuration.template
             self.template_paths = collect_template_paths(
-                ['voila', 'nbconvert'], template_name, prune=True
+                ["voila", "nbconvert"], template_name, prune=True
             )
             self.static_paths = collect_static_paths(
-                ['voila', 'nbconvert'], template_name
+                ["voila", "nbconvert"], template_name
             )
-            conf_paths = [
-                os.path.join(d, 'conf.json') for d in self.template_paths
-            ]
+            conf_paths = [os.path.join(d, "conf.json") for d in self.template_paths]
             for p in conf_paths:
                 # see if config file exists
                 if os.path.exists(p):
@@ -115,23 +111,23 @@ class Voici(Application):
                     with open(p) as json_file:
                         conf = json.load(json_file)
                     # update the overall config with it, preserving CLI config priority
-                    if 'traitlet_configuration' in conf:
+                    if "traitlet_configuration" in conf:
                         recursive_update(
-                            conf['traitlet_configuration'],
+                            conf["traitlet_configuration"],
                             self.voici_configuration.config.VoilaConfiguration,
                         )
                         # pass merged config to overall Voilà config
                         self.voici_configuration.config.VoilaConfiguration = Config(
-                            conf['traitlet_configuration']
+                            conf["traitlet_configuration"]
                         )
 
         self.jinja2_env = jinja2.Environment(
             loader=jinja2.FileSystemLoader(self.template_paths),
-            extensions=['jinja2.ext.i18n'],
-            **{'autoescape': True},
+            extensions=["jinja2.ext.i18n"],
+            **{"autoescape": True},
         )
         nbui = gettext.translation(
-            'nbui', localedir=os.path.join(ROOT, 'i18n'), fallback=True
+            "nbui", localedir=os.path.join(ROOT, "i18n"), fallback=True
         )
         self.jinja2_env.install_gettext_translations(nbui, newstyle=False)
 
@@ -147,48 +143,44 @@ class Voici(Application):
                     self.notebook_path = arg
                 else:
                     raise ValueError(
-                        'argument is neither a file nor a directory: %r' % arg
+                        "argument is neither a file nor a directory: %r" % arg
                     )
         elif len(self.extra_args) != 0:
-            raise ValueError(
-                'provided more than 1 argument: %r' % self.extra_args
-            )
-        self.load_config_file('voici', path=self.config_file_paths)
+            raise ValueError("provided more than 1 argument: %r" % self.extra_args)
+        self.load_config_file("voici", path=self.config_file_paths)
         self.voici_configuration = VoilaConfiguration(parent=self)
         self.setup_template_dirs()
 
         self.contents_manager = LargeFileManager(parent=self)
 
     def copy_static_files(self, federated_extensions: TypeList[str]) -> None:
-
         lite_static_path = os.path.join(
-            os.path.dirname(os.path.realpath(__file__)), 'static'
+            os.path.dirname(os.path.realpath(__file__)), "static"
         )
         dest_static_path = os.path.join(os.getcwd(), self.output_prefix)
         if os.path.isdir(dest_static_path):
             shutil.rmtree(dest_static_path, ignore_errors=False)
         shutil.copytree(
             os.path.join(lite_static_path),
-            os.path.join(dest_static_path, 'build'),
+            os.path.join(dest_static_path, "build"),
             dirs_exist_ok=True,
         )
         shutil.copyfile(
-            os.path.join(lite_static_path, 'services.js'),
-            os.path.join(dest_static_path, 'services.js'),
+            os.path.join(lite_static_path, "services.js"),
+            os.path.join(dest_static_path, "services.js"),
         )
 
         # Copy extension files
-        labextensions_path = jupyter_path('labextensions')
+        labextensions_path = jupyter_path("labextensions")
         roots = tuple(
-            os.path.abspath(os.path.expanduser(p)) + os.sep
-            for p in labextensions_path
+            os.path.abspath(os.path.expanduser(p)) + os.sep for p in labextensions_path
         )
-        dest_extension_path = os.path.join(dest_static_path, 'labextensions')
+        dest_extension_path = os.path.join(dest_static_path, "labextensions")
         if os.path.isdir(dest_extension_path):
             shutil.rmtree(dest_extension_path)
         for extension in federated_extensions:
             for root in roots:
-                name = extension['name']
+                name = extension["name"]
                 full_path = os.path.join(root, name)
                 if os.path.isdir(full_path):
                     shutil.copytree(
@@ -203,8 +195,7 @@ class Voici(Application):
             return [
                 f
                 for f in files
-                if os.path.isfile(os.path.join(dir, f))
-                and f.endswith('voila.js')
+                if os.path.isfile(os.path.join(dir, f)) and f.endswith("voila.js")
             ]
 
         for root in self.static_paths:
@@ -214,10 +205,10 @@ class Voici(Application):
                     abspath,
                     os.path.join(
                         dest_static_path,
-                        'voila',
-                        'templates',
+                        "voila",
+                        "templates",
                         template_name,
-                        'static',
+                        "static",
                     ),
                     ignore=ignore_func,
                     dirs_exist_ok=True,
@@ -226,49 +217,37 @@ class Voici(Application):
         # Copy themes files
         all_themes = find_all_lab_theme()
         for theme in all_themes:
-            theme_dst = os.path.join(
-                dest_static_path, 'build', 'themes', theme[0]
-            )
+            theme_dst = os.path.join(dest_static_path, "build", "themes", theme[0])
             shutil.copytree(theme[1], theme_dst, dirs_exist_ok=True)
 
         # Copy additional files
         in_files_path = os.path.join(os.getcwd(), self.contents)
-        out_files_path = os.path.join(dest_static_path, 'files')
+        out_files_path = os.path.join(dest_static_path, "files")
         if os.path.exists(in_files_path):
-            shutil.copytree(
-                in_files_path, os.path.join(out_files_path, self.contents)
-            )
+            shutil.copytree(in_files_path, os.path.join(out_files_path, self.contents))
         self.index_user_files()
 
-    def index_user_files(self, current_path='') -> None:
-
+    def index_user_files(self, current_path="") -> None:
         dest_static_path = os.path.join(os.getcwd(), self.output_prefix)
         cm = self.contents_manager
         contents = cm.get(current_path)
-        contents['content'] = sorted(
-            contents['content'], key=lambda i: i['name']
-        )
-        if current_path == '':
-            contents['content'] = list(
+        contents["content"] = sorted(contents["content"], key=lambda i: i["name"])
+        if current_path == "":
+            contents["content"] = list(
                 filter(
-                    lambda c: c['type'] == 'directory'
-                    and c['name'] == self.contents,
-                    contents['content'],
+                    lambda c: c["type"] == "directory" and c["name"] == self.contents,
+                    contents["content"],
                 )
             )
-        for item in contents['content']:
-            if item['type'] == 'directory':
-                self.index_user_files(item['path'])
+        for item in contents["content"]:
+            if item["type"] == "directory":
+                self.index_user_files(item["path"])
 
-        output_dir = os.path.join(
-            dest_static_path, 'api', 'contents', current_path
-        )
+        output_dir = os.path.join(dest_static_path, "api", "contents", current_path)
         if not os.path.exists(output_dir):
             os.makedirs(output_dir, exist_ok=True)
-        with open(os.path.join(output_dir, 'all.json'), 'w') as f:
-            json.dump(
-                contents, f, sort_keys=True, indent=2, cls=DateTimeEncoder
-            )
+        with open(os.path.join(output_dir, "all.json"), "w") as f:
+            json.dump(contents, f, sort_keys=True, indent=2, cls=DateTimeEncoder)
 
     def convert_notebook(
         self,
@@ -282,15 +261,15 @@ class Voici(Application):
 
         nb_path = Path(nb_path)
         if not nb_name:
-            nb_name = f'{nb_path.stem}.html'
+            nb_name = f"{nb_path.stem}.html"
         with open(nb_path) as f:
             nb = nbformat.read(f, 4)
             nb_src = [
                 {
-                    'cell_source': cell['source'],
-                    'cell_type': cell['cell_type'],
+                    "cell_source": cell["source"],
+                    "cell_type": cell["cell_type"],
                 }
-                for cell in nb['cells']
+                for cell in nb["cells"]
             ]
         voici_exporter = VoiciExporter(
             voici_config=self.voici_configuration,
@@ -304,11 +283,10 @@ class Voici(Application):
 
         if not os.path.exists(output_dir):
             os.makedirs(output_dir, exist_ok=True)
-        with open(os.path.join(output_dir, nb_name), 'w') as f:
+        with open(os.path.join(output_dir, nb_name), "w") as f:
             f.write(content)
 
     def convert_directory(self, page_config):
-
         tree_exporter = VoiciTreeExporter(
             jinja2_env=self.jinja2_env,
             voici_configuration=self.voici_configuration,
@@ -322,31 +300,29 @@ class Voici(Application):
             self.convert_notebook(
                 nb,
                 page_config,
-                os.path.join(self.output_prefix, 'voila', 'render'),
+                os.path.join(self.output_prefix, "voila", "render"),
                 self.packages,
             )
 
     def start(self):
-        page_config = get_page_config(
-            base_url=self.base_url, settings={}, log=None
+        page_config = get_page_config(base_url=self.base_url, settings={}, log=None)
+        page_config["themesUrl"] = url_path_join("build", "themes")
+        page_config["fullStaticUrl"] = url_path_join(self.base_url, "build")
+        page_config["fullLabextensionsUrl"] = url_path_join(
+            self.base_url, "labextensions"
         )
-        page_config['themesUrl'] = url_path_join('build', 'themes')
-        page_config['fullStaticUrl'] = url_path_join(self.base_url, 'build')
-        page_config['fullLabextensionsUrl'] = url_path_join(
-            self.base_url, 'labextensions'
-        )
-        page_config['settingsUrl'] = url_path_join(
-            page_config['fullStaticUrl'], 'schemas'
+        page_config["settingsUrl"] = url_path_join(
+            page_config["fullStaticUrl"], "schemas"
         )
 
-        if self.voici_configuration.theme == 'light':
-            themeName = 'JupyterLab Light'
-        elif self.voici_configuration.theme == 'dark':
-            themeName = 'JupyterLab Dark'
+        if self.voici_configuration.theme == "light":
+            themeName = "JupyterLab Light"
+        elif self.voici_configuration.theme == "dark":
+            themeName = "JupyterLab Dark"
         else:
             themeName = self.voici_configuration.theme
-        page_config['labThemeName'] = themeName
-        federated_extensions = page_config.get('federated_extensions', [])
+        page_config["labThemeName"] = themeName
+        federated_extensions = page_config.get("federated_extensions", [])
         self.copy_static_files(federated_extensions)
 
         if self.notebook_path:
@@ -355,7 +331,7 @@ class Voici(Application):
                 page_config,
                 self.output_prefix,
                 self.packages,
-                'index.html',
+                "index.html",
             )
         else:
             self.convert_directory(page_config)

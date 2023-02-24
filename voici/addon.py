@@ -44,19 +44,15 @@ class VoiciAddon(BaseAddon):
 
     @property
     def voici_static_path(self):
-        return Path(__file__).resolve().parent / 'static'
+        return Path(__file__).resolve().parent / "static"
 
     def setup_template_dirs(self):
         template_name = self.voici_configuration.template
         self.template_paths = collect_template_paths(
-            ['voila', 'nbconvert'], template_name, prune=True
+            ["voila", "nbconvert"], template_name, prune=True
         )
-        self.static_paths = collect_static_paths(
-            ['voila', 'nbconvert'], template_name
-        )
-        conf_paths = [
-            os.path.join(d, 'conf.json') for d in self.template_paths
-        ]
+        self.static_paths = collect_static_paths(["voila", "nbconvert"], template_name)
+        conf_paths = [os.path.join(d, "conf.json") for d in self.template_paths]
 
         for p in conf_paths:
             # see if config file exists
@@ -65,23 +61,23 @@ class VoiciAddon(BaseAddon):
                 with open(p) as json_file:
                     conf = json.load(json_file)
                 # update the overall config with it, preserving CLI config priority
-                if 'traitlet_configuration' in conf:
+                if "traitlet_configuration" in conf:
                     recursive_update(
-                        conf['traitlet_configuration'],
+                        conf["traitlet_configuration"],
                         self.voici_configuration.config.VoilaConfiguration,
                     )
                     # pass merged config to overall Voilà config
                     self.voici_configuration.config.VoilaConfiguration = Config(
-                        conf['traitlet_configuration']
+                        conf["traitlet_configuration"]
                     )
 
         self.jinja2_env = jinja2.Environment(
             loader=jinja2.FileSystemLoader(self.template_paths),
-            extensions=['jinja2.ext.i18n'],
-            **{'autoescape': True},
+            extensions=["jinja2.ext.i18n"],
+            **{"autoescape": True},
         )
         nbui = gettext.translation(
-            'nbui', localedir=os.path.join(ROOT, 'i18n'), fallback=True
+            "nbui", localedir=os.path.join(ROOT, "i18n"), fallback=True
         )
         self.jinja2_env.install_gettext_translations(nbui, newstyle=False)
 
@@ -103,35 +99,41 @@ class VoiciAddon(BaseAddon):
         # TODO Update Voila templates so we don't need this,
         # the following monkey patch will not work if lite is served
         # in a sub directory
-        page_config['baseUrl'] = '/'
-        page_config['fullStaticUrl'] = '/build'
+        page_config["baseUrl"] = "/"
+        page_config["fullStaticUrl"] = "/build"
 
-        print('--- PAGE CONFIG', page_config)
+        print("--- PAGE CONFIG", page_config)
 
         # Copy static files
         yield dict(
             name=f"voici:copy:{self.voici_static_path}",
-            actions=[(self.copy_one, [
-                self.voici_static_path,
-                self.manager.output_dir / 'build'
-            ])],
+            actions=[
+                (
+                    self.copy_one,
+                    [self.voici_static_path, self.manager.output_dir / "build"],
+                )
+            ],
         )
 
         # Convert Notebooks content into static dashboards
         tree_exporter = VoiciTreeExporter(
             jinja2_env=self.jinja2_env,
             voici_configuration=self.voici_configuration,
-            base_url=page_config.get('baseUrl'),
+            base_url=page_config.get("baseUrl"),
             page_config=page_config,
         )
 
-        for file_path, generated_file in tree_exporter.generate_contents(str(self.output_files_dir)):
+        for file_path, generated_file in tree_exporter.generate_contents(
+            str(self.output_files_dir)
+        ):
             yield dict(
                 name=f"voici:generate:{file_path}",
-                actions=[(self.create_one, [
-                    generated_file,
-                    self.manager.output_dir / 'voila' / file_path
-                ])],
+                actions=[
+                    (
+                        self.create_one,
+                        [generated_file, self.manager.output_dir / "voila" / file_path],
+                    )
+                ],
             )
 
     def create_one(self, stringio: io.StringIO, dest: Path):

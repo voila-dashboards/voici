@@ -21,14 +21,18 @@ from .exporter import VoiciExporter
 def path_to_content(path: Path, relative_to: Path):
     """Create a partial contents dictionary (in the sense of jupyter server) from a given path."""
     if path.is_dir():
-        content = [path_to_content(subitem, relative_to) for subitem in path.iterdir() if subitem is not None]
-        content = sorted(content, key=lambda i: i['name'])
+        content = [
+            path_to_content(subitem, relative_to)
+            for subitem in path.iterdir()
+            if subitem is not None
+        ]
+        content = sorted(content, key=lambda i: i["name"])
 
         return dict(
             type="directory",
             name=path.stem,
             path=str(path.relative_to(relative_to)),
-            content=content
+            content=content,
         )
     if path.is_file() and path.suffix == ".ipynb":
         actual_filename = f"{path.stem}.html"
@@ -36,7 +40,7 @@ def path_to_content(path: Path, relative_to: Path):
         return dict(
             type="notebook",
             name=actual_filename,
-            path=str(path.relative_to(relative_to).parent / actual_filename)
+            path=str(path.relative_to(relative_to).parent / actual_filename),
         )
     return None
 
@@ -60,34 +64,33 @@ class VoiciTreeExporter:
 
         self.notebook_paths = []
 
-
     def allowed_content(self, content: Dict) -> bool:
-        return content['type'] == 'notebook' or content['type'] == 'directory'
+        return content["type"] == "notebook" or content["type"] == "directory"
 
     def generate_breadcrumbs(self, path: Path) -> List:
-        breadcrumbs = [(url_path_join(self.base_url, 'voila/tree'), '')]
-        parts = str(path).split('/')
+        breadcrumbs = [(url_path_join(self.base_url, "voila/tree"), "")]
+        parts = str(path).split("/")
         for i in range(len(parts)):
             if parts[i]:
                 link = url_path_join(
                     self.base_url,
-                    'voila/tree',
+                    "voila/tree",
                     url_escape(url_path_join(*parts[: i + 1])),
                 )
                 breadcrumbs.append((link, parts[i]))
         return breadcrumbs
 
     def generate_page_title(self, path: Path) -> str:
-        parts = str(path).split('/')
+        parts = str(path).split("/")
         if len(parts) > 3:  # not too many parts
             parts = parts[-2:]
         page_title = url_path_join(*parts)
         if page_title:
-            return page_title + '/'
+            return page_title + "/"
         else:
-            return 'Voici Home'
+            return "Voici Home"
 
-    def generate_contents(self, path='', relative_to=None) -> Tuple[Dict, List[str]]:
+    def generate_contents(self, path="", relative_to=None) -> Tuple[Dict, List[str]]:
         """Generate the Tree content. This is a generator method that generates tuples (filepath, file)."""
         if relative_to is None:
             relative_to = path
@@ -96,23 +99,28 @@ class VoiciTreeExporter:
             relative_path = Path(path).relative_to(relative_to)
 
         self.resources = self.init_resources()
-        self.template = self.jinja2_env.get_template('tree.html')
+        self.template = self.jinja2_env.get_template("tree.html")
 
         breadcrumbs = self.generate_breadcrumbs(path)
         page_title = self.generate_page_title(path)
 
         contents = path_to_content(Path(path), relative_to)
 
-        yield (Path('tree') / relative_path / 'index.html', StringIO(self.template.render(
-            contents=contents,
-            page_title=page_title,
-            breadcrumbs=breadcrumbs,
-            **self.resources,
-        )))
+        yield (
+            Path("tree") / relative_path / "index.html",
+            StringIO(
+                self.template.render(
+                    contents=contents,
+                    page_title=page_title,
+                    breadcrumbs=breadcrumbs,
+                    **self.resources,
+                )
+            ),
+        )
 
-        for file in contents['content']:
-            if file['type'] == 'notebook':
-                notebook_path = file['path'].replace('.html', '.ipynb')
+        for file in contents["content"]:
+            if file["type"] == "notebook":
+                notebook_path = file["path"].replace(".html", ".ipynb")
 
                 # TODO The reading of the Notebook source should be done by the VoiciExporter!!
                 # TODO Find nbformat version in the Notebook content instead of assuming 4
@@ -120,10 +128,10 @@ class VoiciTreeExporter:
                     nb = nbformat.read(f, 4)
                     nb_src = [
                         {
-                            'cell_source': cell['source'],
-                            'cell_type': cell['cell_type'],
+                            "cell_source": cell["source"],
+                            "cell_type": cell["cell_type"],
                         }
-                        for cell in nb['cells']
+                        for cell in nb["cells"]
                     ]
 
                 voici_exporter = VoiciExporter(
@@ -133,32 +141,35 @@ class VoiciTreeExporter:
                     nb_src=nb_src,
                 )
 
-                yield (Path('render') / file['path'], StringIO(
-                    voici_exporter.from_filename(notebook_path)[0]
-                ))
-            elif file['type'] == 'directory':
-                for subcontent in self.generate_contents(Path(path) / file['name'], relative_to):
+                yield (
+                    Path("render") / file["path"],
+                    StringIO(voici_exporter.from_filename(notebook_path)[0]),
+                )
+            elif file["type"] == "directory":
+                for subcontent in self.generate_contents(
+                    Path(path) / file["name"], relative_to
+                ):
                     yield subcontent
 
     def init_resources(self, **kwargs) -> Dict:
         resources = {
-            'base_url': self.base_url,
-            'page_config': self.page_config,
-            'frontend': 'voici',
-            'main_js': 'voici.js',
-            'voila_process': r'(cell_index, cell_count) => {}',
-            'voila_finish': r'() => {}',
-            'theme': self.theme,
-            'include_css': lambda x: '',
-            'include_js': lambda x: '',
-            'include_url': lambda x: '',
-            'include_lab_theme': lambda x: '',
+            "base_url": self.base_url,
+            "page_config": self.page_config,
+            "frontend": "voici",
+            "main_js": "voici.js",
+            "voila_process": r"(cell_index, cell_count) => {}",
+            "voila_finish": r"() => {}",
+            "theme": self.theme,
+            "include_css": lambda x: "",
+            "include_js": lambda x: "",
+            "include_url": lambda x: "",
+            "include_lab_theme": lambda x: "",
             **kwargs,
         }
 
-        if self.page_config.get('labThemeName') in [
-            'JupyterLab Light',
-            'JupyterLab Dark',
+        if self.page_config.get("labThemeName") in [
+            "JupyterLab Light",
+            "JupyterLab Dark",
         ]:
             include_assets_functions = create_include_assets_functions(
                 self.template_name, self.base_url

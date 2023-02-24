@@ -18,11 +18,9 @@ from nbconvert.exporters.html import find_lab_theme
 
 
 def find_all_lab_theme() -> List[Tuple[str, str]]:
-
-    labextensions_path = jupyter_path('labextensions')
+    labextensions_path = jupyter_path("labextensions")
     roots = tuple(
-        os.path.abspath(os.path.expanduser(p)) + os.sep
-        for p in labextensions_path
+        os.path.abspath(os.path.expanduser(p)) + os.sep for p in labextensions_path
     )
     theme_list = []
     for root in roots:
@@ -41,6 +39,6 @@ class DateTimeEncoder(json.JSONEncoder):
 
     def default(self, o):
         if isinstance(o, datetime.datetime):
-            return o.isoformat().replace('+00:00', 'Z')
+            return o.isoformat().replace("+00:00", "Z")
 
         return json.JSONEncoder.default(self, o)

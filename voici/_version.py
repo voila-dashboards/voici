@@ -33,7 +33,9 @@ _version_regex = re.compile(
 
 _version_fields = _version_regex.match(__version__).groupdict()  # type:ignore
 
-VersionInfo = namedtuple("VersionInfo", ["major", "minor", "micro", "releaselevel", "serial"])
+VersionInfo = namedtuple(
+    "VersionInfo", ["major", "minor", "micro", "releaselevel", "serial"]
+)
 
 version_info = VersionInfo(
     *[
