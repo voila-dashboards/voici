@@ -7,9 +7,7 @@ from pathlib import Path
 
 import jinja2
 
-from traitlets.config.application import Application
-
-import nbformat
+from traitlets.config import Config
 
 from jupyter_server.config_manager import recursive_update
 
@@ -23,7 +21,6 @@ from jupyterlite.constants import (
     UTF8,
 )
 
-from .exporter import VoiciExporter
 from .tree_exporter import VoiciTreeExporter
 
 

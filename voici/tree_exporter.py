@@ -1,6 +1,4 @@
-from copy import deepcopy
 from io import StringIO
-import os
 from typing import Dict, List, Tuple
 from pathlib import Path
 
@@ -8,13 +6,11 @@ import jinja2
 
 import nbformat
 
-from jupyter_server.services.contents.filemanager import FileContentsManager
 from jupyter_server.utils import url_path_join, url_escape
 
 from voila.configuration import VoilaConfiguration
 from voila.utils import create_include_assets_functions
 
-from .utils import find_all_lab_theme
 from .exporter import VoiciExporter
 
 
