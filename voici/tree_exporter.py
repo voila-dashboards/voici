@@ -15,6 +15,30 @@ from voila.configuration import VoilaConfiguration
 from voila.utils import create_include_assets_functions
 
 from .utils import find_all_lab_theme
+from .exporter import VoiciExporter
+
+
+def path_to_content(path: Path, relative_to: Path):
+    """Create a partial contents dictionary (in the sense of jupyter server) from a given path."""
+    if path.is_dir():
+        content = [path_to_content(subitem, relative_to) for subitem in path.iterdir() if subitem is not None]
+        content = sorted(content, key=lambda i: i['name'])
+
+        return dict(
+            type="directory",
+            name=path.stem,
+            path=str(path.relative_to(relative_to)),
+            content=content
+        )
+    if path.is_file() and path.suffix == ".ipynb":
+        actual_filename = f"{path.stem}.html"
+
+        return dict(
+            type="notebook",
+            name=actual_filename,
+            path=str(path.relative_to(relative_to).parent / actual_filename)
+        )
+    return None
 
 
 class VoiciTreeExporter:
@@ -65,65 +89,54 @@ class VoiciTreeExporter:
         """Generate the Tree content. This is a generator method that generates tuples (filepath, file)."""
         if relative_to is None:
             relative_to = path
-            relative_path = Path('')
+            relative_path = Path(".")
         else:
             relative_path = Path(path).relative_to(relative_to)
 
         self.resources = self.init_resources()
         self.template = self.jinja2_env.get_template('tree.html')
 
-        # TODO Get rid of content manager which does not work and grab files ourselves with pathlib
-        if cm.dir_exists(path=path):
-            if cm.is_hidden(path) and not cm.allow_hidden:
-                print('Refusing to serve hidden directory, via 404 Error')
-                return
+        breadcrumbs = self.generate_breadcrumbs(path)
+        page_title = self.generate_page_title(path)
 
-            breadcrumbs = self.generate_breadcrumbs(path)
-            page_title = self.generate_page_title(path)
-            contents = cm.get(path)
+        contents = path_to_content(Path(path), relative_to)
 
-            contents['content'] = sorted(
-                contents['content'], key=lambda i: i['name']
-            )
-            contents['content'] = list(
-                filter(self.allowed_content, contents['content'])
-            )
+        yield (Path('tree') / relative_path / 'index.html', StringIO(self.template.render(
+            contents=contents,
+            page_title=page_title,
+            breadcrumbs=breadcrumbs,
+            **self.resources,
+        )))
 
-            yield (Path('tree') / relative_path / 'index.html', StringIO(self.template.render(
-                contents=contents,
-                page_title=page_title,
-                breadcrumbs=breadcrumbs,
-                **self.resources,
-            )))
+        for file in contents['content']:
+            if file['type'] == 'notebook':
+                notebook_path = file['path'].replace('.html', '.ipynb')
 
-            for file in contents['content']:
-                if file['type'] == 'notebook':
-                    notebook_path = Path(file['path'].replace('.ipynb', '.html')).relative_to(relative_to)
+                # TODO The reading of the Notebook source should be done by the VoiciExporter!!
+                # TODO Find nbformat version in the Notebook content instead of assuming 4
+                with open(notebook_path) as f:
+                    nb = nbformat.read(f, 4)
+                    nb_src = [
+                        {
+                            'cell_source': cell['source'],
+                            'cell_type': cell['cell_type'],
+                        }
+                        for cell in nb['cells']
+                    ]
 
-                    # TODO Find nbformat version in the Notebook content instead of assuming 4
-                    with open(nb_path) as f:
-                        nb = nbformat.read(f, 4)
-                        nb_src = [
-                            {
-                                'cell_source': cell['source'],
-                                'cell_type': cell['cell_type'],
-                            }
-                            for cell in nb['cells']
-                        ]
+                voici_exporter = VoiciExporter(
+                    voici_config=self.voici_configuration,
+                    # page_config=page_config,
+                    base_url=self.base_url,
+                    nb_src=nb_src,
+                )
 
-                    voici_exporter = VoiciExporter(
-                        voici_config=self.voici_configuration,
-                        # page_config=page_config,
-                        base_url=self.base_url,
-                        nb_src=nb_src,
-                    )
-
-                    yield (notebook_path, StringIO(
-                        voici_exporter.from_filename(nb_path)[0]
-                    ))
-                elif file['type'] == 'directory':
-                    for subcontent in self.generate_contents(file['path'], relative_to):
-                        yield subcontent
+                yield (Path('render') / file['path'], StringIO(
+                    voici_exporter.from_filename(notebook_path)[0]
+                ))
+            elif file['type'] == 'directory':
+                for subcontent in self.generate_contents(Path(path) / file['name'], relative_to):
+                    yield subcontent
 
     def init_resources(self, **kwargs) -> Dict:
         resources = {

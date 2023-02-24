@@ -1,6 +1,8 @@
 import gettext
 import os
+import io
 import json
+import shutil
 from pathlib import Path
 
 import jinja2
@@ -31,7 +33,7 @@ class VoiciAddon(BaseAddon):
         self.voici_configuration = VoilaConfiguration(parent=self)
         self.setup_template_dirs()
 
-        self.base_url = '/voici/'
+        self.base_url = '/'
 
     @property
     def output_files_dir(self):
@@ -94,7 +96,7 @@ class VoiciAddon(BaseAddon):
             name=f"voici:copy:{self.voici_static_path}",
             actions=[(self.copy_one, [
                 self.voici_static_path,
-                self.manager.output_dir / 'voici' / 'static'
+                self.manager.output_dir / 'voila' / 'static'
             ])],
         )
 
@@ -109,8 +111,27 @@ class VoiciAddon(BaseAddon):
         for file_path, generated_file in tree_exporter.generate_contents(str(self.output_files_dir)):
             yield dict(
                 name=f"voici:generate:{file_path}",
-                actions=[(self.copy_one, [
+                actions=[(self.create_one, [
                     generated_file,
-                    self.manager.output_dir / 'voici' / file_path
+                    self.manager.output_dir / 'voila' / file_path
                 ])],
             )
+
+    def create_one(self, stringio: io.StringIO, dest: Path):
+        """create a file in the lite output"""
+        if dest.is_dir():
+            shutil.rmtree(dest)
+        elif dest.exists():
+            dest.unlink()
+
+        if not dest.parent.exists():
+            self.log.debug(f"creating folder {dest.parent}")
+            dest.parent.mkdir(parents=True)
+
+        self.maybe_timestamp(dest.parent)
+
+        with open(dest, "w") as fobj:
+            stringio.seek(0)
+            shutil.copyfileobj(stringio, fobj)
+
+        self.maybe_timestamp(dest)
