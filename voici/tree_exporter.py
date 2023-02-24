@@ -118,23 +118,10 @@ class VoiciTreeExporter:
             if file["type"] == "notebook":
                 notebook_path = file["path"].replace(".html", ".ipynb")
 
-                # TODO The reading of the Notebook source should be done by the VoiciExporter!!
-                # TODO Find nbformat version in the Notebook content instead of assuming 4
-                with open(notebook_path) as f:
-                    nb = nbformat.read(f, 4)
-                    nb_src = [
-                        {
-                            "cell_source": cell["source"],
-                            "cell_type": cell["cell_type"],
-                        }
-                        for cell in nb["cells"]
-                    ]
-
                 voici_exporter = VoiciExporter(
                     voici_config=self.voici_configuration,
                     page_config=self.page_config,
                     base_url=self.base_url,
-                    nb_src=nb_src,
                 )
 
                 yield (

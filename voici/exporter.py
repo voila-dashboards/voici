@@ -32,7 +32,6 @@ class VoiciExporter(VoilaExporter):
         self.theme = self.voici_configuration.theme
         self.template_name = self.voici_configuration.template
         self.packages = kwargs.get("packages", [])
-        self.nb_src = kwargs.get("nb_src", [])
 
         # TODO
         # Investigate why this doesnt work
@@ -100,7 +99,7 @@ class VoiciExporter(VoilaExporter):
             resources=resources,
             **extra_context,
             static_url=self.static_url,
-            page_config=self.update_page_config(self.page_config),
+            page_config=self.update_page_config(nb, self.page_config),
         ):
             html.append(html_snippet)
 
@@ -124,10 +123,17 @@ class VoiciExporter(VoilaExporter):
 
         return resources
 
-    def update_page_config(self, page_config):
+    def update_page_config(self, nb, page_config):
         page_config_copy = deepcopy(page_config)
 
-        page_config_copy["notebookSrc"] = self.nb_src
+        page_config_copy["notebookSrc"] = [
+            {
+                "cell_source": cell["source"],
+                "cell_type": cell["cell_type"],
+            }
+            for cell in nb.cells
+        ]
+
         if len(self.packages) > 0:
             packages_src = "import piplite\n"
             packages_src += f"await piplite.install({self.packages})\n"
