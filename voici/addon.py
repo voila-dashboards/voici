@@ -169,7 +169,7 @@ class VoiciAddon(BaseAddon):
         page_config = config.get(JUPYTER_CONFIG_DATA, {})
 
         # Patch appUrl
-        page_config["appUrl"] = "./voila"
+        page_config["appUrl"] = "./voila/tree"
 
         # Path favicon
         page_config["faviconUrl"] = "./voila/favicon.ico"
