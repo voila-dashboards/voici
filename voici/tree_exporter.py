@@ -62,7 +62,7 @@ class VoiciTreeExporter(HTMLExporter):
 
     def generate_breadcrumbs(self, path: Path) -> List:
         breadcrumbs = [(url_path_join(self.base_url, "voila/tree"), "")]
-        parts = str(path).split("/")
+        parts = path.parts
         for i in range(len(parts)):
             if parts[i]:
                 link = url_path_join(
@@ -74,7 +74,7 @@ class VoiciTreeExporter(HTMLExporter):
         return breadcrumbs
 
     def generate_page_title(self, path: Path) -> str:
-        parts = str(path).split("/")
+        parts = path.parts
         if len(parts) > 3:  # not too many parts
             parts = parts[-2:]
         page_title = url_path_join(*parts)
@@ -83,14 +83,14 @@ class VoiciTreeExporter(HTMLExporter):
         else:
             return "Voici Home"
 
-    def generate_contents(self, path="", relative_to=None) -> Tuple[Dict, List[str]]:
+    def generate_contents(self, path: Path, relative_to=None) -> Tuple[Dict, List[str]]:
         """Generate the Tree content. This is a generator method that generates tuples (filepath, file)."""
         if relative_to is None:
             relative_to = path
             relative_path = Path(".")
             breadcrumbs = []
         else:
-            relative_path = Path(path).relative_to(relative_to)
+            relative_path = path.relative_to(relative_to)
             breadcrumbs = self.generate_breadcrumbs(relative_path)
 
         resources = self._init_resources({})
@@ -98,7 +98,7 @@ class VoiciTreeExporter(HTMLExporter):
 
         page_title = self.generate_page_title(path)
 
-        contents = path_to_content(Path(path), relative_to)
+        contents = path_to_content(path, relative_to)
 
         yield (
             Path("tree") / relative_path / "index.html",
@@ -128,6 +128,6 @@ class VoiciTreeExporter(HTMLExporter):
                 )
             elif file["type"] == "directory":
                 for subcontent in self.generate_contents(
-                    Path(path) / file["name"], relative_to
+                    path / file["name"], relative_to
                 ):
                     yield subcontent

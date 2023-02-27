@@ -128,7 +128,7 @@ class VoiciAddon(BaseAddon):
         )
 
         for file_path, generated_file in tree_exporter.generate_contents(
-            str(self.output_files_dir)
+            self.output_files_dir
         ):
             yield dict(
                 name=f"voici:generate:{file_path}",

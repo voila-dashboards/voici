@@ -35,9 +35,6 @@ class VoiciExporter(VoilaExporter):
         self.template_name = self.voici_configuration.template
         self.packages = kwargs.get("packages", [])
 
-        # TODO
-        # Investigate why this doesnt work
-        # jupyter nbconvert --to voici_dashboard --VoilaConfiguration.strip_sources=False notebook.ipynb
         if self.voici_configuration.strip_sources:
             self.exclude_input = True
             self.exclude_output_prompt = True
