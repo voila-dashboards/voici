@@ -16,6 +16,7 @@ from voila.paths import ROOT, collect_static_paths, collect_template_paths
 
 from jupyterlite.addons.base import BaseAddon
 from jupyterlite.constants import (
+    JSON_FMT,
     JUPYTER_CONFIG_DATA,
     JUPYTERLITE_JSON,
     UTF8,
@@ -78,6 +79,7 @@ class VoiciAddon(BaseAddon):
         )
         self.jinja2_env.install_gettext_translations(nbui, newstyle=False)
 
+
     def post_build(self, manager):
         """copies the Voici application files to the JupyterLite output and generate static dashboards."""
 
@@ -87,10 +89,7 @@ class VoiciAddon(BaseAddon):
 
         # Get page_config
         jupyterlite_json = manager.output_dir / JUPYTERLITE_JSON
-        if not jupyterlite_json.exists():
-            config = {}
-        else:
-            config = json.loads(jupyterlite_json.read_text(**UTF8))
+        config = json.loads(jupyterlite_json.read_text(**UTF8))
         page_config = config.get(JUPYTER_CONFIG_DATA, {})
 
         # TODO Update Voila templates so we don't need this,
@@ -99,7 +98,16 @@ class VoiciAddon(BaseAddon):
         page_config["baseUrl"] = "/"
         page_config["fullStaticUrl"] = "/build"
 
-        print("--- PAGE CONFIG", page_config)
+        # Patch the jupyter-lite.json
+        yield dict(
+            name=f"voici:patch:{JUPYTERLITE_JSON}",
+            actions=[
+                (
+                    self.patch_jupyterlite_json,
+                    [],
+                )
+            ],
+        )
 
         # Copy static files
         yield dict(
@@ -151,3 +159,22 @@ class VoiciAddon(BaseAddon):
             shutil.copyfileobj(stringio, fobj)
 
         self.maybe_timestamp(dest)
+
+    def patch_jupyterlite_json(self):
+        # Don't patch anything if Voici is not the only app
+        if not self.manager.apps or len(self.manager.apps) != 1 or "voici" not in self.manager.apps:
+            return
+
+        jupyterlite_json = self.manager.output_dir / JUPYTERLITE_JSON
+        config = json.loads(jupyterlite_json.read_text(**UTF8))
+        page_config = config.get(JUPYTER_CONFIG_DATA, {})
+
+        # Patch appUrl
+        page_config["appUrl"] = "./voila"
+
+        # Path favicon
+        page_config["faviconUrl"] = "./voila/favicon.ico"
+
+        config[JUPYTER_CONFIG_DATA] = page_config
+
+        jupyterlite_json.write_text(json.dumps(config, **JSON_FMT), **UTF8)
