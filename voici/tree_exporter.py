@@ -4,14 +4,11 @@ from pathlib import Path
 
 import jinja2
 
-import nbformat
-
 from jupyter_server.utils import url_path_join, url_escape
 
 from nbconvert.exporters import HTMLExporter
 
 from voila.configuration import VoilaConfiguration
-from voila.utils import create_include_assets_functions
 
 from .exporter import VoiciExporter
 

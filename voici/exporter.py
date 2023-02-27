@@ -10,8 +10,6 @@
 
 from copy import deepcopy
 
-import markupsafe
-
 from jupyter_server.services.contents.largefilemanager import LargeFileManager
 
 from nbconvert.exporters import TemplateExporter
