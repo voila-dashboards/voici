@@ -79,7 +79,6 @@ class VoiciAddon(BaseAddon):
         )
         self.jinja2_env.install_gettext_translations(nbui, newstyle=False)
 
-
     def post_build(self, manager):
         """copies the Voici application files to the JupyterLite output and generate static dashboards."""
 

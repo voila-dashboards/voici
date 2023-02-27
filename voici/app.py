@@ -1,5 +1,3 @@
-import subprocess
-
 from traitlets import default
 
 from jupyterlite.app import (
