@@ -90,13 +90,14 @@ class VoiciTreeExporter(HTMLExporter):
         if relative_to is None:
             relative_to = path
             relative_path = Path(".")
+            breadcrumbs = []
         else:
             relative_path = Path(path).relative_to(relative_to)
+            breadcrumbs = self.generate_breadcrumbs(relative_path)
 
         resources = self._init_resources({})
         template = self.jinja2_env.get_template("tree.html")
 
-        breadcrumbs = self.generate_breadcrumbs(path)
         page_title = self.generate_page_title(path)
 
         contents = path_to_content(Path(path), relative_to)
