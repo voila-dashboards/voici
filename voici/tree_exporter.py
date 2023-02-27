@@ -30,12 +30,10 @@ def path_to_content(path: Path, relative_to: Path):
             content=content,
         )
     if path.is_file() and path.suffix == ".ipynb":
-        actual_filename = f"{path.stem}.html"
-
         return dict(
             type="notebook",
-            name=actual_filename,
-            path=str(path.relative_to(relative_to).parent / actual_filename),
+            name=path.name,
+            path=str(path.relative_to(relative_to)).replace(".ipynb", ".html"),
         )
     return None
 
@@ -118,8 +116,6 @@ class VoiciTreeExporter(HTMLExporter):
 
         for file in contents["content"]:
             if file["type"] == "notebook":
-                notebook_path = file["path"].replace(".html", ".ipynb")
-
                 voici_exporter = VoiciExporter(
                     voici_config=self.voici_configuration,
                     page_config=self.page_config,
@@ -128,7 +124,7 @@ class VoiciTreeExporter(HTMLExporter):
 
                 yield (
                     Path("render") / file["path"],
-                    StringIO(voici_exporter.from_filename(notebook_path)[0]),
+                    StringIO(voici_exporter.from_filename(file["path"].replace(".html", ".ipynb"))[0]),
                 )
             elif file["type"] == "directory":
                 for subcontent in self.generate_contents(
