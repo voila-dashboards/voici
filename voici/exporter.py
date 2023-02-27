@@ -10,10 +10,14 @@
 
 from copy import deepcopy
 
+import markupsafe
+
 from jupyter_server.services.contents.largefilemanager import LargeFileManager
+
 from nbconvert.exporters import TemplateExporter
 from nbconvert.filters.highlight import Highlight2HTML
 from nbconvert.preprocessors import ClearOutputPreprocessor
+
 from traitlets import default
 
 from voila.exporter import VoilaExporter
@@ -115,13 +119,9 @@ class VoiciExporter(VoilaExporter):
             yield output
 
     def _init_resources(self, resources):
-        resources = super()._init_resources(resources)
-        # We are using the theme manager of JupyterLab instead of including
-        # CSS file in the template.
-        resources["include_css"] = lambda x: ""
-        resources["include_lab_theme"] = lambda x: ""
-
-        return resources
+        # Not calling Voila's _init_resources, because we want to embed static
+        # assets like CSS and theming instead of serving them from the server
+        return super(VoilaExporter, self)._init_resources(resources)
 
     def update_page_config(self, nb, page_config):
         page_config_copy = deepcopy(page_config)

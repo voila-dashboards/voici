@@ -8,6 +8,8 @@ import nbformat
 
 from jupyter_server.utils import url_path_join, url_escape
 
+from nbconvert.exporters import HTMLExporter
+
 from voila.configuration import VoilaConfiguration
 from voila.utils import create_include_assets_functions
 
@@ -41,7 +43,7 @@ def path_to_content(path: Path, relative_to: Path):
     return None
 
 
-class VoiciTreeExporter:
+class VoiciTreeExporter(HTMLExporter):
     def __init__(
         self,
         jinja2_env: jinja2.Environment,
@@ -94,8 +96,8 @@ class VoiciTreeExporter:
         else:
             relative_path = Path(path).relative_to(relative_to)
 
-        self.resources = self.init_resources()
-        self.template = self.jinja2_env.get_template("tree.html")
+        resources = self._init_resources({})
+        template = self.jinja2_env.get_template("tree.html")
 
         breadcrumbs = self.generate_breadcrumbs(path)
         page_title = self.generate_page_title(path)
@@ -105,11 +107,13 @@ class VoiciTreeExporter:
         yield (
             Path("tree") / relative_path / "index.html",
             StringIO(
-                self.template.render(
+                template.render(
                     contents=contents,
                     page_title=page_title,
                     breadcrumbs=breadcrumbs,
-                    **self.resources,
+                    page_config=self.page_config,
+                    base_url=self.base_url,
+                    **resources,
                 )
             ),
         )
@@ -133,30 +137,3 @@ class VoiciTreeExporter:
                     Path(path) / file["name"], relative_to
                 ):
                     yield subcontent
-
-    def init_resources(self, **kwargs) -> Dict:
-        resources = {
-            "base_url": self.base_url,
-            "page_config": self.page_config,
-            "frontend": "voici",
-            "main_js": "voici.js",
-            "voila_process": r"(cell_index, cell_count) => {}",
-            "voila_finish": r"() => {}",
-            "theme": self.theme,
-            "include_css": lambda x: "",
-            "include_js": lambda x: "",
-            "include_url": lambda x: "",
-            "include_lab_theme": lambda x: "",
-            **kwargs,
-        }
-
-        if self.page_config.get("labThemeName") in [
-            "JupyterLab Light",
-            "JupyterLab Dark",
-        ]:
-            include_assets_functions = create_include_assets_functions(
-                self.template_name, self.base_url
-            )
-            resources.update(include_assets_functions)
-
-        return resources
