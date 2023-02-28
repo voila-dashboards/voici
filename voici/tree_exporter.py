@@ -100,6 +100,9 @@ class VoiciTreeExporter(HTMLExporter):
 
         contents = path_to_content(path, relative_to)
 
+        if contents is None:
+            return
+
         yield (
             Path("tree") / relative_path / "index.html",
             StringIO(
