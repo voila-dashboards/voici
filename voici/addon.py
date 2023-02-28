@@ -44,6 +44,10 @@ class VoiciAddon(BaseAddon):
     def voici_static_path(self):
         return Path(__file__).resolve().parent / "static"
 
+    @property
+    def voici_jupyterlite_json_path(self):
+        return Path(__file__).resolve().parent / "jupyter-lite.json"
+
     def setup_template_dirs(self):
         template_name = self.voici_configuration.template
         self.template_paths = collect_template_paths(
@@ -97,12 +101,23 @@ class VoiciAddon(BaseAddon):
         page_config["baseUrl"] = "/"
         page_config["fullStaticUrl"] = "/build"
 
-        # Patch the jupyter-lite.json
+        # Copy jupyter-lite.json
+        yield dict(
+            name=f"voici:copy:jupyter-lite.json",
+            actions=[
+                (
+                    self.copy_one,
+                    [self.voici_jupyterlite_json_path, self.manager.output_dir / "voila" / "jupyter-lite.json"],
+                )
+            ],
+        )
+
+        # Patch the main jupyter-lite.json
         yield dict(
             name=f"voici:patch:{JUPYTERLITE_JSON}",
             actions=[
                 (
-                    self.patch_jupyterlite_json,
+                    self.patch_main_jupyterlite_json,
                     [],
                 )
             ],
@@ -159,7 +174,7 @@ class VoiciAddon(BaseAddon):
 
         self.maybe_timestamp(dest)
 
-    def patch_jupyterlite_json(self):
+    def patch_main_jupyterlite_json(self):
         # Don't patch anything if Voici is not the only app
         if not self.manager.apps or len(self.manager.apps) != 1 or "voici" not in self.manager.apps:
             return
