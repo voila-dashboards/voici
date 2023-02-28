@@ -114,7 +114,7 @@ class VoiciTreeExporter(HTMLExporter):
             ),
         )
 
-        for file in contents["content"]:
+        for file in contents.get("content", []):
             if file["type"] == "notebook":
                 voici_exporter = VoiciExporter(
                     voici_config=self.voici_configuration,
