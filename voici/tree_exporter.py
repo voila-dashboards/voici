@@ -103,6 +103,15 @@ class VoiciTreeExporter(HTMLExporter):
         if contents is None:
             return
 
+        page_config = self.page_config.copy()
+
+        # Grabbing from the Voici static folder
+        page_config["fullStaticUrl"] = f"../{'../' * len(relative_path.parts)}build"
+
+        # Grabbing from the jupyterlite static folder
+        page_config["settingsUrl"] = f"../../../{'../' * len(relative_path.parts)}build/schemas"
+        page_config["themesUrl"] = f"../../../{'../' * len(relative_path.parts)}build/themes"
+
         yield (
             Path("tree") / relative_path / "index.html",
             StringIO(
@@ -110,7 +119,7 @@ class VoiciTreeExporter(HTMLExporter):
                     contents=contents,
                     page_title=page_title,
                     breadcrumbs=breadcrumbs,
-                    page_config=self.page_config,
+                    page_config=page_config,
                     base_url=self.base_url,
                     **resources,
                 )
@@ -121,7 +130,7 @@ class VoiciTreeExporter(HTMLExporter):
             if file["type"] == "notebook":
                 voici_exporter = VoiciExporter(
                     voici_config=self.voici_configuration,
-                    page_config=self.page_config,
+                    page_config=page_config,
                     base_url=self.base_url,
                 )
 

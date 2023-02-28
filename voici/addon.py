@@ -44,10 +44,6 @@ class VoiciAddon(BaseAddon):
     def voici_static_path(self):
         return Path(__file__).resolve().parent / "static"
 
-    @property
-    def voici_jupyterlite_json_path(self):
-        return Path(__file__).resolve().parent / "jupyter-lite.json"
-
     def setup_template_dirs(self):
         template_name = self.voici_configuration.template
         self.template_paths = collect_template_paths(
@@ -99,18 +95,6 @@ class VoiciAddon(BaseAddon):
         # the following monkey patch will not work if lite is served
         # in a sub directory
         page_config["baseUrl"] = "/"
-        page_config["fullStaticUrl"] = "/build"
-
-        # Copy jupyter-lite.json
-        yield dict(
-            name=f"voici:copy:jupyter-lite.json",
-            actions=[
-                (
-                    self.copy_one,
-                    [self.voici_jupyterlite_json_path, self.manager.output_dir / "voila" / "jupyter-lite.json"],
-                )
-            ],
-        )
 
         # Patch the main jupyter-lite.json
         yield dict(
@@ -123,13 +107,13 @@ class VoiciAddon(BaseAddon):
             ],
         )
 
-        # Copy static files
+        # Copy static assets
         yield dict(
             name=f"voici:copy:{self.voici_static_path}",
             actions=[
                 (
                     self.copy_one,
-                    [self.voici_static_path, self.manager.output_dir / "build"],
+                    [self.voici_static_path, self.manager.output_dir / "voila"],
                 )
             ],
         )

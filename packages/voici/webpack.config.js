@@ -50,7 +50,7 @@ const style = path.resolve(__dirname, 'style.css');
 fs.copySync(libDir, buildDir);
 fs.copySync(style, path.resolve(buildDir, 'style.css'));
 
-const distRoot = path.resolve(__dirname, '..', '..', 'voici', 'static');
+const distRoot = path.resolve(__dirname, '..', '..', 'voici', 'static', 'build');
 
 const extras = Build.ensureAssets({
   packageNames: names,

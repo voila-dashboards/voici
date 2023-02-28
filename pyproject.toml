@@ -63,7 +63,7 @@ path = "voici/_version.py"
 
 [tool.hatch.build]
 artifacts = [
-    "voici/static",
+    "voici/static/build",
 ]
 
 [tool.hatch.build.targets.sdist]
@@ -78,10 +78,10 @@ dependencies = [
 ]
 build-function = "hatch_jupyter_builder.npm_builder"
 ensured-targets = [
-    "voici/static/voici.js",
+    "voici/static/build/voici.js",
 ]
 skip-if-exists = [
-    "voici/static/voici.js",
+    "voici/static/build/voici.js",
 ]
 
 [tool.hatch.build.hooks.jupyter-builder.editable-build-kwargs]

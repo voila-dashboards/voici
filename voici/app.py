@@ -25,7 +25,7 @@ class VoiciAppMixin(ManagedApp):
             manager.apps = ["voici"]
         # If it is specified, we make sure voici is included
         elif "voici" not in manager.apps:
-            manager.apps = manager.apps + ["voici"]
+            manager.apps = list(manager.apps) + ["voici"]
 
         return manager
 

@@ -31,7 +31,7 @@ package-lock.json
 
 lib
 
-voici/static/**/*
+voici/static/build/**/*
 
 tsconfig.tsbuildinfo
 
