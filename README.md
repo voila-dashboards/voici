@@ -11,7 +11,7 @@ This is made possible thanks to the amazing work done in the [JupyterLite projec
 - Generates self-contained HTML files with embedded wasm kernels.
 - Works offline, without requiring a server to run the dashboard.
 - Supports custom templates for styling dashboards, powered by Jinja2.
-- Supports all programming languages that have JupyterLite kernels available. *e.g.* the default JavaScript and Python kernels JupyterLite provides, [python with xeus-python](https://github.com/jupyterlite/xeus-python-kernel), [lua](https://github.com/jupyterlite/xeus-lua-kernel), [nelson](https://github.com/jupyterlite/xeus-nelson-kernel)
+- Supports all programming languages that have JupyterLite kernels available. _e.g._ the default JavaScript and Python kernels JupyterLite provides, [python with xeus-python](https://github.com/jupyterlite/xeus-python-kernel), [lua](https://github.com/jupyterlite/xeus-lua-kernel), [nelson](https://github.com/jupyterlite/xeus-nelson-kernel)
 
 <!-- ## Getting Started 🏁
 
