@@ -33,7 +33,6 @@ class VoiciExporter(VoilaExporter):
         self.page_config = kwargs.get("page_config", {})
         self.theme = self.voici_configuration.theme
         self.template_name = self.voici_configuration.template
-        self.packages = kwargs.get("packages", [])
 
         if self.voici_configuration.strip_sources:
             self.exclude_input = True
@@ -121,17 +120,6 @@ class VoiciExporter(VoilaExporter):
     def update_page_config(self, nb, page_config):
         page_config_copy = deepcopy(page_config)
 
-        page_config_copy["notebookSrc"] = [
-            {
-                "cell_source": cell["source"],
-                "cell_type": cell["cell_type"],
-            }
-            for cell in nb.cells
-        ]
-
-        if len(self.packages) > 0:
-            packages_src = "import piplite\n"
-            packages_src += f"await piplite.install({self.packages})\n"
-            page_config_copy["packagesSrc"] = packages_src
+        page_config_copy["notebookSrc"] = nb
 
         return page_config_copy

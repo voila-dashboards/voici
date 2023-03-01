@@ -10,6 +10,8 @@ import '@jupyterlab/nbconvert-css/style/index.css';
 
 import { PageConfig, URLExt } from '@jupyterlab/coreutils';
 import { JupyterLiteServer } from '@jupyterlite/server';
+import { IKernelSpecs } from '@jupyterlite/kernel';
+
 import { VoilaShell } from '@voila-dashboards/voila';
 
 import { VoiciApp } from './app';
@@ -17,7 +19,7 @@ import plugins from './plugins';
 import { loadComponent, createModule, activePlugins } from './utils';
 
 const serverExtensions = [
-  // import('@jupyterlite/javascript-kernel-extension'),
+  import('@jupyterlite/javascript-kernel-extension'),
   import('@jupyterlite/pyolite-kernel-extension'),
   import('@jupyterlite/server-extension')
 ];
@@ -144,9 +146,14 @@ async function main() {
   // start the server
   await jupyterLiteServer.start();
 
+  const kernelspecs = await jupyterLiteServer.resolveRequiredService(
+    IKernelSpecs
+  );
+
   const serviceManager = jupyterLiteServer.serviceManager;
   const app = new VoiciApp({
     serviceManager: serviceManager as any,
+    kernelspecs,
     mimeExtensions,
     shell: new VoilaShell()
   });

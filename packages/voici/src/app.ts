@@ -7,6 +7,7 @@ import {
 import { PageConfig } from '@jupyterlab/coreutils';
 import { OutputAreaModel, SimplifiedOutputArea } from '@jupyterlab/outputarea';
 import { IRenderMime } from '@jupyterlab/rendermime';
+import { NotebookModel } from '@jupyterlab/notebook';
 import { ServiceManager } from '@jupyterlab/services';
 import {
   RenderMimeRegistry,
@@ -15,6 +16,7 @@ import {
 import { IShell, VoilaShell } from '@voila-dashboards/voila';
 import { VoiciWidgetManager } from './manager';
 import { IKernelConnection } from '@jupyterlab/services/lib/kernel/kernel';
+import { IKernelSpecs } from '@jupyterlite/kernel';
 import { Widget } from '@lumino/widgets';
 import { managerPromise } from './plugins';
 
@@ -40,6 +42,7 @@ export class VoiciApp extends JupyterFrontEnd<IShell> {
       }
     }
 
+    this._kernelspecs = options.kernelspecs;
     this._serviceManager = options.serviceManager;
   }
 
@@ -133,13 +136,55 @@ export class VoiciApp extends JupyterFrontEnd<IShell> {
     await serviceManager.ready;
     const sessionManager = serviceManager.sessions;
     await sessionManager.ready;
+
+    const notebookModel = new NotebookModel();
+    notebookModel.fromString(PageConfig.getOption('notebookSrc'));
+
+    let requestedKernelspec = notebookModel.metadata.get('kernelspec') as any;
+    if (!requestedKernelspec) {
+      requestedKernelspec = {
+        name: 'python'
+      };
+    }
+
+    const specs = this._kernelspecs?.specs?.kernelspecs;
+    let spec;
+    if (!specs) {
+      console.error('No kernel available');
+      return;
+    }
+
+    // First look if the specified kernel is available
+    if (requestedKernelspec.name in specs) {
+      console.log(`${requestedKernelspec.name} kernel is available!`);
+      spec = specs[requestedKernelspec.name];
+    }
+    // Otherwise fallback to trying to find an available kernel for that language
+    else {
+      for (const name in specs) {
+        if (requestedKernelspec.language === specs[name]?.language) {
+          console.log(
+            `${
+              requestedKernelspec.name
+            } kernel is not available, fallback to using ${specs[name]!.name}`
+          );
+          spec = specs[name];
+          break;
+        }
+      }
+    }
+
+    if (!spec) {
+      console.error(`No kernel available for ${requestedKernelspec.language}`);
+      return;
+    }
+
     const connection = await sessionManager.startNew({
+      // TODO Get these name and path information from the exporter
       name: '',
       path: '',
       type: 'notebook',
-      kernel: {
-        name: 'python' // TODO Correct kernel name
-      }
+      kernel: spec
     });
     const kernel = connection.kernel;
     if (!kernel) {
@@ -167,16 +212,14 @@ export class VoiciApp extends JupyterFrontEnd<IShell> {
         // `idle` status of the kernel.
         await new Promise(r => setTimeout(r, 500));
         let executed = false;
-        const notebookSrc = JSON.parse(
-          PageConfig.getOption('notebookSrc')
-        ) as ICellData[];
+
         const packagesSrc = PageConfig.getOption('packagesSrc');
         kernel.statusChanged.connect(async (_, status) => {
           if (!executed && status === 'idle') {
             executed = true;
             await App.executeCells({
               packages: packagesSrc,
-              source: notebookSrc,
+              source: notebookModel,
               rendermime,
               kernel: connection.kernel!
             });
@@ -187,6 +230,7 @@ export class VoiciApp extends JupyterFrontEnd<IShell> {
   }
 
   private _serviceManager?: ServiceManager;
+  private _kernelspecs?: IKernelSpecs;
 }
 
 /**
@@ -200,6 +244,7 @@ export namespace App {
     extends JupyterFrontEnd.IOptions<IShell>,
       Partial<IInfo> {
     paths?: Partial<JupyterFrontEnd.IPaths>;
+    kernelspecs?: IKernelSpecs;
   }
 
   /**
@@ -225,7 +270,7 @@ export namespace App {
 
   export async function executeCells(options: {
     packages?: string;
-    source: ICellData[];
+    source: NotebookModel;
     rendermime: RenderMimeRegistry;
     kernel: IKernelConnection;
   }): Promise<void> {
@@ -237,11 +282,12 @@ export namespace App {
       });
       await future.done;
     }
-    const cellCount = source.length;
+
+    const cellCount = source.cells.length;
     for (let idx = 0; idx < cellCount; idx++) {
-      const cell = source[idx];
+      const cell = source.cells.get(idx);
       window.update_loading_text(idx + 1, cellCount, null);
-      if (cell.cell_type !== 'code') {
+      if (cell.type !== 'code') {
         if (idx === cellCount - 1) {
           window.display_cells();
         }
@@ -253,7 +299,7 @@ export namespace App {
         rendermime
       });
       area.future = kernel.requestExecute({
-        code: cell.cell_source
+        code: cell.value.text
       });
       await area.future.done;
       const element = document.querySelector(`[cell-index="${idx + 1}"]`);
