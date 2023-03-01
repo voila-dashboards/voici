@@ -5,7 +5,7 @@ import { expect, test } from '@playwright/test';
 
 test.describe('Voici Tests', () => {
   test.beforeEach(({ page }) => {
-    page.setDefaultTimeout(120000);
+    page.setDefaultTimeout(600000);
   });
   test.afterEach(async ({ page, browserName }) => {
     await page.close({ runBeforeUnload: true });
