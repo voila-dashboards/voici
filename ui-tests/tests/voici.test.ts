@@ -30,30 +30,40 @@ test.describe('Voici Tests', () => {
     await page.click('a:text("voici.ipynb")');
 
     // Wait for page to load
-    await page.waitForSelector('pre');
+    await page.waitForSelector('.jupyter-widgets');
     // Wait a bit for the theme to be applied
     await page.waitForTimeout(1000);
 
     expect(await page.screenshot()).toMatchSnapshot('voici-simple.png');
   });
 
-  // test('Render bqplot Notebook', async ({ page, browserName }, testInfo) => {
-  //   await page.goto('voila/render/widgets/bqplot.html');
-  //   // Wait for page to load
-  //   await page.waitForSelector('canvas');
-  //   // Wait a bit for the theme to be applied
-  //   await page.waitForTimeout(1000);
+  test('Render bqplot Notebook', async ({ page, browserName }, testInfo) => {
+    await page.goto('');
 
-  //   expect(await page.screenshot()).toMatchSnapshot('voici-bqplot.png');
-  // });
+    await page.waitForSelector('a:text("widgets")');
+    await page.click('a:text("widgets")');
+    await page.waitForSelector('a:text("bqplot.ipynb")');
+    await page.click('a:text("bqplot.ipynb")');
 
-  // test('Render ipycanvas Notebook', async ({ page, browserName }, testInfo) => {
-  //   await page.goto('voila/render/widgets/ipycanvas.html');
-  //   // Wait for page to load
-  //   await page.waitForSelector('canvas');
-  //   // Wait a bit for the theme to be applied
-  //   await page.waitForTimeout(1000);
+    // Wait for page to load
+    await page.waitForSelector('.jupyter-widgets');
+    await page.waitForTimeout(1000);
 
-  //   expect(await page.screenshot()).toMatchSnapshot('voici-ipycanvas.png');
-  // });
+    expect(await page.screenshot()).toMatchSnapshot('voici-bqplot.png');
+  });
+
+  test('Render ipycanvas Notebook', async ({ page, browserName }, testInfo) => {
+    await page.goto('');
+
+    await page.waitForSelector('a:text("widgets")');
+    await page.click('a:text("widgets")');
+    await page.waitForSelector('a:text("bqplot.ipynb")');
+    await page.click('a:text("bqplot.ipynb")');
+
+    // Wait for page to load
+    await page.waitForSelector('.jupyter-widgets');
+    await page.waitForTimeout(1000);
+
+    expect(await page.screenshot()).toMatchSnapshot('voici-ipycanvas.png');
+  });
 });
