@@ -15,7 +15,6 @@ from jupyterlite.app import (
 
 
 class VoiciAppMixin(ManagedApp):
-
     @default("lite_manager")
     def _default_manager(self):
         manager = super()._default_manager()
@@ -32,36 +31,43 @@ class VoiciAppMixin(ManagedApp):
 
 class VoiciListApp(LiteListApp, VoiciAppMixin):
     """describe a Voici site"""
+
     pass
 
 
 class VoiciStatusApp(LiteStatusApp, VoiciAppMixin):
     """report about what a Voici build _might_ do"""
+
     pass
 
 
 class VoiciInitApp(LiteInitApp, VoiciAppMixin):
     """initialize a Voici site from an app archive baseline"""
+
     pass
 
 
 class VoiciBuildApp(LiteBuildApp, VoiciAppMixin):
     """build a Voici site, including user content"""
+
     pass
 
 
 class VoiciCheckApp(LiteCheckApp, VoiciAppMixin):
     """verify a Voici site, using available schema and rules"""
+
     pass
 
 
 class VoiciServeApp(LiteServeApp, VoiciAppMixin):
     """serve a Voici site, using best available HTTP server"""
+
     pass
 
 
 class VoiciArchiveApp(LiteArchiveApp, VoiciAppMixin):
     """build a Voici app archive, which can be used as a baseline"""
+
     pass
 
 

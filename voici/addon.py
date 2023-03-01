@@ -4,6 +4,7 @@ import io
 import json
 import shutil
 from pathlib import Path
+from typing import Callable, Dict
 
 import jinja2
 
@@ -86,16 +87,6 @@ class VoiciAddon(BaseAddon):
         if self.manager.apps and "voici" not in self.manager.apps:
             return
 
-        # Get page_config
-        jupyterlite_json = manager.output_dir / JUPYTERLITE_JSON
-        config = json.loads(jupyterlite_json.read_text(**UTF8))
-        page_config = config.get(JUPYTER_CONFIG_DATA, {})
-
-        # TODO Update Voila templates so we don't need this,
-        # the following monkey patch will not work if lite is served
-        # in a sub directory
-        page_config["baseUrl"] = "/"
-
         # Patch the main jupyter-lite.json
         yield dict(
             name=f"voici:patch:{JUPYTERLITE_JSON}",
@@ -122,25 +113,38 @@ class VoiciAddon(BaseAddon):
         tree_exporter = VoiciTreeExporter(
             jinja2_env=self.jinja2_env,
             voici_configuration=self.voici_configuration,
-            base_url=page_config.get("baseUrl"),
-            page_config=page_config,
+            base_url="/",  # TODO We should grab the correct base_url from the manager?
         )
 
-        for file_path, generated_file in tree_exporter.generate_contents(
+        for file_path, generate_file in tree_exporter.generate_contents(
             self.output_files_dir
         ):
             yield dict(
                 name=f"voici:generate:{file_path}",
                 actions=[
                     (
-                        self.create_one,
-                        [generated_file, self.manager.output_dir / "voila" / file_path],
+                        self.create_dashboard_or_tree,
+                        [generate_file, self.manager.output_dir / "voila" / file_path],
                     )
                 ],
             )
 
-    def create_one(self, stringio: io.StringIO, dest: Path):
-        """create a file in the lite output"""
+    def create_dashboard_or_tree(
+        self, generate_file: Callable[[Dict], io.StringIO], dest: Path
+    ):
+        """generate a voici dashboard or tree view in the lite output"""
+        # Get page_config
+        jupyterlite_json = self.manager.output_dir / JUPYTERLITE_JSON
+        config = json.loads(jupyterlite_json.read_text(**UTF8))
+        page_config = config.get(JUPYTER_CONFIG_DATA, {})
+
+        # TODO Update Voila templates so we don't need this,
+        # the following monkey patch will not work if lite is served
+        # in a sub directory
+        page_config["baseUrl"] = "/"
+
+        generated_file = generate_file(page_config)
+
         if dest.is_dir():
             shutil.rmtree(dest)
         elif dest.exists():
@@ -153,14 +157,18 @@ class VoiciAddon(BaseAddon):
         self.maybe_timestamp(dest.parent)
 
         with open(dest, "w") as fobj:
-            stringio.seek(0)
-            shutil.copyfileobj(stringio, fobj)
+            generated_file.seek(0)
+            shutil.copyfileobj(generated_file, fobj)
 
         self.maybe_timestamp(dest)
 
     def patch_main_jupyterlite_json(self):
         # Don't patch anything if Voici is not the only app
-        if not self.manager.apps or len(self.manager.apps) != 1 or "voici" not in self.manager.apps:
+        if (
+            not self.manager.apps
+            or len(self.manager.apps) != 1
+            or "voici" not in self.manager.apps
+        ):
             return
 
         jupyterlite_json = self.manager.output_dir / JUPYTERLITE_JSON

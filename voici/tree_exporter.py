@@ -38,24 +38,44 @@ def path_to_content(path: Path, relative_to: Path):
     return None
 
 
+def patch_page_config(page_config: Dict, relative_path: Path):
+    page_config = page_config.copy()
+
+    # Grabbing from the Voici static folder
+    page_config["fullStaticUrl"] = f"../{'../' * len(relative_path.parts)}build"
+
+    # Grabbing from the jupyterlite static folders
+    page_config[
+        "settingsUrl"
+    ] = f"../../../{'../' * len(relative_path.parts)}build/schemas"
+    page_config[
+        "themesUrl"
+    ] = f"../../../{'../' * len(relative_path.parts)}build/themes"
+    page_config[
+        "fullLabextensionsUrl"
+    ] = f"../../../{'../' * len(relative_path.parts)}extensions"
+
+    return page_config
+
+
 class VoiciTreeExporter(HTMLExporter):
     def __init__(
         self,
         jinja2_env: jinja2.Environment,
         voici_configuration: VoilaConfiguration,
         base_url: str,
-        page_config: Dict,
         **kwargs,
     ):
         self.jinja2_env = jinja2_env
         self.voici_configuration = voici_configuration
         self.base_url = base_url
-        self.page_config = page_config
 
         self.theme = voici_configuration.theme
         self.template_name = voici_configuration.template
 
         self.notebook_paths = []
+
+        self.resources = self._init_resources({})
 
     def allowed_content(self, content: Dict) -> bool:
         return content["type"] == "notebook" or content["type"] == "directory"
@@ -83,8 +103,45 @@ class VoiciTreeExporter(HTMLExporter):
         else:
             return "Voici Home"
 
+    def will_render_tree(
+        self, template, contents, page_title, breadcrumbs, relative_path
+    ):
+        """Return a function that will render the tree into a StringIO and return it."""
+
+        def render_tree(page_config) -> StringIO:
+            page_config = patch_page_config(page_config, relative_path)
+
+            return StringIO(
+                template.render(
+                    contents=contents,
+                    page_title=page_title,
+                    breadcrumbs=breadcrumbs,
+                    page_config=page_config,
+                    base_url=self.base_url,
+                    **self.resources,
+                )
+            )
+
+        return render_tree
+
+    def will_render_notebook(self, notebook_path, relative_path):
+        """Return a function that will render the notebook into a StringIO and return it."""
+
+        def render_notebook(page_config) -> StringIO:
+            page_config = patch_page_config(page_config, relative_path)
+
+            voici_exporter = VoiciExporter(
+                voici_config=self.voici_configuration,
+                page_config=page_config,
+                base_url=self.base_url,
+            )
+
+            return StringIO(voici_exporter.from_filename(notebook_path)[0])
+
+        return render_notebook
+
     def generate_contents(self, path: Path, relative_to=None) -> Tuple[Dict, List[str]]:
-        """Generate the Tree content. This is a generator method that generates tuples (filepath, file)."""
+        """Generate the Tree content. This is a generator method that generates tuples (filepath, filecreation_function)."""
         if relative_to is None:
             relative_to = path
             relative_path = Path(".")
@@ -93,7 +150,6 @@ class VoiciTreeExporter(HTMLExporter):
             relative_path = path.relative_to(relative_to)
             breadcrumbs = self.generate_breadcrumbs(relative_path)
 
-        resources = self._init_resources({})
         template = self.jinja2_env.get_template("tree.html")
 
         page_title = self.generate_page_title(path)
@@ -103,40 +159,20 @@ class VoiciTreeExporter(HTMLExporter):
         if contents is None:
             return
 
-        page_config = self.page_config.copy()
-
-        # Grabbing from the Voici static folder
-        page_config["fullStaticUrl"] = f"../{'../' * len(relative_path.parts)}build"
-
-        # Grabbing from the jupyterlite static folder
-        page_config["settingsUrl"] = f"../../../{'../' * len(relative_path.parts)}build/schemas"
-        page_config["themesUrl"] = f"../../../{'../' * len(relative_path.parts)}build/themes"
-
         yield (
             Path("tree") / relative_path / "index.html",
-            StringIO(
-                template.render(
-                    contents=contents,
-                    page_title=page_title,
-                    breadcrumbs=breadcrumbs,
-                    page_config=page_config,
-                    base_url=self.base_url,
-                    **resources,
-                )
+            self.will_render_tree(
+                template, contents, page_title, breadcrumbs, relative_path
             ),
         )
 
         for file in contents.get("content", []):
             if file["type"] == "notebook":
-                voici_exporter = VoiciExporter(
-                    voici_config=self.voici_configuration,
-                    page_config=page_config,
-                    base_url=self.base_url,
-                )
-
                 yield (
                     Path("render") / file["path"],
-                    StringIO(voici_exporter.from_filename(file["path"].replace(".html", ".ipynb"))[0]),
+                    self.will_render_notebook(
+                        file["path"].replace(".html", ".ipynb"), relative_path
+                    ),
                 )
             elif file["type"] == "directory":
                 for subcontent in self.generate_contents(
