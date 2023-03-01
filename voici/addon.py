@@ -84,7 +84,7 @@ class VoiciAddon(BaseAddon):
         """copies the Voici application files to the JupyterLite output and generate static dashboards."""
 
         # Do nothing if Voici is disabled
-        if self.manager.apps and "voici" not in self.manager.apps:
+        if not self.manager.apps or (self.manager.apps and "voici" not in self.manager.apps):
             return
 
         # Patch the main jupyter-lite.json
