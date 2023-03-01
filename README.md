@@ -19,7 +19,37 @@ To use Voici, you'll need to install it first:
 
 ```bash
 pip install voici
-``` -->
+```
+
+Then, you can generate static dashboards from a directory of Notebooks like this:
+
+```bash
+voici build . --contents notebooks/
+```
+
+Once your dashboards built, you can simply serve them with a simple static server, *e.g.*:
+
+```bash
+cd _output
+python -m http.server
+```
+
+The `voici` command line interface is the same as the `jupyter lite` one. The only difference is that the `voici build` command will only generate Voici dashboards, excluding the full JupyterLab interface from the output. Running `voici build .` is equivalent to running `jupyter lite build . --apps voici`
+You can generate the classic `jupyter lite` output alongside your dashboards by specifying the additional apps you want:
+
+```bash
+voici build . --apps lab --apps retro
+```
+
+In order to get some help on how to use the `voici` command, you can run:
+
+```bash
+voici --help
+```
+
+We'd also suggest looking into the [JupyterLite documentation](https://jupyterlite.readthedocs.io/en/latest/howto/index.html) for more insights on how to configure your `voici` deployment.
+
+-->
 
 ## Limitations ⚠️
 
