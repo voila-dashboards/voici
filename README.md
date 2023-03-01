@@ -27,4 +27,4 @@ Because Voici uses wasm kernels to execute notebooks, there are some limitations
 
 ## Contributing 👋
 
-If you find a bug or have a feature request, please open an issue on the GitHub repository. If you'd like to contribute code, please fork the repository and submit a pull request. We welcome contributions from anyone!
+If you find a bug or have a feature request, please open an issue on the [GitHub repository](https://github.com/voila-dashboards/voici). If you'd like to contribute code, please fork the repository and submit a pull request. We welcome contributions from anyone!
