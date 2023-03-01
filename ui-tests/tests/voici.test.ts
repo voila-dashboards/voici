@@ -57,8 +57,8 @@ test.describe('Voici Tests', () => {
 
     await page.waitForSelector('a:text("widgets")');
     await page.click('a:text("widgets")');
-    await page.waitForSelector('a:text("bqplot.ipynb")');
-    await page.click('a:text("bqplot.ipynb")');
+    await page.waitForSelector('a:text("ipycanvas.ipynb")');
+    await page.click('a:text("ipycanvas.ipynb")');
 
     // Wait for page to load
     await page.waitForSelector('.jupyter-widgets');
