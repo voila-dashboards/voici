@@ -41,5 +41,5 @@ ui-tests/benchmark-results
 ui-tests/jlab_root
 
 _output
-ui-tests/notebooks
+ui-tests/demo
 .jupyterlite.doit.db

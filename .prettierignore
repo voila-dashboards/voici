@@ -5,7 +5,7 @@ node_modules
 **/labextension
 **/static
 build
-notebooks/
+demo/
 .vscode/
 .pytest_cache
 
