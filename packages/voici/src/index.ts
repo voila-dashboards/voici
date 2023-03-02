@@ -145,10 +145,12 @@ async function main() {
   });
 
   // Add the serverlite federated extensions.
-  const federatedLiteExtensions = await Promise.allSettled(liteExtensionPromises);
+  const federatedLiteExtensions = await Promise.allSettled(
+    liteExtensionPromises
+  );
   federatedLiteExtensions.forEach(p => {
-    if (p.status === "fulfilled") {
-      for (let plugin of activePlugins(p.value, disabled)) {
+    if (p.status === 'fulfilled') {
+      for (const plugin of activePlugins(p.value, disabled)) {
         litePluginsToRegister.push(plugin);
       }
     } else {
