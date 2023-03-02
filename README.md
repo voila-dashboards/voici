@@ -27,7 +27,7 @@ Then, you can generate static dashboards from a directory of Notebooks like this
 voici build . --contents notebooks/
 ```
 
-Once your dashboards built, you can simply serve them with a simple static server, *e.g.*:
+Once your dashboards built, you can simply serve them with a simple static server, _e.g._:
 
 ```bash
 cd _output
