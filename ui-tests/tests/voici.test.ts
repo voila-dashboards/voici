@@ -13,12 +13,17 @@ test.describe('Voici Tests', () => {
 
   test('Render Tree', async ({ page, browserName }, testInfo) => {
     await page.goto('');
-    // Wait for page to load
-    await page.waitForSelector('a');
+
+    await page.waitForSelector('a:text("widgets")');
+
     // Wait a bit for the theme to be applied
     await page.waitForTimeout(1000);
 
     expect(await page.screenshot()).toMatchSnapshot('voici-tree.png');
+
+    await page.click('a:text("widgets")');
+
+    expect(await page.screenshot()).toMatchSnapshot('voici-subtree.png');
   });
 
   test('Render Simple Notebook', async ({ page, browserName }, testInfo) => {
@@ -65,5 +70,15 @@ test.describe('Voici Tests', () => {
     await page.waitForTimeout(1000);
 
     expect(await page.screenshot()).toMatchSnapshot('voici-ipycanvas.png');
+  });
+
+  test('Render dark theme', async ({ page, browserName }, testInfo) => {
+    await page.goto('voila/render/widgets/bqplot.html?theme=dark');
+
+    // Wait for page to load
+    await page.waitForSelector('.jupyter-widgets');
+    await page.waitForTimeout(1000);
+
+    expect(await page.screenshot()).toMatchSnapshot('voici-dark.png');
   });
 });
