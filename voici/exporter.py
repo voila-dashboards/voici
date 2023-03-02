@@ -11,9 +11,11 @@
 from copy import deepcopy
 
 from jupyter_server.services.contents.largefilemanager import LargeFileManager
+
 from nbconvert.exporters import TemplateExporter
 from nbconvert.filters.highlight import Highlight2HTML
 from nbconvert.preprocessors import ClearOutputPreprocessor
+
 from traitlets import default
 
 from voila.exporter import VoilaExporter
@@ -22,30 +24,25 @@ from voila.paths import collect_template_paths
 
 class VoiciExporter(VoilaExporter):
     def __init__(self, *args, **kwargs):
-        kwargs.setdefault('base_url', '/')
-        kwargs.setdefault('contents_manager', LargeFileManager())
+        kwargs.setdefault("base_url", "/voici/")
+        kwargs.setdefault("contents_manager", LargeFileManager())
 
         super().__init__(*args, **kwargs)
 
-        self.voici_configuration = kwargs.get('voici_config')
-        self.page_config = kwargs.get('page_config', {})
+        self.voici_configuration = kwargs.get("voici_config")
+        self.page_config = kwargs.get("page_config", {})
         self.theme = self.voici_configuration.theme
         self.template_name = self.voici_configuration.template
-        self.packages = kwargs.get('packages', [])
-        self.nb_src = kwargs.get('nb_src', [])
 
-        # TODO
-        # Investigate why this doesnt work
-        # jupyter nbconvert --to voici_dashboard --VoilaConfiguration.strip_sources=False notebook.ipynb
         if self.voici_configuration.strip_sources:
             self.exclude_input = True
             self.exclude_output_prompt = True
             self.exclude_input_prompt = True
 
-    @default('template_paths')
+    @default("template_paths")
     def _template_paths(self, prune=True, root_dirs=None):
         path = collect_template_paths(
-            ['voila', 'nbconvert'], self.template_name, prune=True
+            ["voila", "nbconvert"], self.template_name, prune=True
         )
         return path
 
@@ -53,12 +50,12 @@ class VoiciExporter(VoilaExporter):
         # this replaces from_notebook_node, but calls template.generate instead of template.render
         # Mocking the highligh_code filter
 
-        langinfo = nb.metadata.get('language_info', {})
-        lexer = langinfo.get('pygments_lexer', langinfo.get('name', None))
+        langinfo = nb.metadata.get("language_info", {})
+        lexer = langinfo.get("pygments_lexer", langinfo.get("name", None))
         highlight_code = self.filters.get(
-            'highlight_code', Highlight2HTML(pygments_lexer=lexer, parent=self)
+            "highlight_code", Highlight2HTML(pygments_lexer=lexer, parent=self)
         )
-        self.register_filter('highlight_code', highlight_code)
+        self.register_filter("highlight_code", highlight_code)
         # self.register_filter('highlight_code', lambda x: x)
 
         # TODO: This part is already copied three times across
@@ -67,29 +64,28 @@ class VoiciExporter(VoilaExporter):
             nb, resources, **kwargs
         )
 
-        resources['base_url'] = self.base_url
-        resources.setdefault('raw_mimetypes', self.raw_mimetypes)
-        resources['global_content_filter'] = {
-            'include_code': not self.exclude_code_cell,
-            'include_markdown': not self.exclude_markdown,
-            'include_raw': not self.exclude_raw,
-            'include_unknown': not self.exclude_unknown,
-            'include_input': not self.exclude_input,
-            'include_output': not self.exclude_output,
-            'include_input_prompt': not self.exclude_input_prompt,
-            'include_output_prompt': not self.exclude_output_prompt,
-            'no_prompt': self.exclude_input_prompt
-            and self.exclude_output_prompt,
+        resources["base_url"] = self.base_url
+        resources.setdefault("raw_mimetypes", self.raw_mimetypes)
+        resources["global_content_filter"] = {
+            "include_code": not self.exclude_code_cell,
+            "include_markdown": not self.exclude_markdown,
+            "include_raw": not self.exclude_raw,
+            "include_unknown": not self.exclude_unknown,
+            "include_input": not self.exclude_input,
+            "include_output": not self.exclude_output,
+            "include_input_prompt": not self.exclude_input_prompt,
+            "include_output_prompt": not self.exclude_output_prompt,
+            "no_prompt": self.exclude_input_prompt and self.exclude_output_prompt,
         }
 
         def notebook_execute(nb, kernel_id):
-            return ''
+            return ""
 
         extra_context = dict(
-            frontend='voici',
-            main_js='voici.js',
-            voila_process=r'(cell_index, cell_count) => {}',
-            voila_finish=r'() => {}',
+            frontend="voici",
+            main_js="voici.js",
+            voila_process=r"(cell_index, cell_count) => {}",
+            voila_finish=r"() => {}",
             kernel_start=self.kernel_start,
             cell_generator=self.cell_generator,
             notebook_execute=notebook_execute,
@@ -101,14 +97,14 @@ class VoiciExporter(VoilaExporter):
             resources=resources,
             **extra_context,
             static_url=self.static_url,
-            page_config=self.update_page_config(self.page_config),
+            page_config=self.update_page_config(nb, self.page_config),
         ):
             html.append(html_snippet)
 
-        return ''.join(html), resources
+        return "".join(html), resources
 
     def kernel_start(self, nb):
-        return ''
+        return ""
 
     def cell_generator(self, nb, kernel_id):
         nb, _ = ClearOutputPreprocessor().preprocess(nb, {})
@@ -117,21 +113,13 @@ class VoiciExporter(VoilaExporter):
             yield output
 
     def _init_resources(self, resources):
-        resources = super()._init_resources(resources)
-        # We are using the theme manager of JupyterLab instead of including
-        # CSS file in the template.
-        resources['include_css'] = lambda x: ''
-        resources['include_lab_theme'] = lambda x: ''
+        # Not calling Voila's _init_resources, because we want to embed static
+        # assets like CSS and theming instead of serving them from the server
+        return super(VoilaExporter, self)._init_resources(resources)
 
-        return resources
-
-    def update_page_config(self, page_config):
+    def update_page_config(self, nb, page_config):
         page_config_copy = deepcopy(page_config)
 
-        page_config_copy['notebookSrc'] = self.nb_src
-        if len(self.packages) > 0:
-            packages_src = 'import piplite\n'
-            packages_src += f'await piplite.install({self.packages})\n'
-            page_config_copy['packagesSrc'] = packages_src
+        page_config_copy["notebookSrc"] = nb
 
         return page_config_copy

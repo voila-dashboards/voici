@@ -51,11 +51,23 @@ export const themePlugin: JupyterFrontEndPlugin<void> = {
 
     const search = window.location.search;
     const urlParams = new URLSearchParams(search);
-    const theme = urlParams.get('theme')?.trim() ?? labThemeName;
+    const urltheme = urlParams.get('theme');
+    let theme = urltheme ? decodeURIComponent(urltheme) : labThemeName;
 
-    const themeName = decodeURIComponent(theme);
+    if (theme === 'dark') {
+      theme = 'JupyterLab Dark';
+    }
+    if (theme === 'light') {
+      theme = 'JupyterLab Light';
+    }
 
-    themeManager.setTheme(themeName);
+    // TODO Find a way to wait for settings loaded
+    // Listening to theme changed is a workaround for waiting for settings to be loaded
+    themeManager.themeChanged.connect(() => {
+      if (themeManager.theme !== theme) {
+        themeManager.setTheme(theme);
+      }
+    });
   }
 };
 

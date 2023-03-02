@@ -1,171 +1,182 @@
-from copy import deepcopy
-import os
+from io import StringIO
 from typing import Dict, List, Tuple
+from pathlib import Path
 
 import jinja2
-from jupyter_server.services.contents.largefilemanager import LargeFileManager
+
 from jupyter_server.utils import url_path_join, url_escape
 
+from nbconvert.exporters import HTMLExporter
+
 from voila.configuration import VoilaConfiguration
-from voila.utils import create_include_assets_functions
 
-from .utils import find_all_lab_theme
+from .exporter import VoiciExporter
 
 
-class VoiciTreeExporter:
+def path_to_content(path: Path, relative_to: Path):
+    """Create a partial contents dictionary (in the sense of jupyter server) from a given path."""
+    if path.is_dir():
+        content = [
+            path_to_content(subitem, relative_to)
+            for subitem in path.iterdir()
+            if subitem is not None
+        ]
+        content = [subcontent for subcontent in content if subcontent is not None]
+        content = sorted(content, key=lambda i: i["name"])
+
+        return dict(
+            type="directory",
+            name=path.stem,
+            path=str(path.relative_to(relative_to)),
+            content=content,
+        )
+    if path.is_file() and path.suffix == ".ipynb":
+        return dict(
+            type="notebook",
+            name=path.name,
+            path=str(path.relative_to(relative_to)).replace(".ipynb", ".html"),
+        )
+    return None
+
+
+def patch_page_config(page_config: Dict, relative_path: Path):
+    page_config = page_config.copy()
+
+    # Grabbing from the Voici static folder
+    page_config["fullStaticUrl"] = f"../{'../' * len(relative_path.parts)}build"
+
+    # Grabbing from the jupyterlite static folders
+    page_config[
+        "settingsUrl"
+    ] = f"../../../{'../' * len(relative_path.parts)}build/schemas"
+    page_config[
+        "themesUrl"
+    ] = f"../../../{'../' * len(relative_path.parts)}build/themes"
+    page_config[
+        "fullLabextensionsUrl"
+    ] = f"../../../{'../' * len(relative_path.parts)}extensions"
+
+    return page_config
+
+
+class VoiciTreeExporter(HTMLExporter):
     def __init__(
         self,
         jinja2_env: jinja2.Environment,
         voici_configuration: VoilaConfiguration,
-        contents_manager: LargeFileManager,
         base_url: str,
-        page_config: Dict,
-        output_prefix: str = '_output',
         **kwargs,
     ):
-
         self.jinja2_env = jinja2_env
+        self.voici_configuration = voici_configuration
         self.base_url = base_url
-        self.contents_manager = contents_manager
+
         self.theme = voici_configuration.theme
         self.template_name = voici_configuration.template
 
-        self.allowed_extensions = list(
-            voici_configuration.extension_language_mapping.keys()
-        ) + ['.ipynb']
-        self.output_prefix = output_prefix
         self.notebook_paths = []
 
-        self.page_config = self.filter_extensions(page_config)
-        self.contents_directory = kwargs.get('contents_directory', None)
-
-    def filter_extensions(self, page_config: Dict) -> Dict:
-
-        page_config_copy = deepcopy(page_config)
-        all_themes = find_all_lab_theme()
-        all_theme_name = [x[0] for x in all_themes]
-        filtered_extension = list(
-            filter(
-                lambda x: x['name'] in all_theme_name,
-                page_config_copy['federated_extensions'],
-            )
-        )
-        page_config_copy['federated_extensions'] = filtered_extension
-        return page_config_copy
+        self.resources = self._init_resources({})
 
     def allowed_content(self, content: Dict) -> bool:
-        if content['type'] == 'notebook':
-            return True
-        if (
-            content['type'] == 'directory'
-            and content['name'] != '_output'
-            and content['name'] != self.contents_directory
-        ):
-            return True
-        __, ext = os.path.splitext(content.get('path'))
-        return ext in self.allowed_extensions
+        return content["type"] == "notebook" or content["type"] == "directory"
 
-    def from_contents(self, **kwargs) -> Tuple[str, List[str]]:
-
-        self.resources = self.init_resources(**kwargs)
-        self.template = self.jinja2_env.get_template('tree.html')
-
-        return self.write_contents()
-
-    def generate_breadcrumbs(self, path: str) -> List:
-        breadcrumbs = [(url_path_join(self.base_url, 'voila/tree'), '')]
-        parts = path.split('/')
+    def generate_breadcrumbs(self, path: Path) -> List:
+        breadcrumbs = [(url_path_join(self.base_url, "voila/tree"), "")]
+        parts = path.parts
         for i in range(len(parts)):
             if parts[i]:
                 link = url_path_join(
                     self.base_url,
-                    'voila/tree',
+                    "voila/tree",
                     url_escape(url_path_join(*parts[: i + 1])),
                 )
                 breadcrumbs.append((link, parts[i]))
         return breadcrumbs
 
-    def generate_page_title(self, path: str) -> str:
-        parts = path.split('/')
+    def generate_page_title(self, path: Path) -> str:
+        parts = path.parts
         if len(parts) > 3:  # not too many parts
             parts = parts[-2:]
         page_title = url_path_join(*parts)
         if page_title:
-            return page_title + '/'
+            return page_title + "/"
         else:
-            return 'Voilà Home'
+            return "Voici Home"
 
-    def write_contents(self, path='') -> Tuple[Dict, List[str]]:
-        cm = self.contents_manager
-        if cm.dir_exists(path=path):
-            if cm.is_hidden(path) and not cm.allow_hidden:
-                print('Refusing to serve hidden directory, via 404 Error')
-                return
+    def will_render_tree(
+        self, template, contents, page_title, breadcrumbs, relative_path
+    ):
+        """Return a function that will render the tree into a StringIO and return it."""
 
-            breadcrumbs = self.generate_breadcrumbs(path)
-            page_title = self.generate_page_title(path)
-            contents = cm.get(path)
+        def render_tree(page_config) -> StringIO:
+            page_config = patch_page_config(page_config, relative_path)
 
-            contents['content'] = sorted(
-                contents['content'], key=lambda i: i['name']
-            )
-            contents['content'] = list(
-                filter(self.allowed_content, contents['content'])
-            )
-
-            for file in contents['content']:
-                if file['type'] == 'notebook':
-                    self.notebook_paths.append(file['path'])
-                    file['path'] = file['path'].replace('.ipynb', '.html')
-                elif file['type'] == 'directory':
-                    self.write_contents(file['path'])
-
-            page_content = self.template.render(
-                contents=contents,
-                page_title=page_title,
-                breadcrumbs=breadcrumbs,
-                **self.resources,
+            return StringIO(
+                template.render(
+                    contents=contents,
+                    page_title=page_title,
+                    breadcrumbs=breadcrumbs,
+                    page_config=page_config,
+                    base_url=self.base_url,
+                    **self.resources,
+                )
             )
 
-            output_dir = os.path.join(
-                self.output_prefix, 'voila', 'tree', path
+        return render_tree
+
+    def will_render_notebook(self, notebook_path, relative_path):
+        """Return a function that will render the notebook into a StringIO and return it."""
+
+        def render_notebook(page_config) -> StringIO:
+            page_config = patch_page_config(page_config, relative_path)
+
+            voici_exporter = VoiciExporter(
+                voici_config=self.voici_configuration,
+                page_config=page_config,
+                base_url=self.base_url,
             )
-            if not os.path.exists(output_dir):
-                os.makedirs(output_dir, exist_ok=True)
-            with open(os.path.join(output_dir, 'index.html'), 'w') as f:
-                f.write(page_content)
 
-            if path == '':
-                with open(
-                    os.path.join(self.output_prefix, 'index.html'), 'w'
-                ) as f:
-                    f.write(page_content)
+            return StringIO(voici_exporter.from_filename(notebook_path)[0])
 
-        return self.notebook_paths
+        return render_notebook
 
-    def init_resources(self, **kwargs) -> Dict:
+    def generate_contents(self, path: Path, relative_to=None) -> Tuple[Dict, List[str]]:
+        """Generate the Tree content. This is a generator method that generates tuples (filepath, filecreation_function)."""
+        if relative_to is None:
+            relative_to = path
+            relative_path = Path(".")
+            breadcrumbs = []
+        else:
+            relative_path = path.relative_to(relative_to)
+            breadcrumbs = self.generate_breadcrumbs(relative_path)
 
-        resources = {
-            'base_url': self.base_url,
-            'page_config': self.page_config,
-            'frontend': 'voici',
-            'main_js': 'voici.js',
-            'voila_process': r'(cell_index, cell_count) => {}',
-            'voila_finish': r'() => {}',
-            'theme': self.theme,
-            'include_css': lambda x: '',
-            'include_js': lambda x: '',
-            'include_url': lambda x: '',
-            'include_lab_theme': lambda x: '',
-            **kwargs,
-        }
-        if self.page_config['labThemeName'] in [
-            'JupyterLab Light',
-            'JupyterLab Dark',
-        ]:
-            include_assets_functions = create_include_assets_functions(
-                self.template_name, self.base_url
-            )
-            resources.update(include_assets_functions)
+        template = self.jinja2_env.get_template("tree.html")
 
-        return resources
+        page_title = self.generate_page_title(path)
+
+        contents = path_to_content(path, relative_to)
+
+        if contents is None:
+            return
+
+        yield (
+            Path("tree") / relative_path / "index.html",
+            self.will_render_tree(
+                template, contents, page_title, breadcrumbs, relative_path
+            ),
+        )
+
+        for file in contents.get("content", []):
+            if file["type"] == "notebook":
+                yield (
+                    Path("render") / file["path"],
+                    self.will_render_notebook(
+                        file["path"].replace(".html", ".ipynb"), relative_path
+                    ),
+                )
+            elif file["type"] == "directory":
+                for subcontent in self.generate_contents(
+                    path / file["name"], relative_to
+                ):
+                    yield subcontent
