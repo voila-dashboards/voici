@@ -13,7 +13,7 @@ This is made possible thanks to the amazing work done in the [JupyterLite projec
 - Supports custom templates for styling dashboards, powered by Jinja2.
 - Supports all programming languages that have JupyterLite kernels available. _e.g._ the default JavaScript and Python kernels JupyterLite provides, [python with xeus-python](https://github.com/jupyterlite/xeus-python-kernel), [lua](https://github.com/jupyterlite/xeus-lua-kernel), [nelson](https://github.com/jupyterlite/xeus-nelson-kernel)
 
-<!-- ## Getting Started 🏁
+## Getting Started 🏁
 
 To use Voici, you'll need to install it first:
 
@@ -48,8 +48,6 @@ voici --help
 ```
 
 We'd also suggest looking into the [JupyterLite documentation](https://jupyterlite.readthedocs.io/en/latest/howto/index.html) for more insights on how to configure your `voici` deployment.
-
--->
 
 ## Limitations ⚠️
 
