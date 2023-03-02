@@ -5,8 +5,6 @@ dependencies:
   - pip
   - yarn=1
   - flake8
-  - bqplot
-  - ipycanvas
   - pip:
     - voila>=0.5.0a1,<0.6.0
     - jupyterlite>=0.1.0b18,<0.2.0
