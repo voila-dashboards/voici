@@ -21,6 +21,7 @@ def path_to_content(path: Path, relative_to: Path):
             for subitem in path.iterdir()
             if subitem is not None
         ]
+        content = [subcontent for subcontent in content if subcontent is not None]
         content = sorted(content, key=lambda i: i["name"])
 
         return dict(
