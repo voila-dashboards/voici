@@ -24,6 +24,10 @@ test.describe('Voici Tests', () => {
     await page.click('a:text("widgets")');
 
     expect(await page.screenshot()).toMatchSnapshot('voici-subtree.png');
+
+    await page.click('a:text("..")');
+
+    expect(await page.screenshot()).toMatchSnapshot('voici-tree.png');
   });
 
   test('Render Simple Notebook', async ({ page, browserName }, testInfo) => {
