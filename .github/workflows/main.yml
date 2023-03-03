@@ -52,7 +52,7 @@ jobs:
 
     - name: Run UI tests
       run: yarn run start:detached
-      working-directory: ui-tests/dist
+      working-directory: ui-tests
 
     - name: Wait for Voici
       uses: ifaxity/wait-on-action@v1
