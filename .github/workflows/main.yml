@@ -46,8 +46,8 @@ jobs:
         yarn playwright install chromium
       working-directory: ui-tests
 
-    - name: Build Voici output
-      run: voici build --output-dir dist --contents ../demo
+    - name: Build UI tests
+      run: yarn run build
       working-directory: ui-tests
 
     - name: Run UI tests
