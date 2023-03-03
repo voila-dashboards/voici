@@ -24,7 +24,6 @@ from voila.paths import collect_template_paths
 
 class VoiciExporter(VoilaExporter):
     def __init__(self, *args, **kwargs):
-        kwargs.setdefault("base_url", "/voici/")
         kwargs.setdefault("contents_manager", LargeFileManager())
 
         super().__init__(*args, **kwargs)
@@ -64,7 +63,6 @@ class VoiciExporter(VoilaExporter):
             nb, resources, **kwargs
         )
 
-        resources["base_url"] = self.base_url
         resources.setdefault("raw_mimetypes", self.raw_mimetypes)
         resources["global_content_filter"] = {
             "include_code": not self.exclude_code_cell,
@@ -97,6 +95,7 @@ class VoiciExporter(VoilaExporter):
             resources=resources,
             **extra_context,
             static_url=self.static_url,
+            base_url=self.base_url,
             page_config=self.update_page_config(nb, self.page_config),
         ):
             html.append(html_snippet)

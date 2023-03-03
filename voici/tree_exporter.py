@@ -48,13 +48,13 @@ def patch_page_config(page_config: Dict, relative_path: Path):
     # Grabbing from the jupyterlite static folders
     page_config[
         "settingsUrl"
-    ] = f"../../../{'../' * len(relative_path.parts)}build/schemas"
+    ] = f"../../{'../' * len(relative_path.parts)}build/schemas"
     page_config[
         "themesUrl"
     ] = f"../../../{'../' * len(relative_path.parts)}build/themes"
     page_config[
         "fullLabextensionsUrl"
-    ] = f"../../../{'../' * len(relative_path.parts)}extensions"
+    ] = f"../../{'../' * len(relative_path.parts)}extensions"
 
     return page_config
 
@@ -64,12 +64,10 @@ class VoiciTreeExporter(HTMLExporter):
         self,
         jinja2_env: jinja2.Environment,
         voici_configuration: VoilaConfiguration,
-        base_url: str,
         **kwargs,
     ):
         self.jinja2_env = jinja2_env
         self.voici_configuration = voici_configuration
-        self.base_url = base_url
 
         self.theme = voici_configuration.theme
         self.template_name = voici_configuration.template
@@ -81,17 +79,20 @@ class VoiciTreeExporter(HTMLExporter):
     def allowed_content(self, content: Dict) -> bool:
         return content["type"] == "notebook" or content["type"] == "directory"
 
-    def generate_breadcrumbs(self, path: Path) -> List:
-        breadcrumbs = [(url_path_join(self.base_url, "voila/tree"), "")]
+    def generate_breadcrumbs(self, path: Path, depth: int) -> List:
+        root = "../../" + "../" * depth
+        breadcrumbs = [(url_path_join(root, "voila/tree"), "")]
         parts = path.parts
+
         for i in range(len(parts)):
             if parts[i]:
                 link = url_path_join(
-                    self.base_url,
+                    root,
                     "voila/tree",
                     url_escape(url_path_join(*parts[: i + 1])),
                 )
                 breadcrumbs.append((link, parts[i]))
+
         return breadcrumbs
 
     def generate_page_title(self, path: Path) -> str:
@@ -118,7 +119,7 @@ class VoiciTreeExporter(HTMLExporter):
                     page_title=page_title,
                     breadcrumbs=breadcrumbs,
                     page_config=page_config,
-                    base_url=self.base_url,
+                    base_url="../../" + "../" * len(relative_path.parts),
                     **self.resources,
                 )
             )
@@ -134,7 +135,7 @@ class VoiciTreeExporter(HTMLExporter):
             voici_exporter = VoiciExporter(
                 voici_config=self.voici_configuration,
                 page_config=page_config,
-                base_url=self.base_url,
+                base_url="../../" + "../" * len(relative_path.parts),
             )
 
             return StringIO(voici_exporter.from_filename(notebook_path)[0])
@@ -149,7 +150,7 @@ class VoiciTreeExporter(HTMLExporter):
             breadcrumbs = []
         else:
             relative_path = path.relative_to(relative_to)
-            breadcrumbs = self.generate_breadcrumbs(relative_path)
+            breadcrumbs = self.generate_breadcrumbs(relative_path, len(relative_path.parts))
 
         template = self.jinja2_env.get_template("tree.html")
 

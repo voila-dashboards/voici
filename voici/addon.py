@@ -114,8 +114,7 @@ class VoiciAddon(BaseAddon):
         # Convert Notebooks content into static dashboards
         tree_exporter = VoiciTreeExporter(
             jinja2_env=self.jinja2_env,
-            voici_configuration=self.voici_configuration,
-            base_url="/",  # TODO We should grab the correct base_url from the manager?
+            voici_configuration=self.voici_configuration
         )
 
         for file_path, generate_file in tree_exporter.generate_contents(
