@@ -4,8 +4,8 @@
   "description": "Voici UI Tests",
   "private": true,
   "scripts": {
-    "build": "voici build --output-dir=dist --contents=../demo/notebooks --config=../demo/jupyter-lite.json --XeusPythonEnv.environment_file=../demo/environment.yml",
-    "start": "cd dist && python -m http.server 8866",
+    "build": "cd ../demo &&  voici build --output-dir dist --contents notebooks --config jupyter-lite.json",
+    "start": "cd ../demo/dist && python -m http.server 8866",
     "start:detached": "yarn run start&",
     "test": "playwright test",
     "test:debug": "PWDEBUG=1 playwright test",
