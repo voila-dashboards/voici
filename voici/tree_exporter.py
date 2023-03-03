@@ -80,7 +80,7 @@ class VoiciTreeExporter(HTMLExporter):
         return content["type"] == "notebook" or content["type"] == "directory"
 
     def generate_breadcrumbs(self, path: Path, depth: int) -> List:
-        root = "../" * depth
+        root = "../../" + "../" * depth
         breadcrumbs = [(url_path_join(root, "voila/tree"), "")]
         parts = path.parts
 
@@ -92,6 +92,7 @@ class VoiciTreeExporter(HTMLExporter):
                     url_escape(url_path_join(*parts[: i + 1])),
                 )
                 breadcrumbs.append((link, parts[i]))
+
         return breadcrumbs
 
     def generate_page_title(self, path: Path) -> str:
