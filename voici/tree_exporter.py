@@ -141,7 +141,7 @@ class VoiciTreeExporter(HTMLExporter):
 
         return render_notebook
 
-    def generate_contents(self, path: Path, relative_to=None) -> Tuple[Dict, List[str]]:
+    def generate_contents(self, path: Path, lite_files_output: Path, relative_to=None) -> Tuple[Dict, List[str]]:
         """Generate the Tree content. This is a generator method that generates tuples (filepath, filecreation_function)."""
         if relative_to is None:
             relative_to = path
@@ -172,11 +172,11 @@ class VoiciTreeExporter(HTMLExporter):
                 yield (
                     Path("render") / file["path"],
                     self.will_render_notebook(
-                        file["path"].replace(".html", ".ipynb"), relative_path
+                        lite_files_output / file["path"].replace(".html", ".ipynb"), relative_path
                     ),
                 )
             elif file["type"] == "directory":
                 for subcontent in self.generate_contents(
-                    path / file["name"], relative_to
+                    path / file["name"], lite_files_output, relative_to
                 ):
                     yield subcontent
