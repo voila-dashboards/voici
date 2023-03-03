@@ -46,9 +46,13 @@ jobs:
         yarn playwright install chromium
       working-directory: ui-tests
 
+    - name: Build Voici output
+      run: voici build --output-dir dist --contents ../demo
+      working-directory: ui-tests
+
     - name: Run UI tests
       run: yarn run start:detached
-      working-directory: ui-tests
+      working-directory: ui-tests/dist
 
     - name: Wait for Voici
       uses: ifaxity/wait-on-action@v1
