@@ -12,7 +12,7 @@ test.describe('Voici Tests', () => {
   });
 
   test('Render Tree', async ({ page, browserName }, testInfo) => {
-    await page.goto('');
+    await page.goto('lite');
 
     await page.waitForSelector('a:text("widgets")');
 
@@ -31,7 +31,7 @@ test.describe('Voici Tests', () => {
   });
 
   test('Render Simple Notebook', async ({ page, browserName }, testInfo) => {
-    await page.goto('');
+    await page.goto('lite');
     // Wait for page to load
     await page.waitForSelector('a:text("voici.ipynb")');
 
@@ -47,7 +47,7 @@ test.describe('Voici Tests', () => {
   });
 
   test('Render bqplot Notebook', async ({ page, browserName }, testInfo) => {
-    await page.goto('');
+    await page.goto('lite');
 
     await page.waitForSelector('a:text("widgets")');
     await page.click('a:text("widgets")');
@@ -62,7 +62,7 @@ test.describe('Voici Tests', () => {
   });
 
   test('Render ipycanvas Notebook', async ({ page, browserName }, testInfo) => {
-    await page.goto('');
+    await page.goto('lite');
 
     await page.waitForSelector('a:text("widgets")');
     await page.click('a:text("widgets")');
@@ -77,7 +77,7 @@ test.describe('Voici Tests', () => {
   });
 
   test('Render dark theme', async ({ page, browserName }, testInfo) => {
-    await page.goto('voila/render/widgets/bqplot.html?theme=dark');
+    await page.goto('lite/voila/render/widgets/bqplot.html?theme=dark');
 
     // Wait for page to load
     await page.waitForSelector('.jupyter-widgets');
