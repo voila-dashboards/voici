@@ -6,6 +6,8 @@ Voici is a tool for generating static dashboards from Jupyter Notebooks. Unlike 
 
 This is made possible thanks to the amazing work done in the [JupyterLite project](https://github.com/jupyterlite/jupyterlite).
 
+https://user-images.githubusercontent.com/591645/222892327-2a5b1341-640d-49c2-9e95-1f2d3ec122be.mp4
+
 ## Features 🚀
 
 - Generates self-contained HTML files with embedded wasm kernels.
