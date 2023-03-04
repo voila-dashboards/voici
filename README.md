@@ -2,7 +2,7 @@
 
 🚧 **WARNING: Voici is still a work in progress and should not be used for production workloads.** 🚧
 
-Voici is a tool for generating static dashboards from Jupyter Notebooks. Unlike [Voilà](https://github.com/voila-dashboards/voila), which renders interactive dashboards using server-side execution, Voici uses WebAssembly (wasm) kernels to render notebooks in the browser, making the resulting dashboard entirely self-contained and distributable.
+Voici is a tool for generating static dashboards from Jupyter Notebooks. Unlike [Voilà](https://github.com/voila-dashboards/voila), which renders interactive dashboards using server-side execution, Voici uses [WebAssembly](https://developer.mozilla.org/en-US/docs/WebAssembly) (Wasm) kernels to render notebooks in the browser, making the resulting dashboard entirely self-contained and distributable.
 
 This is made possible thanks to the amazing work done in the [JupyterLite project](https://github.com/jupyterlite/jupyterlite).
 
@@ -10,7 +10,7 @@ https://user-images.githubusercontent.com/591645/222892327-2a5b1341-640d-49c2-9e
 
 ## Features 🚀
 
-- Generates self-contained HTML files with embedded wasm kernels.
+- Generates self-contained HTML files with embedded Wasm kernels.
 - Works offline, without requiring a server to run the dashboard.
 - Supports custom templates for styling dashboards, powered by Jinja2.
 - Supports all programming languages that have JupyterLite kernels available. _e.g._ the default JavaScript and Python kernels JupyterLite provides, [python with xeus-python](https://github.com/jupyterlite/xeus-python-kernel), [lua](https://github.com/jupyterlite/xeus-lua-kernel), [nelson](https://github.com/jupyterlite/xeus-nelson-kernel)
@@ -53,7 +53,7 @@ We'd also suggest looking into the [JupyterLite documentation](https://jupyterli
 
 ## Limitations ⚠️
 
-Because Voici uses wasm kernels to execute notebooks, there are some limitations to the types of notebooks that can be rendered: Some notebook features may not work correctly or may have limited functionality when rendered in Voici.
+Because Voici uses Wasm kernels to execute notebooks, there are some limitations to the types of notebooks that can be rendered: Some notebook features may not work correctly or may have limited functionality when rendered in Voici.
 
 ## Contributing 👋
 
