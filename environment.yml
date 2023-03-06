@@ -6,6 +6,6 @@ dependencies:
   - yarn=1
   - flake8
   - pip:
-    - voila>=0.5.0a1,<0.6.0
+    - voila>=0.5.0a2,<0.6.0
     - jupyterlite>=0.1.0b18,<0.2.0
     - jupyterlite-xeus-python

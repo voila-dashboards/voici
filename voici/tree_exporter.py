@@ -115,6 +115,7 @@ class VoiciTreeExporter(HTMLExporter):
 
             return StringIO(
                 template.render(
+                    frontend='voici',
                     contents=contents,
                     page_title=page_title,
                     breadcrumbs=breadcrumbs,
