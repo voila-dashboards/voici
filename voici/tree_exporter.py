@@ -81,14 +81,14 @@ class VoiciTreeExporter(HTMLExporter):
 
     def generate_breadcrumbs(self, path: Path, depth: int) -> List:
         root = "../../" + "../" * depth
-        breadcrumbs = [(url_path_join(root, "voila/tree"), "")]
+        breadcrumbs = [(url_path_join(root, "voici/tree"), "")]
         parts = path.parts
 
         for i in range(len(parts)):
             if parts[i]:
                 link = url_path_join(
                     root,
-                    "voila/tree",
+                    "voici/tree",
                     url_escape(url_path_join(*parts[: i + 1])),
                 )
                 breadcrumbs.append((link, parts[i]))

@@ -77,7 +77,7 @@ test.describe('Voici Tests', () => {
   });
 
   test('Render dark theme', async ({ page, browserName }, testInfo) => {
-    await page.goto('lite/voila/render/widgets/bqplot.html?theme=dark');
+    await page.goto('lite/voici/render/widgets/bqplot.html?theme=dark');
 
     // Wait for page to load
     await page.waitForSelector('.jupyter-widgets');
