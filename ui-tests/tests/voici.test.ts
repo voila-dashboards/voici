@@ -39,7 +39,7 @@ test.describe('Voici Tests', () => {
     [page] = await Promise.all([
       context.waitForEvent('page'),
       page.click('a:text("voici.ipynb")')
-    ])
+    ]);
 
     // Wait for page to load
     await page.waitForSelector('.jupyter-widgets');
@@ -60,7 +60,7 @@ test.describe('Voici Tests', () => {
     [page] = await Promise.all([
       context.waitForEvent('page'),
       page.click('a:text("bqplot.ipynb")')
-    ])
+    ]);
 
     // Wait for page to load
     await page.waitForSelector('.jupyter-widgets');
@@ -80,7 +80,7 @@ test.describe('Voici Tests', () => {
     [page] = await Promise.all([
       context.waitForEvent('page'),
       page.click('a:text("ipycanvas.ipynb")')
-    ])
+    ]);
 
     // Wait for page to load
     await page.waitForSelector('.jupyter-widgets');
