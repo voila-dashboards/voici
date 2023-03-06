@@ -7,11 +7,11 @@ test.describe('Voici Tests', () => {
   test.beforeEach(({ page }) => {
     page.setDefaultTimeout(600000);
   });
-  test.afterEach(async ({ page, browserName }) => {
+  test.afterEach(async ({ page }) => {
     await page.close({ runBeforeUnload: true });
   });
 
-  test('Render Tree', async ({ page, browserName }, testInfo) => {
+  test('Render Tree', async ({ page }, testInfo) => {
     await page.goto('lite');
 
     await page.waitForSelector('a:text("widgets")');
@@ -30,13 +30,16 @@ test.describe('Voici Tests', () => {
     expect(await page.screenshot()).toMatchSnapshot('voici-tree.png');
   });
 
-  test('Render Simple Notebook', async ({ page, browserName }, testInfo) => {
+  test('Render Simple Notebook', async ({ page, context }, testInfo) => {
     await page.goto('lite');
     // Wait for page to load
     await page.waitForSelector('a:text("voici.ipynb")');
 
-    // Open the notebook
-    await page.click('a:text("voici.ipynb")');
+    // Open the notebook in a new tab
+    [page] = await Promise.all([
+      context.waitForEvent('page'),
+      page.click('a:text("voici.ipynb")')
+    ])
 
     // Wait for page to load
     await page.waitForSelector('.jupyter-widgets');
@@ -46,13 +49,18 @@ test.describe('Voici Tests', () => {
     expect(await page.screenshot()).toMatchSnapshot('voici-simple.png');
   });
 
-  test('Render bqplot Notebook', async ({ page, browserName }, testInfo) => {
+  test('Render bqplot Notebook', async ({ page, context }, testInfo) => {
     await page.goto('lite');
 
     await page.waitForSelector('a:text("widgets")');
     await page.click('a:text("widgets")');
     await page.waitForSelector('a:text("bqplot.ipynb")');
-    await page.click('a:text("bqplot.ipynb")');
+
+    // Open the notebook in a new tab
+    [page] = await Promise.all([
+      context.waitForEvent('page'),
+      page.click('a:text("bqplot.ipynb")')
+    ])
 
     // Wait for page to load
     await page.waitForSelector('.jupyter-widgets');
@@ -61,13 +69,18 @@ test.describe('Voici Tests', () => {
     expect(await page.screenshot()).toMatchSnapshot('voici-bqplot.png');
   });
 
-  test('Render ipycanvas Notebook', async ({ page, browserName }, testInfo) => {
+  test('Render ipycanvas Notebook', async ({ page, context }, testInfo) => {
     await page.goto('lite');
 
     await page.waitForSelector('a:text("widgets")');
     await page.click('a:text("widgets")');
     await page.waitForSelector('a:text("ipycanvas.ipynb")');
-    await page.click('a:text("ipycanvas.ipynb")');
+
+    // Open the notebook in a new tab
+    [page] = await Promise.all([
+      context.waitForEvent('page'),
+      page.click('a:text("ipycanvas.ipynb")')
+    ])
 
     // Wait for page to load
     await page.waitForSelector('.jupyter-widgets');
@@ -76,7 +89,7 @@ test.describe('Voici Tests', () => {
     expect(await page.screenshot()).toMatchSnapshot('voici-ipycanvas.png');
   });
 
-  test('Render dark theme', async ({ page, browserName }, testInfo) => {
+  test('Render dark theme', async ({ page }, testInfo) => {
     await page.goto('lite/voici/render/widgets/bqplot.html?theme=dark');
 
     // Wait for page to load
