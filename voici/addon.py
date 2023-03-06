@@ -106,7 +106,7 @@ class VoiciAddon(BaseAddon):
             actions=[
                 (
                     self.copy_one,
-                    [self.voici_static_path, self.manager.output_dir / "voila"],
+                    [self.voici_static_path, self.manager.output_dir / "voici"],
                 )
             ],
         )
@@ -125,7 +125,7 @@ class VoiciAddon(BaseAddon):
                 actions=[
                     (
                         self.create_dashboard_or_tree,
-                        [generate_file, self.manager.output_dir / "voila" / file_path],
+                        [generate_file, self.manager.output_dir / "voici" / file_path],
                     )
                 ],
             )
@@ -177,10 +177,10 @@ class VoiciAddon(BaseAddon):
         page_config = config.get(JUPYTER_CONFIG_DATA, {})
 
         # Patch appUrl
-        page_config["appUrl"] = "./voila/tree"
+        page_config["appUrl"] = "./voici/tree"
 
         # Path favicon
-        page_config["faviconUrl"] = "./voila/favicon.ico"
+        page_config["faviconUrl"] = "./voici/favicon.ico"
 
         config[JUPYTER_CONFIG_DATA] = page_config
 
