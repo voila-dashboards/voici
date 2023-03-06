@@ -26,7 +26,7 @@ pip install voici
 Then, you can generate static dashboards from a directory of Notebooks like this:
 
 ```bash
-voici build . --contents notebooks/
+voici build --contents notebooks/
 ```
 
 Once your dashboards built, you can simply serve them with a simple static server, _e.g._:
@@ -40,7 +40,7 @@ The `voici` command line interface is the same as the `jupyter lite` one. The on
 You can generate the classic `jupyter lite` output alongside your dashboards by specifying the additional apps you want:
 
 ```bash
-voici build . --apps lab --apps retro
+voici build --apps lab --apps retro
 ```
 
 In order to get some help on how to use the `voici` command, you can run:
@@ -50,6 +50,42 @@ voici --help
 ```
 
 We'd also suggest looking into the [JupyterLite documentation](https://jupyterlite.readthedocs.io/en/latest/howto/index.html) for more insights on how to configure your `voici` deployment.
+
+### Build the demo site yourself
+
+Before you can build the demo site from this repository, you will need to install [jupyterlite-xeus-python](https://github.com/jupyterlite/xeus-python-kernel):
+
+```bash
+pip install jupyterlite-xeus-python
+```
+
+You will also need either [micromamba](https://mamba.readthedocs.io/en/latest/user_guide/micromamba.html), [mamba](https://mamba.readthedocs.io/en/latest) or conda installed in order to build the emscripten environment.
+
+The [demo directory](https://github.com/voila-dashboards/voici/tree/main/demo) contains:
+
+- `notebooks/`: The directory of Notebooks that will be served by Voici
+- `environment.yml`: The file specifying the Emscripten environment that will be used for rendering the dashboards, this must contain all your Notebook dependencies
+- `jupyter-lite.json`: The JupyterLite config file, this config will disable the default Python kernel JupyterLite provides, allowing to use xeus-python instead.
+
+Run the following command to build the demo site:
+
+```bash
+git clone https://github.com/voila-dashboards/voici
+cd voici/demo
+
+voici build --contents notebooks
+```
+
+Then serve it!
+
+```bash
+cd _output
+python -m http.server
+```
+
+### Make your own Github pages deployment
+
+Please follow [this guide](https://github.com/voila-dashboards/voici-demo#-how-to-make-your-own-deployment) for making your own Github pages deployment.
 
 ## Limitations ⚠️
 
