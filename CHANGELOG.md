@@ -2,6 +2,27 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 0.2.0
+
+([Full Changelog](https://github.com/voila-dashboards/voici/compare/@voila-dashboards/voici@0.2.1...96e793cfde26e39affbb9ea33cbc0223dd296829))
+
+### Enhancements made
+
+- Require latest voila [#31](https://github.com/voila-dashboards/voici/pull/31) ([@martinRenou](https://github.com/martinRenou))
+
+### Documentation improvements
+
+- Update README instructions [#32](https://github.com/voila-dashboards/voici/pull/32) ([@martinRenou](https://github.com/martinRenou))
+- Minor edits to the README [#30](https://github.com/voila-dashboards/voici/pull/30) ([@jtpio](https://github.com/jtpio))
+
+### Contributors to this release
+
+([GitHub contributors page for this release](https://github.com/voila-dashboards/voici/graphs/contributors?from=2023-03-03&to=2023-03-06&type=c))
+
+[@jtpio](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Ajtpio+updated%3A2023-03-03..2023-03-06&type=Issues) | [@martinRenou](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3AmartinRenou+updated%3A2023-03-03..2023-03-06&type=Issues)
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 0.1.2
 
 ([Full Changelog](https://github.com/voila-dashboards/voici/compare/@voila-dashboards/voici@0.2.0...7b047500ec3c3aaa81b44fedc6946fb546d663cc))
@@ -19,8 +40,6 @@
 ([GitHub contributors page for this release](https://github.com/voila-dashboards/voici/graphs/contributors?from=2023-03-03&to=2023-03-03&type=c))
 
 [@martinRenou](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3AmartinRenou+updated%3A2023-03-03..2023-03-03&type=Issues)
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 0.1.1
 
