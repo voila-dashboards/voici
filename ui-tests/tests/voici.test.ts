@@ -98,4 +98,39 @@ test.describe('Voici Tests', () => {
 
     expect(await page.screenshot()).toMatchSnapshot('voici-dark.png');
   });
+
+  test('Render material template', async ({ page, context }, testInfo) => {
+    await page.goto('material');
+
+    await page.waitForSelector('a:text("widgets")');
+
+    // Wait a bit for the theme to be applied
+    await page.waitForTimeout(1000);
+
+    expect(await page.screenshot()).toMatchSnapshot('voici-tree-material.png');
+
+    await page.click('a:text("widgets")');
+
+    expect(await page.screenshot()).toMatchSnapshot(
+      'voici-subtree-material.png'
+    );
+
+    await page.click('a:text("..")');
+
+    await page.waitForSelector('a:text("voici.ipynb")');
+
+    expect(await page.screenshot()).toMatchSnapshot('voici-tree-material.png');
+
+    // Open the notebook (The material template does not open in a new tab?)
+    await page.click('a:text("voici.ipynb")');
+
+    // Wait for page to load
+    await page.waitForSelector('.jupyter-widgets');
+    // Wait a bit for the theme to be applied
+    await page.waitForTimeout(1000);
+
+    expect(await page.screenshot()).toMatchSnapshot(
+      'voici-simple-material.png'
+    );
+  });
 });
