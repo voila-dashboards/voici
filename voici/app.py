@@ -1,5 +1,6 @@
 from traitlets import default
 
+from jupyterlite.addons import merge_addon_aliases
 from jupyterlite.app import (
     ManagedApp,
     LiteListApp,
@@ -11,6 +12,16 @@ from jupyterlite.app import (
     LiteArchiveApp,
     PipliteApp,
     LiteApp,
+    lite_aliases,
+)
+
+
+voici_aliases = dict(
+    **lite_aliases,
+    show_tracebacks='VoilaConfiguration.show_tracebacks',
+    strip_sources='VoilaConfiguration.strip_sources',
+    template='VoilaConfiguration.template',
+    theme='VoilaConfiguration.theme',
 )
 
 
@@ -27,6 +38,11 @@ class VoiciAppMixin(ManagedApp):
             manager.apps = list(manager.apps) + ["voici"]
 
         return manager
+
+    @property
+    def aliases(self):
+        """Get CLI aliases, including ones provided by addons."""
+        return merge_addon_aliases(voici_aliases)
 
 
 class VoiciListApp(LiteListApp, VoiciAppMixin):
