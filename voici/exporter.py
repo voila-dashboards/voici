@@ -26,12 +26,12 @@ class VoiciExporter(VoilaExporter):
     def __init__(self, *args, **kwargs):
         kwargs.setdefault("contents_manager", LargeFileManager())
 
-        super().__init__(*args, **kwargs)
-
         self.voici_configuration = kwargs.get("voici_config")
         self.page_config = kwargs.get("page_config", {})
         self.theme = self.voici_configuration.theme
         self.template_name = self.voici_configuration.template
+
+        super().__init__(*args, **kwargs)
 
         if self.voici_configuration.strip_sources:
             self.exclude_input = True
@@ -55,7 +55,6 @@ class VoiciExporter(VoilaExporter):
             "highlight_code", Highlight2HTML(pygments_lexer=lexer, parent=self)
         )
         self.register_filter("highlight_code", highlight_code)
-        # self.register_filter('highlight_code', lambda x: x)
 
         # TODO: This part is already copied three times across
         # nbconvert and Voila, we should do something about it
@@ -79,7 +78,10 @@ class VoiciExporter(VoilaExporter):
         def notebook_execute(nb, kernel_id):
             return ""
 
-        extra_context = dict(
+        html = []
+        for html_snippet in self.template.generate(
+            nb=nb_copy,
+            resources=resources,
             frontend="voici",
             main_js="voici.js",
             voila_process=r"(cell_index, cell_count) => {}",
@@ -87,13 +89,6 @@ class VoiciExporter(VoilaExporter):
             kernel_start=self.kernel_start,
             cell_generator=self.cell_generator,
             notebook_execute=notebook_execute,
-        )
-
-        html = []
-        for html_snippet in self.template.generate(
-            nb=nb_copy,
-            resources=resources,
-            **extra_context,
             static_url=self.static_url,
             base_url=self.base_url,
             page_config=self.update_page_config(nb, self.page_config),
