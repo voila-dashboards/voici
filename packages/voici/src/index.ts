@@ -20,7 +20,6 @@ import { loadComponent, createModule, activePlugins } from './utils';
 
 const serverExtensions = [
   import('@jupyterlite/javascript-kernel-extension'),
-  import('@jupyterlite/pyolite-kernel-extension'),
   import('@jupyterlite/server-extension')
 ];
 
