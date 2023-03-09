@@ -10,7 +10,6 @@ from jupyterlite_core.app import (
     LiteCheckApp,
     LiteServeApp,
     LiteArchiveApp,
-    PipliteApp,
     LiteApp,
     lite_aliases,
 )
@@ -102,7 +101,6 @@ class VoiciApp(LiteApp):
             check=VoiciCheckApp,
             serve=VoiciServeApp,
             archive=VoiciArchiveApp,
-            pip=PipliteApp,
         ).items()
     }
 
