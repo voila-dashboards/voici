@@ -1,7 +1,7 @@
 from traitlets import default
 
-from jupyterlite.addons import merge_addon_aliases
-from jupyterlite.app import (
+from jupyterlite_core.addons import merge_addon_aliases
+from jupyterlite_core.app import (
     ManagedApp,
     LiteListApp,
     LiteStatusApp,

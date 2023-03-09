@@ -8,5 +8,5 @@ dependencies:
   - pip:
     - voila>=0.5.0a2,<0.6.0
     - voila-material>=0.4.3
-    - jupyterlite>=0.1.0b18,<0.2.0
+    - jupyterlite-core[lab] @ https://jupyterlite--994.org.readthedocs.build/en/994/_static/jupyterlite_core-0.1.0b18-py3-none-any.whl
     - jupyterlite-xeus-python
