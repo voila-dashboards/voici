@@ -17,8 +17,8 @@ import { IShell, VoilaShell } from '@voila-dashboards/voila';
 import { VoiciWidgetManager } from './manager';
 import { IKernelConnection } from '@jupyterlab/services/lib/kernel/kernel';
 import { IKernelSpecs } from '@jupyterlite/kernel';
+import { PromiseDelegate } from '@lumino/coreutils';
 import { Widget } from '@lumino/widgets';
-import { managerPromise } from './plugins';
 
 const PACKAGE = require('../package.json');
 
@@ -60,6 +60,13 @@ export class VoiciApp extends JupyterFrontEnd<IShell> {
    * The version of the application.
    */
   readonly version = PACKAGE['version'];
+
+  /**
+   * A promise that resolves when the Voici Widget Manager is created
+   */
+  get managerPromise(): PromiseDelegate<VoiciWidgetManager> {
+    return this._managerPromise;
+  }
 
   /**
    * The JupyterLab application paths dictionary.
@@ -201,7 +208,7 @@ export class VoiciApp extends JupyterFrontEnd<IShell> {
 
         // Create Voila widget manager
         const widgetManager = new VoiciWidgetManager(kernel, rendermime);
-        managerPromise.resolve(widgetManager);
+        this._managerPromise.resolve(widgetManager);
         if (!connection.kernel) {
           return;
         }
@@ -231,6 +238,7 @@ export class VoiciApp extends JupyterFrontEnd<IShell> {
 
   private _serviceManager?: ServiceManager;
   private _kernelspecs?: IKernelSpecs;
+  private _managerPromise = new PromiseDelegate<VoiciWidgetManager>();
 }
 
 /**
