@@ -64,8 +64,8 @@ export class VoiciApp extends JupyterFrontEnd<IShell> {
   /**
    * A promise that resolves when the Voici Widget Manager is created
    */
-  get managerPromise(): PromiseDelegate<VoiciWidgetManager> {
-    return this._managerPromise;
+  get widgetManagerPromise(): PromiseDelegate<VoiciWidgetManager> {
+    return this._widgetManagerPromise;
   }
 
   /**
@@ -208,7 +208,7 @@ export class VoiciApp extends JupyterFrontEnd<IShell> {
 
         // Create Voila widget manager
         const widgetManager = new VoiciWidgetManager(kernel, rendermime);
-        this._managerPromise.resolve(widgetManager);
+        this._widgetManagerPromise.resolve(widgetManager);
         if (!connection.kernel) {
           return;
         }
@@ -238,7 +238,7 @@ export class VoiciApp extends JupyterFrontEnd<IShell> {
 
   private _serviceManager?: ServiceManager;
   private _kernelspecs?: IKernelSpecs;
-  private _managerPromise = new PromiseDelegate<VoiciWidgetManager>();
+  private _widgetManagerPromise = new PromiseDelegate<VoiciWidgetManager>();
 }
 
 /**

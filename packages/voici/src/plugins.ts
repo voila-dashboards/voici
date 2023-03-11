@@ -29,7 +29,7 @@ const widgetManager = {
         'The Voici Widget Manager plugin must be activated in a VoilaApp'
       );
     }
-    const managerPromise = app.managerPromise;
+    const managerPromise = app.widgetManagerPromise;
     return {
       registerWidget: async (data: any) => {
         const manager = await managerPromise.promise;
