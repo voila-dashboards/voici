@@ -1,7 +1,7 @@
 from traitlets import default
 
-from jupyterlite.addons import merge_addon_aliases
-from jupyterlite.app import (
+from jupyterlite_core.addons import merge_addon_aliases
+from jupyterlite_core.app import (
     ManagedApp,
     LiteListApp,
     LiteStatusApp,
@@ -10,7 +10,6 @@ from jupyterlite.app import (
     LiteCheckApp,
     LiteServeApp,
     LiteArchiveApp,
-    PipliteApp,
     LiteApp,
     lite_aliases,
 )
@@ -102,7 +101,6 @@ class VoiciApp(LiteApp):
             check=VoiciCheckApp,
             serve=VoiciServeApp,
             archive=VoiciArchiveApp,
-            pip=PipliteApp,
         ).items()
     }
 

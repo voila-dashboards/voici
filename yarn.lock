@@ -2161,26 +2161,6 @@
     localforage "^1.9.0"
     localforage-memoryStorageDriver "^0.9.2"
 
-"@jupyterlite/pyolite-kernel-extension@^0.1.0-beta.18":
-  version "0.1.0-beta.18"
-  resolved "https://registry.yarnpkg.com/@jupyterlite/pyolite-kernel-extension/-/pyolite-kernel-extension-0.1.0-beta.18.tgz#8fd01fbcc5220fb38a4d2fe3c576a9a9525f80e8"
-  integrity sha512-KqNLE1vUPRoVYXdZL0bKPPvn/5sH7dSnY69XRebVbc09PeopjQoD5IMX4bsPZNjCPqpbYNQgtbMTo/FV/l2DqA==
-  dependencies:
-    "@jupyterlab/coreutils" "~5.5.2"
-    "@jupyterlite/contents" "^0.1.0-beta.18"
-    "@jupyterlite/kernel" "^0.1.0-beta.18"
-    "@jupyterlite/pyolite-kernel" "^0.1.0-beta.18"
-    "@jupyterlite/server" "^0.1.0-beta.18"
-
-"@jupyterlite/pyolite-kernel@^0.1.0-beta.18":
-  version "0.1.0-beta.18"
-  resolved "https://registry.yarnpkg.com/@jupyterlite/pyolite-kernel/-/pyolite-kernel-0.1.0-beta.18.tgz#84295e5f05e15b507967acbcc4307f27e288ecc3"
-  integrity sha512-CsUugrlRoD+naCbOYEuhLecL9YgwH6r5TDeVfBHtlBzzP2MR+KPnwHSXbx7WiDVwzRVcG0pFrzGvRs0CQ0Rvrw==
-  dependencies:
-    "@jupyterlite/contents" "^0.1.0-beta.18"
-    "@jupyterlite/kernel" "^0.1.0-beta.18"
-    comlink "^4.3.1"
-
 "@jupyterlite/server-extension@^0.1.0-beta.18":
   version "0.1.0-beta.18"
   resolved "https://registry.yarnpkg.com/@jupyterlite/server-extension/-/server-extension-0.1.0-beta.18.tgz#aa96cc775929425a70f59e3142a750f4c8dbd556"

@@ -15,8 +15,8 @@ from jupyter_server.config_manager import recursive_update
 from voila.configuration import VoilaConfiguration
 from voila.paths import ROOT, collect_static_paths, collect_template_paths
 
-from jupyterlite.addons.base import BaseAddon
-from jupyterlite.constants import (
+from jupyterlite_core.addons.base import BaseAddon
+from jupyterlite_core.constants import (
     JSON_FMT,
     JUPYTER_CONFIG_DATA,
     JUPYTERLITE_JSON,
