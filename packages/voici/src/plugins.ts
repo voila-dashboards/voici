@@ -12,12 +12,9 @@ import {
   JupyterFrontEndPlugin
 } from '@jupyterlab/application';
 import { IThemeManager } from '@jupyterlab/apputils';
-import { PromiseDelegate } from '@lumino/coreutils';
 import { translatorPlugin, pathsPlugin } from '@voila-dashboards/voila';
 import { PageConfig } from '@jupyterlab/coreutils';
-import { VoiciWidgetManager } from './manager';
-
-export const managerPromise = new PromiseDelegate<VoiciWidgetManager>();
+import { VoiciApp } from './app';
 
 /**
  * The Voici widgets manager plugin.
@@ -26,7 +23,13 @@ const widgetManager = {
   id: '@voila-dashboards/voici:widget-manager',
   autoStart: true,
   provides: base.IJupyterWidgetRegistry,
-  activate: async (): Promise<any> => {
+  activate: async (app: JupyterFrontEnd): Promise<any> => {
+    if (!(app instanceof VoiciApp)) {
+      throw Error(
+        'The Voici Widget Manager plugin must be activated in a VoilaApp'
+      );
+    }
+    const managerPromise = app.widgetManagerPromise;
     return {
       registerWidget: async (data: any) => {
         const manager = await managerPromise.promise;
