@@ -39,9 +39,6 @@ dynamic = [
     "version",
 ]
 
-[tool.hatch.metadata]
-allow-direct-references = true
-
 [project.license]
 file = "LICENSE"
 
