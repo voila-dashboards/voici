@@ -18,10 +18,7 @@ import { VoiciApp } from './app';
 import plugins from './plugins';
 import { loadComponent, createModule, activePlugins } from './utils';
 
-const serverExtensions = [
-  import('@jupyterlite/javascript-kernel-extension'),
-  import('@jupyterlite/server-extension')
-];
+const serverExtensions = [import('@jupyterlite/server-extension')];
 
 const disabled = ['@jupyter-widgets/jupyterlab-manager'];
 

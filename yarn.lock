@@ -1581,7 +1581,7 @@
     react "^17.0.1"
     y-codemirror "^3.0.1"
 
-"@jupyterlab/coreutils@^5.0.0", "@jupyterlab/coreutils@^5.5.2", "@jupyterlab/coreutils@^5.5.3", "@jupyterlab/coreutils@^5.6.1":
+"@jupyterlab/coreutils@^5.0.0", "@jupyterlab/coreutils@^5.5.3", "@jupyterlab/coreutils@^5.6.1":
   version "5.6.1"
   resolved "https://registry.yarnpkg.com/@jupyterlab/coreutils/-/coreutils-5.6.1.tgz#da6c2fe28298ffcad09f1ec5ad4202bdaf1c07c8"
   integrity sha512-nS4ixC9H53lFzdszOfZfDhlM2hlXfOtQAn6TnA/0Ra/gTBQ+LEbFIWdAp588iKuv8eKX39O/Us53T4oq24A31g==
@@ -2109,25 +2109,6 @@
     "@jupyterlab/rendermime-interfaces" "~3.5.2"
     "@lumino/coreutils" "^1.12.0"
     "@lumino/widgets" "^1.33.0"
-
-"@jupyterlite/javascript-kernel-extension@^0.1.0-beta.18":
-  version "0.1.0-beta.18"
-  resolved "https://registry.yarnpkg.com/@jupyterlite/javascript-kernel-extension/-/javascript-kernel-extension-0.1.0-beta.18.tgz#34b7cb86605126da07c53cc896e11e3b9f389afa"
-  integrity sha512-PfFZrppF2Ku5eJvnUPNYNGJ3eDLatPTpDkU42GaF65xLXHeGPRFZa8agh/jpmqq9MtMzJdpPmOzHNG9gRLanfA==
-  dependencies:
-    "@jupyterlab/coreutils" "~5.5.2"
-    "@jupyterlite/javascript-kernel" "^0.1.0-beta.18"
-    "@jupyterlite/kernel" "^0.1.0-beta.18"
-    "@jupyterlite/server" "^0.1.0-beta.18"
-
-"@jupyterlite/javascript-kernel@^0.1.0-beta.18":
-  version "0.1.0-beta.18"
-  resolved "https://registry.yarnpkg.com/@jupyterlite/javascript-kernel/-/javascript-kernel-0.1.0-beta.18.tgz#f75c738e53ddf4c7d304ced81191e1ec7cb0a986"
-  integrity sha512-FATbSEeXi+Am2dmY4GWltnzHCQXCKM6oMikLmWxJRKIOBqjbFPbmFPe/Rzfb7lXV9tz/3PtgEAkvmXIfG2ny4w==
-  dependencies:
-    "@jupyterlab/coreutils" "^5.5.2"
-    "@jupyterlite/kernel" "^0.1.0-beta.18"
-    comlink "^4.3.1"
 
 "@jupyterlite/kernel@^0.1.0-beta.18":
   version "0.1.0-beta.18"
