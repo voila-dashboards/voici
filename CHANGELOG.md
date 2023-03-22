@@ -2,6 +2,34 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 0.3.0
+
+([Full Changelog](https://github.com/voila-dashboards/voici/compare/v0.2.0...49c441b4953d12135f84bee5f54869526ddfbef3))
+
+### Enhancements made
+
+- Add Voila config aliases [#33](https://github.com/voila-dashboards/voici/pull/33) ([@martinRenou](https://github.com/martinRenou))
+
+### Bugs fixed
+
+- Fix custom template support [#34](https://github.com/voila-dashboards/voici/pull/34) ([@martinRenou](https://github.com/martinRenou))
+
+### Maintenance and upkeep improvements
+
+- Update to `jupyterlite-core>=0.1.0b20` [#41](https://github.com/voila-dashboards/voici/pull/41) ([@jtpio](https://github.com/jtpio))
+- Add `yarn watch` command to voici package [#39](https://github.com/voila-dashboards/voici/pull/39) ([@trungleduc](https://github.com/trungleduc))
+- Expose the widget manager promise from the `VoiciApp` [#38](https://github.com/voila-dashboards/voici/pull/38) ([@jtpio](https://github.com/jtpio))
+- Depend on `jupyterlite-core` [#37](https://github.com/voila-dashboards/voici/pull/37) ([@jtpio](https://github.com/jtpio))
+- Test custom template in ui-tests [#35](https://github.com/voila-dashboards/voici/pull/35) ([@martinRenou](https://github.com/martinRenou))
+
+### Contributors to this release
+
+([GitHub contributors page for this release](https://github.com/voila-dashboards/voici/graphs/contributors?from=2023-03-06&to=2023-03-22&type=c))
+
+[@jtpio](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Ajtpio+updated%3A2023-03-06..2023-03-22&type=Issues) | [@martinRenou](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3AmartinRenou+updated%3A2023-03-06..2023-03-22&type=Issues) | [@trungleduc](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Atrungleduc+updated%3A2023-03-06..2023-03-22&type=Issues)
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 0.2.0
 
 ([Full Changelog](https://github.com/voila-dashboards/voici/compare/@voila-dashboards/voici@0.2.1...96e793cfde26e39affbb9ea33cbc0223dd296829))
@@ -20,8 +48,6 @@
 ([GitHub contributors page for this release](https://github.com/voila-dashboards/voici/graphs/contributors?from=2023-03-03&to=2023-03-06&type=c))
 
 [@jtpio](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Ajtpio+updated%3A2023-03-03..2023-03-06&type=Issues) | [@martinRenou](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3AmartinRenou+updated%3A2023-03-03..2023-03-06&type=Issues)
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 0.1.2
 
