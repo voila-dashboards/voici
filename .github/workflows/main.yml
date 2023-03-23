@@ -34,8 +34,10 @@ jobs:
         extra-specs: |
           python=${{ matrix.python_version }}
 
-    - name: Flake8
-      run: python -m flake8 voici setup.py
+    - name: Lint (Python)
+      run: |
+        python -m ruff check .
+        python -m black --check .
 
     - name: Install voici
       run: pip install .

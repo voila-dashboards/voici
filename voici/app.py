@@ -17,10 +17,10 @@ from jupyterlite_core.app import (
 
 voici_aliases = dict(
     **lite_aliases,
-    show_tracebacks='VoilaConfiguration.show_tracebacks',
-    strip_sources='VoilaConfiguration.strip_sources',
-    template='VoilaConfiguration.template',
-    theme='VoilaConfiguration.theme',
+    show_tracebacks="VoilaConfiguration.show_tracebacks",
+    strip_sources="VoilaConfiguration.strip_sources",
+    template="VoilaConfiguration.template",
+    theme="VoilaConfiguration.theme",
 )
 
 

@@ -81,7 +81,8 @@ class VoiciAddon(BaseAddon):
         self.jinja2_env.install_gettext_translations(nbui, newstyle=False)
 
     def post_build(self, manager):
-        """copies the Voici application files to the JupyterLite output and generate static dashboards."""
+        """Copies the Voici application files to the JupyterLite output
+        and generate static dashboards."""
 
         # Do nothing if Voici is disabled
         if not self.manager.apps or (
@@ -113,8 +114,7 @@ class VoiciAddon(BaseAddon):
 
         # Convert Notebooks content into static dashboards
         tree_exporter = VoiciTreeExporter(
-            jinja2_env=self.jinja2_env,
-            voici_configuration=self.voici_configuration
+            jinja2_env=self.jinja2_env, voici_configuration=self.voici_configuration
         )
 
         for file_path, generate_file in tree_exporter.generate_contents(
