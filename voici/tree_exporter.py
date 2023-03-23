@@ -115,7 +115,7 @@ class VoiciTreeExporter(HTMLExporter):
 
             return StringIO(
                 template.render(
-                    frontend='voici',
+                    frontend="voici",
                     contents=contents,
                     page_title=page_title,
                     breadcrumbs=breadcrumbs,
@@ -143,15 +143,20 @@ class VoiciTreeExporter(HTMLExporter):
 
         return render_notebook
 
-    def generate_contents(self, path: Path, lite_files_output: Path, relative_to=None) -> Tuple[Dict, List[str]]:
-        """Generate the Tree content. This is a generator method that generates tuples (filepath, filecreation_function)."""
+    def generate_contents(
+        self, path: Path, lite_files_output: Path, relative_to=None
+    ) -> Tuple[Dict, List[str]]:
+        """Generate the Tree content.
+           This is a generator method that generates tuples (filepath, filecreation_function)."""
         if relative_to is None:
             relative_to = path
             relative_path = Path(".")
             breadcrumbs = []
         else:
             relative_path = path.relative_to(relative_to)
-            breadcrumbs = self.generate_breadcrumbs(relative_path, len(relative_path.parts))
+            breadcrumbs = self.generate_breadcrumbs(
+                relative_path, len(relative_path.parts)
+            )
 
         template = self.jinja2_env.get_template("tree.html")
 
@@ -174,7 +179,8 @@ class VoiciTreeExporter(HTMLExporter):
                 yield (
                     Path("render") / file["path"],
                     self.will_render_notebook(
-                        lite_files_output / file["path"].replace(".html", ".ipynb"), relative_path
+                        lite_files_output / file["path"].replace(".html", ".ipynb"),
+                        relative_path,
                     ),
                 )
             elif file["type"] == "directory":
