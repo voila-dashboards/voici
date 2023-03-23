@@ -106,6 +106,7 @@ before-bump-version = [
     "python -m pip install hatch",
 ]
 before-build-npm = [
+    "yarn",
     "yarn clean",
     "yarn build:prod",
 ]
@@ -114,7 +115,7 @@ before-build-python = [
 ]
 
 [tool.jupyter-releaser.options]
-version-cmd = "python scripts/bump-version.py --force"
+version-cmd = "python scripts/bump-version.py"
 
 [tool.check-wheel-contents]
 ignore = ["W002"]

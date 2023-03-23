@@ -1,112 +1,45 @@
 # Copyright (c) Jupyter Development Team.
+# Copyright (c) Voici Contributors
+
 # Distributed under the terms of the Modified BSD License.import click
 
-# Heavily inspired by:
-# - https://github.com/jupyterlab/jupyterlab/blob/master/buildutils/src/bumpversion.ts
-# - https://github.com/jupyterlab/retrolab/blob/main/buildutils/src/release-bump.ts
-
-import click
-from jupyter_releaser.util import is_prerelease, get_version, run
+import argparse
+from packaging.version import parse as parse_version
+from pathlib import Path
+from subprocess import run
 
 
-OPTIONS = ["major", "minor", "release", "build", "patch", "next"]
+ENC = dict(encoding="utf-8")
+HATCH_VERSION = "hatch version"
+ROOT = Path(__file__).parent.parent
 
 
-def patch(force=False):
-    version = get_version()
-    if is_prerelease(version):
-        raise Exception("Can only make a patch release from a final version")
-
-    run("hatch version patch", quiet=True)
-
-    # Version the changed
-    cmd = "yarn && yarn run lerna version patch --no-push --force-publish --no-git-tag-version"
-    if force:
-        cmd += " --yes"
-    run(cmd)
+def get_version():
+    cmd = run([HATCH_VERSION], capture_output=True, shell=True, check=True, cwd=ROOT)
+    return cmd.stdout.decode("utf-8").strip().split("\n")[-1]
 
 
-def update(spec, force=False):
-    prev = get_version()
-
-    is_final = not is_prerelease(prev)
-
-    if is_final and spec == "build":
-        raise Exception("Cannot increment a build on a final release")
-
-    # If this is a major release during the alpha cycle, bump
-    # just the Python version.
-    if "a" in prev and spec == "major":
-        run(f"hatch version {spec}")
-        return
-
-    # Determine the version spec to use for lerna and hatch
-    py_spec = spec
-    lerna_version = "preminor"
-    if spec == "build":
-        lerna_version = "prerelease"
-        if 'a' in prev:
-            py_spec = 'a'
-        elif 'b' in prev:
-            py_spec = 'b'
-        elif 'rc' in prev:
-            py_spec = 'rc'
-    # a -> b
-    elif spec == "release" and "a" in prev:
-        lerna_version = "prerelease --preid=beta"
-        py_spec = 'beta'
-    # b -> rc
-    elif spec == "release" and "b" in prev:
-        lerna_version = "prerelease --preid=rc"
-        py_spec = 'rc'
-    # rc -> final
-    elif spec == "release" and "c" in prev:
-        lerna_version = "patch"
-        py_spec = 'release'
-    elif spec == "release":
-        py_spec = 'minor,alpha'
-
-    if lerna_version == "preminor":
-        lerna_version += " --preid=alpha"
-
-    cmd = f"yarn && yarn run lerna version --force-publish --no-push --no-git-tag-version {lerna_version}"
-    if force:
-        cmd += " --yes"
-
-    # For a preminor release, we bump 10 minor versions so that we do
-    # not conflict with versions during minor releases of the top level package.
-    if lerna_version == "preminor":
-        for i in range(10):
-            run(cmd)
-    else:
-        run(cmd)
-
-    # Bump the Python version
-    run(f"hatch version {py_spec}")
+def next_version():
+    v = parse_version(get_version())
+    if v.is_prerelease:
+        return f"{v.major}.{v.minor}.{v.micro}{v.pre[0]}{v.pre[1] + 1}"
+    return f"{v.major}.{v.minor}.{v.micro + 1}"
 
 
-@click.command()
-@click.option("--force", default=False, is_flag=True)
-@click.argument("spec", nargs=1)
-def bump(force, spec):
-    status = run("git status --porcelain").strip()
-    if len(status) > 0:
-        raise Exception("Must be in a clean git state with no untracked files")
+def bump():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("version")
+    args = parser.parse_args()
+    py_version = next_version() if args.version == "next" else args.version
+    js_version = (
+        py_version.replace("a", "-alpha.").replace("b", "-beta.").replace("rc", "-rc.")
+    )
 
-    # Make sure we have a valid version spec.
-    if spec not in OPTIONS:
-        raise ValueError(f"Version spec must be one of: {OPTIONS}")
+    # bump the Python version with hatch
+    run(f"{HATCH_VERSION} {py_version}", shell=True, check=True, cwd=ROOT)
 
-    prev = get_version()
-    is_final = not is_prerelease(prev)
-    if spec == "next":
-        spec = "patch" if is_final else "build"
-
-    if spec == "patch":
-        patch(force)
-        return
-
-    update(spec, force)
+    # bump the JS version with lerna
+    run(f"yarn run bump:js:version {js_version}", shell=True, check=True)
 
 
 if __name__ == "__main__":
