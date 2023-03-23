@@ -4,7 +4,6 @@
 # Distributed under the terms of the Modified BSD License.import click
 
 import argparse
-import json
 from packaging.version import parse as parse_version
 from pathlib import Path
 from subprocess import run
@@ -13,7 +12,6 @@ from subprocess import run
 ENC = dict(encoding="utf-8")
 HATCH_VERSION = "hatch version"
 ROOT = Path(__file__).parent.parent
-VOICI_PACKAGE = ROOT / "packages" / "voici"
 
 
 def get_version():
