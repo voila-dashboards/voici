@@ -147,7 +147,8 @@ class VoiciTreeExporter(HTMLExporter):
         self, path: Path, lite_files_output: Path, relative_to=None
     ) -> Tuple[Dict, List[str]]:
         """Generate the Tree content.
-           This is a generator method that generates tuples (filepath, filecreation_function)."""
+        This is a generator method that generates tuples (filepath, filecreation_function).
+        """
         if relative_to is None:
             relative_to = path
             relative_path = Path(".")
