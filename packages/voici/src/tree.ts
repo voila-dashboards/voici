@@ -13,7 +13,7 @@ import { JupyterLiteServer } from '@jupyterlite/server';
 import {
   pathsPlugin,
   translatorPlugin,
-  VoilaShell
+  VoilaShell,
 } from '@voila-dashboards/voila';
 
 import { VoiciApp } from './app';
@@ -33,14 +33,14 @@ async function main() {
     require('@jupyterlab/apputils-extension').default.filter((m: any) =>
       [
         '@jupyterlab/apputils-extension:settings',
-        '@jupyterlab/apputils-extension:themes'
+        '@jupyterlab/apputils-extension:themes',
       ].includes(m.id)
     ),
     require('@jupyterlab/theme-light-extension'),
     require('@jupyterlab/theme-dark-extension'),
     translatorPlugin,
     pathsPlugin,
-    themePlugin
+    themePlugin,
   ];
 
   const mimeExtensions: any[] = [];
@@ -92,7 +92,7 @@ async function main() {
   const federatedExtensions = await Promise.allSettled(
     federatedExtensionPromises
   );
-  federatedExtensions.forEach(p => {
+  federatedExtensions.forEach((p) => {
     if (p.status === 'fulfilled') {
       for (const plugin of activePlugins(p.value, disabled)) {
         mods.push(plugin);
@@ -106,7 +106,7 @@ async function main() {
   const federatedMimeExtensions = await Promise.allSettled(
     federatedMimeExtensionPromises
   );
-  federatedMimeExtensions.forEach(p => {
+  federatedMimeExtensions.forEach((p) => {
     if (p.status === 'fulfilled') {
       for (const plugin of activePlugins(p.value, disabled)) {
         mimeExtensions.push(plugin);
@@ -119,13 +119,13 @@ async function main() {
   // Load all federated component styles and log errors for any that do not
   (await Promise.allSettled(federatedStylePromises))
     .filter(({ status }) => status === 'rejected')
-    .forEach(p => {
+    .forEach((p) => {
       console.error((p as PromiseRejectedResult).reason);
     });
 
   const litePluginsToRegister: any[] = [];
   const baseServerExtensions = await Promise.all(serverExtensions);
-  baseServerExtensions.forEach(p => {
+  baseServerExtensions.forEach((p) => {
     for (const plugin of activePlugins(p, disabled)) {
       litePluginsToRegister.push(plugin);
     }
@@ -141,7 +141,7 @@ async function main() {
   const serviceManager = jupyterLiteServer.serviceManager;
   const app = new VoiciApp({
     serviceManager: serviceManager as any,
-    shell: new VoilaShell()
+    shell: new VoilaShell(),
   });
 
   app.registerPluginModules(mods);

@@ -38,7 +38,7 @@ test.describe('Voici Tests', () => {
     // Open the notebook in a new tab
     [page] = await Promise.all([
       context.waitForEvent('page'),
-      page.click('a:text("voici.ipynb")')
+      page.click('a:text("voici.ipynb")'),
     ]);
 
     // Wait for page to load
@@ -59,7 +59,7 @@ test.describe('Voici Tests', () => {
     // Open the notebook in a new tab
     [page] = await Promise.all([
       context.waitForEvent('page'),
-      page.click('a:text("bqplot.ipynb")')
+      page.click('a:text("bqplot.ipynb")'),
     ]);
 
     // Wait for page to load
@@ -79,7 +79,7 @@ test.describe('Voici Tests', () => {
     // Open the notebook in a new tab
     [page] = await Promise.all([
       context.waitForEvent('page'),
-      page.click('a:text("ipycanvas.ipynb")')
+      page.click('a:text("ipycanvas.ipynb")'),
     ]);
 
     // Wait for page to load
