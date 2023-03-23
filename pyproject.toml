@@ -114,7 +114,7 @@ before-build-python = [
 ]
 
 [tool.jupyter-releaser.options]
-version-cmd = "python scripts/bump-version.py --force"
+version-cmd = "python scripts/bump-version.py"
 
 [tool.check-wheel-contents]
 ignore = ["W002"]
