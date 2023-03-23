@@ -1,5 +1,7 @@
 {
   "extends": "./tsconfigbase",
   "include": ["packages/**/*", "lint-staged.config.js", "ui-tests"],
-  "types": ["jest"]
+  "compilerOptions": {
+    "types": ["jest"]
+  }
 }

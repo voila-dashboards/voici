@@ -9,7 +9,7 @@
 import * as base from '@jupyter-widgets/base';
 import {
   JupyterFrontEnd,
-  JupyterFrontEndPlugin
+  JupyterFrontEndPlugin,
 } from '@jupyterlab/application';
 import { IThemeManager } from '@jupyterlab/apputils';
 import { translatorPlugin, pathsPlugin } from '@voila-dashboards/voila';
@@ -34,9 +34,9 @@ const widgetManager = {
       registerWidget: async (data: any) => {
         const manager = await managerPromise.promise;
         manager.register(data);
-      }
+      },
     };
-  }
+  },
 };
 
 /**
@@ -71,7 +71,7 @@ export const themePlugin: JupyterFrontEndPlugin<void> = {
         themeManager.setTheme(theme);
       }
     });
-  }
+  },
 };
 
 /**
@@ -81,7 +81,7 @@ const plugins: JupyterFrontEndPlugin<any>[] = [
   pathsPlugin,
   translatorPlugin,
   widgetManager,
-  themePlugin
+  themePlugin,
 ];
 
 export default plugins;

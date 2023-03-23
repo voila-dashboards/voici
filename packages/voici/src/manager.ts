@@ -12,7 +12,7 @@ import * as controls from '@jupyter-widgets/controls';
 import {
   KernelWidgetManager,
   output,
-  WidgetRenderer
+  WidgetRenderer,
 } from '@jupyter-widgets/jupyterlab-manager';
 import { IRenderMimeRegistry } from '@jupyterlab/rendermime';
 import { Kernel } from '@jupyterlab/services';
@@ -33,7 +33,7 @@ export class VoiciWidgetManager extends KernelWidgetManager {
       {
         safe: false,
         mimeTypes: [WIDGET_MIMETYPE],
-        createRenderer: options => new WidgetRenderer(options, this as any)
+        createRenderer: (options) => new WidgetRenderer(options, this as any),
       },
       -10
     );
@@ -44,20 +44,20 @@ export class VoiciWidgetManager extends KernelWidgetManager {
     this.register({
       name: '@jupyter-widgets/base',
       version: base.JUPYTER_WIDGETS_VERSION,
-      exports: base as any
+      exports: base as any,
     });
     this.register({
       name: '@jupyter-widgets/controls',
       version: controls.JUPYTER_CONTROLS_VERSION,
-      exports: controls as any
+      exports: controls as any,
     });
     this.register({
       name: '@jupyter-widgets/output',
       version: output.OUTPUT_WIDGET_VERSION,
       exports: {
         ...(output as any),
-        OutputModel
-      }
+        OutputModel,
+      },
     });
   }
 }

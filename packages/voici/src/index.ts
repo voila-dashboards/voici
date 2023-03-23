@@ -31,7 +31,7 @@ async function main() {
     require('@jupyterlab/apputils-extension').default.filter((m: any) =>
       [
         '@jupyterlab/apputils-extension:settings',
-        '@jupyterlab/apputils-extension:themes'
+        '@jupyterlab/apputils-extension:themes',
       ].includes(m.id)
     ),
     require('@jupyterlab/markdownviewer-extension'),
@@ -41,12 +41,12 @@ async function main() {
     // This would also need the theme manager plugin and settings
     require('@jupyterlab/theme-light-extension'),
     require('@jupyterlab/theme-dark-extension'),
-    plugins
+    plugins,
   ];
 
   const mimeExtensions = [
     require('@jupyterlite/iframe-extension'),
-    require('@jupyterlab/json-extension')
+    require('@jupyterlab/json-extension'),
   ];
 
   const extensionData = JSON.parse(
@@ -101,7 +101,7 @@ async function main() {
   const federatedExtensions = await Promise.allSettled(
     federatedExtensionPromises
   );
-  federatedExtensions.forEach(p => {
+  federatedExtensions.forEach((p) => {
     if (p.status === 'fulfilled') {
       for (const plugin of activePlugins(p.value, disabled)) {
         mods.push(plugin);
@@ -115,7 +115,7 @@ async function main() {
   const federatedMimeExtensions = await Promise.allSettled(
     federatedMimeExtensionPromises
   );
-  federatedMimeExtensions.forEach(p => {
+  federatedMimeExtensions.forEach((p) => {
     if (p.status === 'fulfilled') {
       for (const plugin of activePlugins(p.value, disabled)) {
         mimeExtensions.push(plugin);
@@ -128,13 +128,13 @@ async function main() {
   // Load all federated component styles and log errors for any that do not
   (await Promise.allSettled(federatedStylePromises))
     .filter(({ status }) => status === 'rejected')
-    .forEach(p => {
+    .forEach((p) => {
       console.error((p as PromiseRejectedResult).reason);
     });
 
   const litePluginsToRegister: any[] = [];
   const baseServerExtensions = await Promise.all(serverExtensions);
-  baseServerExtensions.forEach(p => {
+  baseServerExtensions.forEach((p) => {
     for (const plugin of activePlugins(p, disabled)) {
       litePluginsToRegister.push(plugin);
     }
@@ -144,7 +144,7 @@ async function main() {
   const federatedLiteExtensions = await Promise.allSettled(
     liteExtensionPromises
   );
-  federatedLiteExtensions.forEach(p => {
+  federatedLiteExtensions.forEach((p) => {
     if (p.status === 'fulfilled') {
       for (const plugin of activePlugins(p.value, disabled)) {
         litePluginsToRegister.push(plugin);
@@ -170,7 +170,7 @@ async function main() {
     serviceManager: serviceManager as any,
     kernelspecs,
     mimeExtensions,
-    shell: new VoilaShell()
+    shell: new VoilaShell(),
   });
 
   app.registerPluginModules(mods);

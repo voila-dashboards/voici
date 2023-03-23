@@ -26,12 +26,12 @@ baseConfig.module.rules = [
   {
     test: /\.json$/,
     use: ['json-loader'],
-    type: 'javascript/auto'
+    type: 'javascript/auto',
   },
-  ...baseConfig.module.rules.filter(filterDeprecatedRule)
+  ...baseConfig.module.rules.filter(filterDeprecatedRule),
 ];
 
-const names = Object.keys(data.dependencies).filter(name => {
+const names = Object.keys(data.dependencies).filter((name) => {
   const packageData = require(path.join(name, 'package.json'));
   return packageData.jupyterlab !== undefined;
 });
@@ -62,7 +62,7 @@ const distRoot = path.resolve(
 const extras = Build.ensureAssets({
   packageNames: names,
   output: buildDir,
-  staticOutput: path.resolve(distRoot)
+  staticOutput: path.resolve(distRoot),
 });
 
 // Make a bootstrap entrypoint
@@ -80,47 +80,47 @@ module.exports = [
       voici: ['./publicpath.js', './' + path.relative(__dirname, entryPoint)],
       treepage: [
         './publicpath.js',
-        './' + path.relative(__dirname, treeEntryPoint)
-      ]
+        './' + path.relative(__dirname, treeEntryPoint),
+      ],
     },
     output: {
       path: distRoot,
       library: {
         type: 'var',
-        name: ['_JUPYTERLAB', 'CORE_OUTPUT']
+        name: ['_JUPYTERLAB', 'CORE_OUTPUT'],
       },
-      filename: '[name].js'
+      filename: '[name].js',
     },
     module: {
       rules: [
         // just keep the woff2 fonts from fontawesome
         {
           test: /fontawesome-free.*\.(svg|eot|ttf|woff)$/,
-          loader: 'ignore-loader'
+          loader: 'ignore-loader',
         },
         {
           test: /\.(jpe?g|png|gif|ico|eot|ttf|map|woff2?)(\?v=\d+\.\d+\.\d+)?$/i,
-          type: 'asset/resource'
-        }
-      ]
+          type: 'asset/resource',
+        },
+      ],
     },
     plugins: [
       new webpack.DefinePlugin({
         // Needed for Blueprint. See https://github.com/palantir/blueprint/issues/4393
         'process.env': '{}',
         // Needed for various packages using cwd(), like the path polyfill
-        process: { cwd: () => '/' }
+        process: { cwd: () => '/' },
       }),
       new ModuleFederationPlugin({
         library: {
           type: 'var',
-          name: ['_JUPYTERLAB', 'CORE_LIBRARY_FEDERATION']
+          name: ['_JUPYTERLAB', 'CORE_LIBRARY_FEDERATION'],
         },
         name: 'CORE_FEDERATION',
         shared: {
-          ...data.dependencies
-        }
-      })
-    ]
-  })
+          ...data.dependencies,
+        },
+      }),
+    ],
+  }),
 ].concat(extras);

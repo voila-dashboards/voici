@@ -20,9 +20,6 @@ jobs:
       - name: Base Setup
         uses: jupyterlab/maintainer-tools/.github/actions/base-setup@v1
 
-      - name: Install Dependencies
-        run: pip install .
-
       - name: Check Release
         uses: jupyter-server/jupyter_releaser/.github/actions/check-release@v2
         with:
@@ -32,5 +29,5 @@ jobs:
       - name: Upload Distributions
         uses: actions/upload-artifact@v2
         with:
-          name: voila-releaser-dist-${{ github.run_number }}
+          name: voici-releaser-dist-${{ github.run_number }}
           path: .jupyter_releaser_checkout/dist

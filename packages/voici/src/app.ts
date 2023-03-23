@@ -1,7 +1,7 @@
 import {
   JupyterFrontEnd,
   JupyterFrontEndPlugin,
-  createRendermimePlugins
+  createRendermimePlugins,
 } from '@jupyterlab/application';
 
 import { PageConfig } from '@jupyterlab/coreutils';
@@ -11,7 +11,7 @@ import { NotebookModel } from '@jupyterlab/notebook';
 import { ServiceManager } from '@jupyterlab/services';
 import {
   RenderMimeRegistry,
-  standardRendererFactories
+  standardRendererFactories,
 } from '@jupyterlab/rendermime';
 import { IShell, VoilaShell } from '@voila-dashboards/voila';
 import { VoiciWidgetManager } from './manager';
@@ -34,7 +34,7 @@ export class VoiciApp extends JupyterFrontEnd<IShell> {
   constructor(options: App.IOptions) {
     super({
       ...options,
-      shell: options.shell ?? new VoilaShell()
+      shell: options.shell ?? new VoilaShell(),
     });
     if (options.mimeExtensions) {
       for (const plugin of createRendermimePlugins(options.mimeExtensions)) {
@@ -85,7 +85,7 @@ export class VoiciApp extends JupyterFrontEnd<IShell> {
         hubHost: PageConfig.getOption('hubHost') || undefined,
         hubPrefix: PageConfig.getOption('hubPrefix') || undefined,
         hubUser: PageConfig.getOption('hubUser') || undefined,
-        hubServerName: PageConfig.getOption('hubServerName') || undefined
+        hubServerName: PageConfig.getOption('hubServerName') || undefined,
       },
       directories: {
         appSettings: PageConfig.getOption('appSettingsDir'),
@@ -95,8 +95,8 @@ export class VoiciApp extends JupyterFrontEnd<IShell> {
         themes: PageConfig.getOption('themesDir'),
         userSettings: PageConfig.getOption('userSettingsDir'),
         serverRoot: PageConfig.getOption('serverRoot'),
-        workspaces: PageConfig.getOption('workspacesDir')
-      }
+        workspaces: PageConfig.getOption('workspacesDir'),
+      },
     };
   }
 
@@ -114,7 +114,7 @@ export class VoiciApp extends JupyterFrontEnd<IShell> {
     if (!Array.isArray(data)) {
       data = [data];
     }
-    data.forEach(item => {
+    data.forEach((item) => {
       try {
         this.registerPlugin(item);
       } catch (error) {
@@ -129,7 +129,7 @@ export class VoiciApp extends JupyterFrontEnd<IShell> {
    * @param mods - The plugin modules to register.
    */
   registerPluginModules(mods: App.IPluginModule[]): void {
-    mods.forEach(mod => {
+    mods.forEach((mod) => {
       this.registerPluginModule(mod);
     });
   }
@@ -150,7 +150,7 @@ export class VoiciApp extends JupyterFrontEnd<IShell> {
     let requestedKernelspec = notebookModel.metadata.get('kernelspec') as any;
     if (!requestedKernelspec) {
       requestedKernelspec = {
-        name: 'python'
+        name: 'python',
       };
     }
 
@@ -191,7 +191,7 @@ export class VoiciApp extends JupyterFrontEnd<IShell> {
       name: '',
       path: '',
       type: 'notebook',
-      kernel: spec
+      kernel: spec,
     });
     const kernel = connection.kernel;
     if (!kernel) {
@@ -203,7 +203,7 @@ export class VoiciApp extends JupyterFrontEnd<IShell> {
       if (status === 'connected') {
         window.update_loading_text(0, 0, 'Starting up kernel...');
         const rendermime = new RenderMimeRegistry({
-          initialFactories: standardRendererFactories
+          initialFactories: standardRendererFactories,
         });
 
         // Create Voila widget manager
@@ -217,7 +217,7 @@ export class VoiciApp extends JupyterFrontEnd<IShell> {
         // The wheels loading step will take way more than 500ms,
         // Let's wait a little bit before listening for the
         // `idle` status of the kernel.
-        await new Promise(r => setTimeout(r, 500));
+        await new Promise((r) => setTimeout(r, 500));
         let executed = false;
 
         const packagesSrc = PageConfig.getOption('packagesSrc');
@@ -228,7 +228,7 @@ export class VoiciApp extends JupyterFrontEnd<IShell> {
               packages: packagesSrc,
               source: notebookModel,
               rendermime,
-              kernel: connection.kernel!
+              kernel: connection.kernel!,
             });
           }
         });
@@ -286,7 +286,7 @@ export namespace App {
     if (packages && packages.length > 0) {
       window.update_loading_text(0, 0, 'Installing dependencies');
       const future = kernel.requestExecute({
-        code: packages
+        code: packages,
       });
       await future.done;
     }
@@ -304,10 +304,10 @@ export namespace App {
       const model = new OutputAreaModel({ trusted: true });
       const area = new SimplifiedOutputArea({
         model,
-        rendermime
+        rendermime,
       });
       area.future = kernel.requestExecute({
-        code: cell.value.text
+        code: cell.value.text,
       });
       await area.future.done;
       const element = document.querySelector(`[cell-index="${idx + 1}"]`);
