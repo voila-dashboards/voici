@@ -14,13 +14,18 @@ import {
   standardRendererFactories,
 } from '@jupyterlab/rendermime';
 import { IShell, VoilaShell } from '@voila-dashboards/voila';
-import { VoiciWidgetManager } from './manager';
 import { IKernelConnection } from '@jupyterlab/services/lib/kernel/kernel';
 import { IKernelSpecs } from '@jupyterlite/kernel';
+import {
+  KernelWidgetManager,
+  WidgetRenderer,
+} from '@jupyter-widgets/jupyterlab-manager';
 import { PromiseDelegate } from '@lumino/coreutils';
 import { Widget } from '@lumino/widgets';
 
 const PACKAGE = require('../package.json');
+
+const WIDGET_MIMETYPE = 'application/vnd.jupyter.widget-view+json';
 
 /**
  * App is the main application class. It is instantiated once and shared.
@@ -64,7 +69,7 @@ export class VoiciApp extends JupyterFrontEnd<IShell> {
   /**
    * A promise that resolves when the Voici Widget Manager is created
    */
-  get widgetManagerPromise(): PromiseDelegate<VoiciWidgetManager> {
+  get widgetManagerPromise(): PromiseDelegate<KernelWidgetManager> {
     return this._widgetManagerPromise;
   }
 
@@ -207,7 +212,17 @@ export class VoiciApp extends JupyterFrontEnd<IShell> {
         });
 
         // Create Voila widget manager
-        const widgetManager = new VoiciWidgetManager(kernel, rendermime);
+        const widgetManager = new KernelWidgetManager(kernel, rendermime);
+        rendermime.removeMimeType(WIDGET_MIMETYPE);
+        rendermime.addFactory(
+          {
+            safe: false,
+            mimeTypes: [WIDGET_MIMETYPE],
+            createRenderer: (options) =>
+              new WidgetRenderer(options, widgetManager),
+          },
+          -10
+        );
         this._widgetManagerPromise.resolve(widgetManager);
         if (!connection.kernel) {
           return;
@@ -238,7 +253,7 @@ export class VoiciApp extends JupyterFrontEnd<IShell> {
 
   private _serviceManager?: ServiceManager;
   private _kernelspecs?: IKernelSpecs;
-  private _widgetManagerPromise = new PromiseDelegate<VoiciWidgetManager>();
+  private _widgetManagerPromise = new PromiseDelegate<KernelWidgetManager>();
 }
 
 /**
