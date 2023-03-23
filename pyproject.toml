@@ -44,8 +44,8 @@ file = "LICENSE"
 [project.optional-dependencies]
 dev = [
     "black",
+    "ruff",
     "hatch",
-    "jupyter_releaser",
 ]
 
 [project.scripts]
@@ -119,3 +119,7 @@ version-cmd = "python scripts/bump-version.py"
 
 [tool.check-wheel-contents]
 ignore = ["W002"]
+
+[tool.ruff]
+target-version = "py38"
+line-length = 100
