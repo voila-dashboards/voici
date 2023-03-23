@@ -106,6 +106,7 @@ before-bump-version = [
     "python -m pip install hatch",
 ]
 before-build-npm = [
+    "yarn",
     "yarn clean",
     "yarn build:prod",
 ]
