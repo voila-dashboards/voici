@@ -16,11 +16,16 @@ import {
 import { IShell, VoilaShell } from '@voila-dashboards/voila';
 import { IKernelConnection } from '@jupyterlab/services/lib/kernel/kernel';
 import { IKernelSpecs } from '@jupyterlite/kernel';
-import { KernelWidgetManager } from '@jupyter-widgets/jupyterlab-manager';
+import {
+  KernelWidgetManager,
+  WidgetRenderer,
+} from '@jupyter-widgets/jupyterlab-manager';
 import { PromiseDelegate } from '@lumino/coreutils';
 import { Widget } from '@lumino/widgets';
 
 const PACKAGE = require('../package.json');
+
+const WIDGET_MIMETYPE = 'application/vnd.jupyter.widget-view+json';
 
 /**
  * App is the main application class. It is instantiated once and shared.
@@ -208,6 +213,16 @@ export class VoiciApp extends JupyterFrontEnd<IShell> {
 
         // Create Voila widget manager
         const widgetManager = new KernelWidgetManager(kernel, rendermime);
+        rendermime.removeMimeType(WIDGET_MIMETYPE);
+        rendermime.addFactory(
+          {
+            safe: false,
+            mimeTypes: [WIDGET_MIMETYPE],
+            createRenderer: (options) =>
+              new WidgetRenderer(options, widgetManager),
+          },
+          -10
+        );
         this._widgetManagerPromise.resolve(widgetManager);
         if (!connection.kernel) {
           return;

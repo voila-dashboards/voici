@@ -20,7 +20,10 @@ import { loadComponent, createModule, activePlugins } from './utils';
 
 const serverExtensions = [import('@jupyterlite/server-extension')];
 
-const disabled = ['@jupyter-widgets/jupyterlab-manager'];
+const disabled = [
+  '@jupyter-widgets/jupyterlab-manager:plugin',
+  '@jupyter-widgets/jupyterlab-manager:saveWidgetState',
+];
 
 /**
  * The main function
