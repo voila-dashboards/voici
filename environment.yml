@@ -3,9 +3,10 @@ channels:
   - conda-forge
 dependencies:
   - pip
-  - ruff==0.0.258
+  - black
   - yarn=1
   - pip:
+    - ruff==0.0.258
     - voila>=0.5.0a3,<0.6.0
     - voila-material>=0.4.3
     - jupyterlite-core[lab]>=0.1.0b20,<0.2.0
