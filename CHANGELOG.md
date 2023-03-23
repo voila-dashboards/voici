@@ -2,6 +2,25 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 0.3.1
+
+([Full Changelog](https://github.com/voila-dashboards/voici/compare/v0.3.0...9ff7f63d4c31d3562a0cfb8ba8e714c4bb7cce20))
+
+### Maintenance and upkeep improvements
+
+- Simplify the script for bumping versions [#47](https://github.com/voila-dashboards/voici/pull/47) ([@jtpio](https://github.com/jtpio))
+- Remove the `reset_stable.sh` script [#45](https://github.com/voila-dashboards/voici/pull/45) ([@jtpio](https://github.com/jtpio))
+- Update to Voila 0.5.0a3 [#44](https://github.com/voila-dashboards/voici/pull/44) ([@jtpio](https://github.com/jtpio))
+- Update dev dependencies, TypeScript 5 [#42](https://github.com/voila-dashboards/voici/pull/42) ([@jtpio](https://github.com/jtpio))
+
+### Contributors to this release
+
+([GitHub contributors page for this release](https://github.com/voila-dashboards/voici/graphs/contributors?from=2023-03-22&to=2023-03-23&type=c))
+
+[@jtpio](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Ajtpio+updated%3A2023-03-22..2023-03-23&type=Issues)
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 0.3.0
 
 ([Full Changelog](https://github.com/voila-dashboards/voici/compare/v0.2.0...49c441b4953d12135f84bee5f54869526ddfbef3))
@@ -27,8 +46,6 @@
 ([GitHub contributors page for this release](https://github.com/voila-dashboards/voici/graphs/contributors?from=2023-03-06&to=2023-03-22&type=c))
 
 [@jtpio](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Ajtpio+updated%3A2023-03-06..2023-03-22&type=Issues) | [@martinRenou](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3AmartinRenou+updated%3A2023-03-06..2023-03-22&type=Issues) | [@trungleduc](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Atrungleduc+updated%3A2023-03-06..2023-03-22&type=Issues)
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 0.2.0
 
