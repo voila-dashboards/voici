@@ -35,7 +35,9 @@ jobs:
           python=${{ matrix.python_version }}
 
     - name: Lint (Python)
-      run: python -m ruff check voici setup.py
+      run: |
+        python -m ruff check .
+        python -m black --check .
 
     - name: Install voici
       run: pip install .
