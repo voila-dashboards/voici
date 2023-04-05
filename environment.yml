@@ -9,5 +9,5 @@ dependencies:
     - ruff==0.0.258
     - voila>=0.5.0a3,<0.6.0
     - voila-material>=0.4.3
-    - jupyterlite-core[lab]>=0.1.0b20,<0.2.0
+    - jupyterlite-core[lab]>=0.1.0,<0.2.0
     - jupyterlite-xeus-python >= 0.7.0
