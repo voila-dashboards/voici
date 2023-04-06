@@ -15,7 +15,7 @@ defaults:
 jobs:
   update-reference-screenshots:
     name: Update UI Tests References
-    if: ${{ github.event.issue.pull_request && contains(github.event.comment.body, 'update playwright references') }}
+    if: ${{ github.event.issue.pull_request && contains(github.event.comment.body, 'update playwright snapshots') }}
     runs-on: ubuntu-latest
 
     steps:

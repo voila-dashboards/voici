@@ -5,6 +5,7 @@ dependencies:
   - pip
   - black
   - yarn=1
+  - nodejs=18
   - pip:
     - ruff==0.0.258
     - voila>=0.5.0a3,<0.6.0
