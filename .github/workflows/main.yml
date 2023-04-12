@@ -52,16 +52,6 @@ jobs:
       run: yarn run build
       working-directory: ui-tests
 
-    - name: Run UI tests
-      run: yarn run start:detached
-      working-directory: ui-tests
-
-    - name: Wait for Voici
-      uses: ifaxity/wait-on-action@v1
-      with:
-        resource: http-get://localhost:8866/
-        timeout: 360000
-
     - name: Test
       run: yarn run test
       working-directory: ui-tests
