@@ -2,6 +2,32 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 0.3.2
+
+([Full Changelog](https://github.com/voila-dashboards/voici/compare/@voila-dashboards/voici@0.3.1...db3b22a3d267337ee8dbded091948ac574588c66))
+
+### Enhancements made
+
+- Create `__main__.py` [#56](https://github.com/voila-dashboards/voici/pull/56) ([@jtpio](https://github.com/jtpio))
+
+### Maintenance and upkeep improvements
+
+- Troubleshoot CI [#55](https://github.com/voila-dashboards/voici/pull/55) ([@jtpio](https://github.com/jtpio))
+- Update to `jupyterlite-core>=0.1.0,<0.2.0` [#50](https://github.com/voila-dashboards/voici/pull/50) ([@jtpio](https://github.com/jtpio))
+- Use `ruff` instead of `flake8`, run `black` [#49](https://github.com/voila-dashboards/voici/pull/49) ([@jtpio](https://github.com/jtpio))
+
+### Documentation improvements
+
+- Create CONTRIBUTING.md [#52](https://github.com/voila-dashboards/voici/pull/52) ([@jtpio](https://github.com/jtpio))
+
+### Contributors to this release
+
+([GitHub contributors page for this release](https://github.com/voila-dashboards/voici/graphs/contributors?from=2023-03-23&to=2023-04-12&type=c))
+
+[@jtpio](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Ajtpio+updated%3A2023-03-23..2023-04-12&type=Issues) | [@martinRenou](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3AmartinRenou+updated%3A2023-03-23..2023-04-12&type=Issues)
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 0.3.1
 
 ([Full Changelog](https://github.com/voila-dashboards/voici/compare/v0.3.0...9ff7f63d4c31d3562a0cfb8ba8e714c4bb7cce20))
@@ -18,8 +44,6 @@
 ([GitHub contributors page for this release](https://github.com/voila-dashboards/voici/graphs/contributors?from=2023-03-22&to=2023-03-23&type=c))
 
 [@jtpio](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Ajtpio+updated%3A2023-03-22..2023-03-23&type=Issues)
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 0.3.0
 
