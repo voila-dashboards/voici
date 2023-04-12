@@ -4,6 +4,7 @@ from pathlib import Path
 
 import jinja2
 
+from copy import deepcopy
 from jupyter_server.utils import url_path_join, url_escape
 
 from nbconvert.exporters import HTMLExporter
@@ -40,23 +41,26 @@ def path_to_content(path: Path, relative_to: Path):
 
 
 def patch_page_config(page_config: Dict, relative_path: Path):
-    page_config = page_config.copy()
+    page_config_copy = deepcopy(page_config)
+
+    # Align the base url with the relative path
+    page_config_copy["baseUrl"] = "../../" + "../" * len(relative_path.parts)
 
     # Grabbing from the Voici static folder
-    page_config["fullStaticUrl"] = f"../{'../' * len(relative_path.parts)}build"
+    page_config_copy["fullStaticUrl"] = f"../{'../' * len(relative_path.parts)}build"
 
     # Grabbing from the jupyterlite static folders
-    page_config[
+    page_config_copy[
         "settingsUrl"
     ] = f"../../{'../' * len(relative_path.parts)}build/schemas"
-    page_config[
+    page_config_copy[
         "themesUrl"
     ] = f"../../../{'../' * len(relative_path.parts)}build/themes"
-    page_config[
+    page_config_copy[
         "fullLabextensionsUrl"
     ] = f"../../{'../' * len(relative_path.parts)}extensions"
 
-    return page_config
+    return page_config_copy
 
 
 class VoiciTreeExporter(HTMLExporter):
@@ -120,7 +124,7 @@ class VoiciTreeExporter(HTMLExporter):
                     page_title=page_title,
                     breadcrumbs=breadcrumbs,
                     page_config=page_config,
-                    base_url="../../" + "../" * len(relative_path.parts),
+                    base_url=page_config["baseUrl"],
                     **self.resources,
                 )
             )
@@ -136,7 +140,7 @@ class VoiciTreeExporter(HTMLExporter):
             voici_exporter = VoiciExporter(
                 voici_config=self.voici_configuration,
                 page_config=page_config,
-                base_url="../../" + "../" * len(relative_path.parts),
+                base_url=page_config["baseUrl"],
             )
 
             return StringIO(voici_exporter.from_filename(notebook_path)[0])

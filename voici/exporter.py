@@ -78,6 +78,15 @@ class VoiciExporter(VoilaExporter):
         def notebook_execute(nb, kernel_id):
             return ""
 
+        page_config = self.update_page_config(nb, self.page_config)
+
+        # align the base url with the one used in the resources
+        # this is because the base Voila template expects the base_url to be in the resources here:
+        # https://github.com/voila-dashboards/voila/blob/0f4cc5360ff387eeaf7e647cee712b2ce08d573a/share/jupyter/voila/templates/lab/index.html.j2#L81
+        # TODO: investigate whether there is something to do in Voila to avoid this
+        base_url = page_config["baseUrl"]
+        resources["base_url"] = base_url
+
         html = []
         for html_snippet in self.template.generate(
             nb=nb_copy,
@@ -90,8 +99,8 @@ class VoiciExporter(VoilaExporter):
             cell_generator=self.cell_generator,
             notebook_execute=notebook_execute,
             static_url=self.static_url,
-            base_url=self.base_url,
-            page_config=self.update_page_config(nb, self.page_config),
+            base_url=base_url,
+            page_config=page_config
         ):
             html.append(html_snippet)
 
