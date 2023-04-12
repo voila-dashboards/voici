@@ -26,7 +26,7 @@ jobs:
         python_version: ['3.10']
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Install Micromamba
       uses: mamba-org/provision-with-micromamba@main
@@ -58,21 +58,21 @@ jobs:
 
     - name: Upload Playwright Test assets
       if: always()
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: voici-test-assets
         path: ui-tests/test-results
 
     - name: Upload Playwright Benchmark report
       if: always()
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: voici-benchmark-report
         path: ui-tests/benchmark-results
 
     - name: Upload Playwright Test report
       if: always()
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: voici-test-report
         path: ui-tests/playwright-report
