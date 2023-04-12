@@ -57,7 +57,8 @@ def patch_page_config(page_config: Dict, relative_path: Path):
         "fullLabextensionsUrl"
     ] = f"../../{'../' * len(relative_path.parts)}extensions"
 
-    # The Themes URL will be joined with the base URL
+    # The Themes URL will be joined with the base URL in the
+    # JupyterLite main application
     page_config_copy["themesUrl"] = "./build/themes"
 
     return page_config_copy
