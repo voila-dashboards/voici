@@ -2153,7 +2153,7 @@
     vega-embed "^6.2.1"
     vega-lite "^5.1.0"
 
-"@jupyterlite/contents@^0.1.0", "@jupyterlite/contents@^0.1.0-beta.18":
+"@jupyterlite/contents@^0.1.0":
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@jupyterlite/contents/-/contents-0.1.0.tgz#aa506bf59c811db9a8e0b02eb40b491db86554f9"
   integrity sha512-SWm72liUhfFrFHcyqxbV+jGRoKJk0JK6cjbYZMOsG0r3E3l7rDtne176MsvD4vIipf7UQeE3lk++dAAst6TnFA==
@@ -2166,7 +2166,7 @@
     localforage "^1.9.0"
     mime "^3.0.0"
 
-"@jupyterlite/iframe-extension@^0.1.0-beta.18":
+"@jupyterlite/iframe-extension@^0.1.0":
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@jupyterlite/iframe-extension/-/iframe-extension-0.1.0.tgz#e614a45f15e009d76a9f81763d291b8efe98d98b"
   integrity sha512-7e2CKFoIJmf0IVAa6tufXmz0UDmvQX+if9AH/F/pSOG9QSwPHlvwEAlNwwATwanjv3ZSxicTTLWx0PBNxU6/1w==
@@ -2175,7 +2175,7 @@
     "@lumino/coreutils" "^1.12.0"
     "@lumino/widgets" "^1.33.0"
 
-"@jupyterlite/kernel@^0.1.0", "@jupyterlite/kernel@^0.1.0-beta.18":
+"@jupyterlite/kernel@^0.1.0":
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@jupyterlite/kernel/-/kernel-0.1.0.tgz#5cd368ff4140c65410934648da3e25f4cba54eb8"
   integrity sha512-94nybVipEz+YrBOxe6wN7oqbe1hLPY1GLkWCeOAUu5NyZQk/eiVozJMY+ukt08SvcUtwTi0yNZZl+5thNzwneA==
@@ -2207,7 +2207,7 @@
     localforage "^1.9.0"
     localforage-memoryStorageDriver "^0.9.2"
 
-"@jupyterlite/server-extension@^0.1.0-beta.18":
+"@jupyterlite/server-extension@^0.1.0":
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@jupyterlite/server-extension/-/server-extension-0.1.0.tgz#aac6c1a38d70e60cf5ca72dcf9d5638435670343"
   integrity sha512-m88Kx+a6FdftWCC/F5Rnk7Vv/sRbDeBzI2YPy/qwyFnYQwLlpLYd/2hDse3zvsv1nP+Y8eWRnxO1s4m0jSg37g==
@@ -2221,7 +2221,7 @@
     "@jupyterlite/settings" "^0.1.0"
     "@jupyterlite/translation" "^0.1.0"
 
-"@jupyterlite/server@^0.1.0", "@jupyterlite/server@^0.1.0-beta.18":
+"@jupyterlite/server@^0.1.0":
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@jupyterlite/server/-/server-0.1.0.tgz#b257617766022e3787449edad3a480f35ef6fd70"
   integrity sha512-BUOVs6kLxDpHgtg3PcUtuGvoixjVFRLUNiiL/ywY56LA22KI1+D5Yp85K9k8IalGkc3FbH0wMblEsmkTUKvAsg==
@@ -11747,15 +11747,15 @@ y18n@^5.0.5:
   resolved "https://registry.yarnpkg.com/y18n/-/y18n-5.0.8.tgz#7f4934d0f7ca8c56f95314939ddcd2dd91ce1d55"
   integrity sha512-0pfFzegeDWJHJIAmTLRP2DwHjdF5s7jo9tuztdQxAhINCdvS+3nGINqPd00AphqJR/0LhANUS6/+7SCb98YOfA==
 
-yallist@*, yallist@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/yallist/-/yallist-4.0.0.tgz#9bb92790d9c0effec63be73519e11a35019a3a72"
-  integrity sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==
-
 yallist@^3.0.2:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/yallist/-/yallist-3.1.1.tgz#dbb7daf9bfd8bac9ab45ebf602b8cbad0d5d08fd"
   integrity sha512-a4UGQaWPH59mOXUYnAG2ewncQS4i4F43Tv3JoAM+s2VDAmS9NsK8GpDMLrCHPksFT7h3K6TOoUNn2pb7RoXx4g==
+
+yallist@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/yallist/-/yallist-4.0.0.tgz#9bb92790d9c0effec63be73519e11a35019a3a72"
+  integrity sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==
 
 yaml@^1.10.0:
   version "1.10.2"
