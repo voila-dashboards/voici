@@ -5,4 +5,12 @@ module.exports = {
     baseURL: 'http://localhost:8866',
     video: 'retain-on-failure',
   },
+  webServer: [
+    {
+      command: 'yarn start',
+      port: 8866,
+      timeout: 120 * 1000,
+      reuseExistingServer: true,
+    },
+  ],
 };
