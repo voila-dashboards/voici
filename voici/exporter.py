@@ -100,7 +100,7 @@ class VoiciExporter(VoilaExporter):
             notebook_execute=notebook_execute,
             static_url=self.static_url,
             base_url=base_url,
-            page_config=page_config
+            page_config=page_config,
         ):
             html.append(html_snippet)
 
