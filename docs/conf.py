@@ -24,6 +24,7 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.intersphinx",
     "sphinx.ext.napoleon",
+    "sphinxcontrib.video",
     "myst_parser",
 ]
 

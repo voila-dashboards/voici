@@ -53,6 +53,7 @@ docs = [
     "pydata-sphinx-theme",
     "sphinx",
     "sphinx-autobuild",
+    "sphinxcontrib-video",
 ]
 
 [project.scripts]
