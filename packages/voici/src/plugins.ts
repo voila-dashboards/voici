@@ -50,12 +50,16 @@ export const themePlugin: JupyterFrontEndPlugin<void> = {
     if (!themeManager) {
       return;
     }
+
     const labThemeName = PageConfig.getOption('labThemeName');
 
     const search = window.location.search;
     const urlParams = new URLSearchParams(search);
     const urltheme = urlParams.get('theme');
     let theme = urltheme ? decodeURIComponent(urltheme) : labThemeName;
+
+    // default to the light theme if the theme is not specified (empty)
+    theme = theme || 'light';
 
     if (theme === 'dark') {
       theme = 'JupyterLab Dark';
