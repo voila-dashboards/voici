@@ -1,5 +1,9 @@
 # Voici
 
+![Github Actions Status](https://github.com/voila-dashboards/voici/actions/workflows/main.yml/badge.svg)
+[![JupyterLite](https://jupyterlite.rtfd.io/en/latest/_static/badge-launch.svg)](https://voici.readthedocs.io/en/latest/_static/lite)
+[![Documentation Status](https://readthedocs.org/projects/voici/badge/?version=latest)](https://voici.readthedocs.io/en/latest/?badge=latest)
+
 🚧 **WARNING: Voici is still a work in progress and should not be used for production workloads.** 🚧
 
 Voici is a tool for generating static dashboards from Jupyter Notebooks. Unlike [Voilà](https://github.com/voila-dashboards/voila), which renders interactive dashboards using server-side execution, Voici uses [WebAssembly](https://developer.mozilla.org/en-US/docs/WebAssembly) (Wasm) kernels to render notebooks in the browser, making the resulting dashboard entirely self-contained and distributable.
