@@ -18,6 +18,12 @@ experience.
 
 Voici is the combination of [Voilà](https://github.com/voila-dashboards/voila) and [JupyterLite](https://github.com/jupyterlite/jupyterlite).
 
+# Try it online
+
+You can try Voici using the following link:
+
+[![JupyterLite](https://jupyterlite.rtfd.io/en/latest/_static/badge-launch.svg)](https://voici.readthedocs.io/en/latest/_static/lite/voici/tree.html)
+
 # Table of contents
 
 For more information about Voici, see the sections below.

@@ -44,6 +44,12 @@ To use the Dark theme, you can use the `--theme` option when building your Voici
 voici build --theme dark
 ```
 
+You can also the `?theme` query parameter to choose the theme while accessing the dashboard. For example:
+
+```text
+https://you-voici-deployment.example.com/voici/render/voici.html?theme=dark
+```
+
 ## Additional Configuration
 
 Voici supports additional configuration provided by JupyterLite, such as using custom extensions and settings.
