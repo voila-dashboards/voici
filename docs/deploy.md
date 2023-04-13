@@ -34,10 +34,10 @@ pip install jupyterlite-xeus-python
 
 ### Build
 
-To build your Voici application, run the following command:
+Let's assume you have a folder named `notebooks` with some notebooks in it. To build your Voici application, run the following command:
 
 ```bash
-voici build
+voici build --contents notebooks
 ```
 
 By default this will create a `_output` folder with the content of your Voici application.
