@@ -5,5 +5,10 @@ build:
   tools:
     python: "mambaforge-4.10"
 
+  jobs:
+    post_build:
+      - yarn build:demo
+      - cp -r demo/_output docs/build/html/_static/lite
+
 conda:
   environment: docs/environment.yml
