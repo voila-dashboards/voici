@@ -9,4 +9,25 @@
 
 # Installing Voici
 
-TODO
+You can install Voici using pip:
+
+```bash
+pip install voici
+```
+
+If you are using a `requirements.txt` file, you can add the following line:
+
+```bash
+# other dependencies
+# ...
+# add Voici as a dependency
+voici
+```
+
+If you are using an `environment.yml` file, you can add the dependency under `pip`:
+
+```yaml
+- name: voici-demo
+  pip:
+    - voici
+```

@@ -16,7 +16,7 @@ interactive dashboard that allows you to share your work with others. It
 is secure and customizable, giving you control over what your readers
 experience.
 
-Voici is the combination of Voilà and JupyterLite.
+Voici is the combination of [Voilà](https://github.com/voila-dashboards/voila) and [JupyterLite](https://github.com/jupyterlite/jupyterlite).
 
 # Table of contents
 
