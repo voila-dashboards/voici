@@ -16,3 +16,40 @@ The template repository contains a GitHub Action that builds the Voici applicati
 ```{video} https://user-images.githubusercontent.com/591645/222892327-2a5b1341-640d-49c2-9e95-1f2d3ec122be.mp4
 
 ```
+
+## Standalone
+
+You can also deploy Voici as a standalone application so it can be hosted anywhere using a simple HTTP server.
+
+### Installation
+
+First install Voici by following the [installation instructions](install.md).
+
+You also need to install a kernel for the language you want to use. For example, to use Python, you can install the `jupyterlite-xeus-python` package.
+Add it to your dependencies, or install it with the following command:
+
+```bash
+pip install jupyterlite-xeus-python
+```
+
+### Build
+
+To build your Voici application, run the following command:
+
+```bash
+voici build
+```
+
+By default this will create a `_output` folder with the content of your Voici application.
+
+You can then serve the content of this folder with a static file server, for example:
+
+```shell
+python -m http.server 8000 --directory _output
+```
+
+Open the URL `http://localhost:8000` in your browser to access your Voici application.
+
+### Configuration
+
+For further configuration options, see the [configuration documentation](configuration.md).
