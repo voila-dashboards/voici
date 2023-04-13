@@ -3,7 +3,7 @@ import os
 # Add dev disclaimer.
 _release = {}
 exec(
-    compile(open("../../voici/_version.py").read(), "../../voici/_version.py", "exec"),
+    compile(open("../voici/_version.py").read(), "../voici/_version.py", "exec"),
     _release,
 )
 if _release["version_info"][-1] == "dev":
@@ -20,11 +20,6 @@ on_rtd = os.environ.get("READTHEDOCS", None) == "True"
 html_theme = "pydata_sphinx_theme"
 html_theme_options = dict(github_url="https://github.com/voila-dashboards/voici")
 
-
-def setup(app):
-    app.add_css_file("main_stylesheet.css")
-
-
 extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.intersphinx",
@@ -32,15 +27,14 @@ extensions = [
     "myst_parser",
 ]
 
-html_static_path = ["_static"]
-source_suffix = ".rst"
+source_suffix = ".md"
 master_doc = "index"
 project = "voici"
 copyright = "2020, The Voilà Development Team"
 author = "The Voilà Development Team"
 version = ".".join(map(str, _release["version_info"][:2]))
 release = _release["__version__"]
-language = None
+language = "en"
 
 html_logo = "voila-logo.svg"
 
