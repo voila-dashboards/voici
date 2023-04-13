@@ -13,7 +13,6 @@ import {
 } from '@jupyterlab/application';
 import { IThemeManager } from '@jupyterlab/apputils';
 import { translatorPlugin, pathsPlugin } from '@voila-dashboards/voila';
-import { PageConfig } from '@jupyterlab/coreutils';
 import { VoiciApp } from './app';
 
 /**
@@ -50,12 +49,11 @@ export const themePlugin: JupyterFrontEndPlugin<void> = {
     if (!themeManager) {
       return;
     }
-    const labThemeName = PageConfig.getOption('labThemeName');
-
     const search = window.location.search;
     const urlParams = new URLSearchParams(search);
     const urltheme = urlParams.get('theme');
-    let theme = urltheme ? decodeURIComponent(urltheme) : labThemeName;
+    // default to the light theme if the theme is not specified
+    let theme = urltheme ? decodeURIComponent(urltheme) : 'light';
 
     if (theme === 'dark') {
       theme = 'JupyterLab Dark';
