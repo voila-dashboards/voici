@@ -1,4 +1,4 @@
-# Contributing to Voici
+# Contributing
 
 Thank you for contributing to Voici!
 
@@ -19,7 +19,7 @@ mamba create -f environment.yml
 mamba activate voici-dev
 
 # Install package in development mode
-pip install -e ".[dev]"
+pip install -e ".[dev,docs]"
 ```
 
 `voici` follows a monorepo structure. To build all the packages at once:
@@ -77,6 +77,30 @@ bot please update playwright snapshots
 ```
 
 This will trigger a GitHub Action that will run the UI tests automatically and push new commits to the branch if the reference snapshots have changed.
+
+## Documentation
+
+First, follow the instructions above to set up a development environment.
+
+Then, to build the documentation:
+
+```bash
+hatch run docs:build
+```
+
+In a separate terminal, start the documentation server:
+
+```bash
+hatch run docs:serve
+```
+
+You can also build and watch the documentation using the following command:
+
+```bash
+hatch run docs:watch
+```
+
+Then open a web browser and navigate to `http://localhost:8000` to access the documentation.
 
 ## Contributing from the browser
 

@@ -19,6 +19,7 @@
   },
   "scripts": {
     "build": "lerna run build",
+    "build:demo": "cd demo && voici build --contents notebooks",
     "build:prod": "lerna run build:prod",
     "build:test": "lerna run build:test",
     "bump:js:version": "lerna version --no-push --force-publish --no-git-tag-version --yes",

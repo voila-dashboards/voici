@@ -48,6 +48,14 @@ dev = [
     "hatch",
 ]
 
+docs = [
+    "myst-parser",
+    "pydata-sphinx-theme",
+    "sphinx",
+    "sphinx-autobuild",
+    "sphinxcontrib-video",
+]
+
 [project.scripts]
 voici = "voici.app:main"
 
@@ -123,3 +131,10 @@ ignore = ["W002"]
 [tool.ruff]
 target-version = "py38"
 line-length = 100
+
+[tool.hatch.envs.docs]
+features = ["docs"]
+[tool.hatch.envs.docs.scripts]
+build = "sphinx-build -W -b html docs docs/build/html"
+watch = "sphinx-autobuild -W -b html docs docs/build/html --host 0.0.0.0"
+serve = "python -m http.server --directory docs/build/html"
