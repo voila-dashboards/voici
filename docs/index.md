@@ -27,4 +27,5 @@ For more information about Voici, see the sections below.
 
 install
 deploy
+contributing
 ```

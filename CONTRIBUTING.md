@@ -1,4 +1,4 @@
-# Contributing to Voici
+# Contributing
 
 Thank you for contributing to Voici!
 
