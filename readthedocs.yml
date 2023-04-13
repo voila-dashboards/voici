@@ -8,7 +8,7 @@ build:
   jobs:
     post_build:
       - yarn build:demo
-      - cp -r demo/_output docs/build/html/_static/lite
+      - cp -r demo/_output _readthedocs/html/_static/lite
 
 conda:
   environment: docs/environment.yml
