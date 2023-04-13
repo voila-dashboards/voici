@@ -2,6 +2,36 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 0.3.3
+
+([Full Changelog](https://github.com/voila-dashboards/voici/compare/@voila-dashboards/voici@0.3.2...1e5b08a398d89d69bcdd746ec47fb09be5b8f0df))
+
+### Enhancements made
+
+- Fix handling of the base url to enable the Service Worker [#59](https://github.com/voila-dashboards/voici/pull/59) ([@jtpio](https://github.com/jtpio))
+
+### Bugs fixed
+
+- Fetch theme name from the body data attribute [#63](https://github.com/voila-dashboards/voici/pull/63) ([@jtpio](https://github.com/jtpio))
+- Fix extra network theme requests [#62](https://github.com/voila-dashboards/voici/pull/62) ([@jtpio](https://github.com/jtpio))
+
+### Maintenance and upkeep improvements
+
+- Add workflow to try Voici on ReadTheDocs [#61](https://github.com/voila-dashboards/voici/pull/61) ([@jtpio](https://github.com/jtpio))
+- Use Playwright `webServer` option [#58](https://github.com/voila-dashboards/voici/pull/58) ([@jtpio](https://github.com/jtpio))
+
+### Documentation improvements
+
+- Update the documentation [#60](https://github.com/voila-dashboards/voici/pull/60) ([@jtpio](https://github.com/jtpio))
+
+### Contributors to this release
+
+([GitHub contributors page for this release](https://github.com/voila-dashboards/voici/graphs/contributors?from=2023-04-12&to=2023-04-13&type=c))
+
+[@jtpio](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Ajtpio+updated%3A2023-04-12..2023-04-13&type=Issues)
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 0.3.2
 
 ([Full Changelog](https://github.com/voila-dashboards/voici/compare/@voila-dashboards/voici@0.3.1...db3b22a3d267337ee8dbded091948ac574588c66))
@@ -25,8 +55,6 @@
 ([GitHub contributors page for this release](https://github.com/voila-dashboards/voici/graphs/contributors?from=2023-03-23&to=2023-04-12&type=c))
 
 [@jtpio](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Ajtpio+updated%3A2023-03-23..2023-04-12&type=Issues) | [@martinRenou](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3AmartinRenou+updated%3A2023-03-23..2023-04-12&type=Issues)
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 0.3.1
 
