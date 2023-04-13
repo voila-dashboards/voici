@@ -2,7 +2,7 @@
 
 ## Templates
 
-You can different templates for your Voici application.
+You can use different templates for your Voici application.
 
 Templates can modify the layout and the appearance of your Voici application. Here are a few template examples:
 
