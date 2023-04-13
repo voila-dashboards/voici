@@ -17,6 +17,16 @@ import { PageConfig } from '@jupyterlab/coreutils';
 import { VoiciApp } from './app';
 
 /**
+ * The name for the default JupyterLab light theme
+ */
+const DEFAULT_JUPYTERLAB_LIGHT_THEME = 'JupyterLab Light';
+
+/**
+ * The name for the default JupyterLab dark theme
+ */
+const DEFAULT_JUPYTERLAB_DARK_THEME = 'JupyterLab Dark';
+
+/**
  * The Voici widgets manager plugin.
  */
 const widgetManager = {
@@ -51,20 +61,23 @@ export const themePlugin: JupyterFrontEndPlugin<void> = {
       return;
     }
 
-    const labThemeName = PageConfig.getOption('labThemeName');
-
     const search = window.location.search;
     const urlParams = new URLSearchParams(search);
     const urltheme = urlParams.get('theme');
+
+    // retrieve the name of the theme as it may already be set as a data attribute on the page
+    const labThemeName = PageConfig.getOption('jpThemeName');
+
+    // query string parameter takes precedence over the page config value
     let theme = urltheme ? decodeURIComponent(urltheme) : labThemeName;
 
     // default to the light theme if the theme is not specified (empty)
     theme = theme || 'light';
 
-    if (theme === 'dark') {
+    if (theme === 'dark' || theme === DEFAULT_JUPYTERLAB_DARK_THEME) {
       theme = 'JupyterLab Dark';
     }
-    if (theme === 'light') {
+    if (theme === 'light' || theme === DEFAULT_JUPYTERLAB_LIGHT_THEME) {
       theme = 'JupyterLab Light';
     }
 
