@@ -43,3 +43,15 @@ To use the Dark theme, you can use the `--theme` option when building your Voici
 ```bash
 voici build --theme dark
 ```
+
+## Additional Configuration
+
+Voici supports additional configuration provided by JupyterLite, such as using custom extensions and settings.
+
+You can refer to the [JupyterLite documentation](https://jupyterlite.readthedocs.io/en/latest/howto/index.html) for more information.
+
+```{warning}
+Some configuration options might not supported yet.
+Please don't hesitate to open an issue on the [Voici repository](https://github.com/voila-dashboards/voici)
+if you would like to use an option not supported by Voici yet.
+```
