@@ -7,7 +7,7 @@ You can use different templates for your Voici application.
 Templates can modify the layout and the appearance of your Voici application. Here are a few template examples:
 
 - [Voila Material](https://github.com/voila-dashboards/voila-material): Material design template for Voilà
-- [Voila GridStack](https://github.com/voila-dashboards/voila-gridstack): Dashboard template for Voilà based on GridStackJS 
+- [Voila GridStack](https://github.com/voila-dashboards/voila-gridstack): Dashboard template for Voilà based on GridStackJS
 
 These templates were originally developed for Voilà, but they can also be used with Voici.
 
