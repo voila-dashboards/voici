@@ -13,7 +13,7 @@ Note: You will need NodeJS to build the extension package.
 
 ```bash
 # create a new environment
-mamba create -f environment.yml
+mamba env create -f environment.yml
 
 # activate the environment
 mamba activate voici-dev
