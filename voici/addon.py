@@ -143,9 +143,9 @@ class VoiciAddon(BaseAddon):
 
     def update_index(self, desc: Path):
         """Update the redirect URL"""
-        contents_path = self.manager.contents[0]
-        if contents_path.is_file():
-            file_name = contents_path.stem
+
+        if len(self.manager.contents) == 1 and self.manager.contents[0].is_file():
+            file_name = self.manager.contents[0].stem
             new_url = f"/voici/render/{file_name}.html"
         else:
             new_url = "/voici/tree/index.html"
