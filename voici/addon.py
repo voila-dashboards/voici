@@ -130,6 +130,32 @@ class VoiciAddon(BaseAddon):
                 ],
             )
 
+        # Update index page
+        yield dict(
+            name=f"voici:update_index:{self.manager.output_dir}",
+            actions=[
+                (
+                    self.update_index,
+                    [self.manager.output_dir / "voici"],
+                )
+            ],
+        )
+
+    def update_index(self, desc: Path):
+        """Update the redirect URL"""
+        contents_path = self.manager.contents[0]
+        if contents_path.is_file():
+            file_name = contents_path.stem
+            new_url = f"/voici/render/{file_name}.html"
+        else:
+            new_url = "/voici/tree/index.html"
+        index_file = desc / "index.html"
+        with open(index_file, "r+") as f:
+            content = f.read()
+            new_content = content.replace(r"{{voici_index_url}}", new_url)
+            f.seek(0)
+            f.write(new_content)
+
     def create_dashboard_or_tree(
         self, generate_file: Callable[[Dict], io.StringIO], dest: Path
     ):
@@ -177,7 +203,7 @@ class VoiciAddon(BaseAddon):
         page_config = config.get(JUPYTER_CONFIG_DATA, {})
 
         # Patch appUrl
-        page_config["appUrl"] = "./voici/tree"
+        page_config["appUrl"] = "./voici"
 
         # Path favicon
         page_config["faviconUrl"] = "./voici/favicon.ico"
