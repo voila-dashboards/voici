@@ -1,19 +1,21 @@
-from traitlets import default
+import os
+import sys
+from copy import deepcopy
 
 from jupyterlite_core.addons import merge_addon_aliases
 from jupyterlite_core.app import (
-    ManagedApp,
-    LiteListApp,
-    LiteStatusApp,
-    LiteInitApp,
+    LiteApp,
+    LiteArchiveApp,
     LiteBuildApp,
     LiteCheckApp,
+    LiteInitApp,
+    LiteListApp,
     LiteServeApp,
-    LiteArchiveApp,
-    LiteApp,
+    LiteStatusApp,
+    ManagedApp,
     lite_aliases,
 )
-
+from traitlets import default
 
 voici_aliases = dict(
     **lite_aliases,
@@ -89,20 +91,46 @@ class VoiciArchiveApp(LiteArchiveApp, VoiciAppMixin):
 class VoiciApp(LiteApp):
     """build ready-to-serve (or -publish) Voici sites"""
 
+    __sub_apps = dict(
+        # special apps
+        list=VoiciListApp,
+        # task apps
+        status=VoiciStatusApp,
+        init=VoiciInitApp,
+        build=VoiciBuildApp,
+        check=VoiciCheckApp,
+        serve=VoiciServeApp,
+        archive=VoiciArchiveApp,
+    )
+
     subcommands = {
-        k: (v, v.__doc__.splitlines()[0].strip())
-        for k, v in dict(
-            # special apps
-            list=VoiciListApp,
-            # task apps
-            status=VoiciStatusApp,
-            init=VoiciInitApp,
-            build=VoiciBuildApp,
-            check=VoiciCheckApp,
-            serve=VoiciServeApp,
-            archive=VoiciArchiveApp,
-        ).items()
+        k: (v, v.__doc__.splitlines()[0].strip()) for k, v in __sub_apps.items()
     }
+
+    def initialize(self, argv=None):
+        arg_list = sys.argv[1:]
+        sub_app = (
+            arg_list[0]
+            if len(arg_list) > 0 and not arg_list[0].startswith("-")
+            else None
+        )
+
+        if sub_app is None or sub_app in self.__sub_apps:
+            super().initialize(argv)
+        else:
+            new_args = deepcopy(arg_list)
+            new_args.insert(0, "build")
+
+            super().initialize(new_args)
+
+            subapp: VoiciBuildApp = self.subapp
+            extra_args = subapp.extra_args
+
+            if len(extra_args) == 1:
+                content_path = subapp.extra_args[0]
+                subapp.contents = (os.path.abspath(content_path),)
+            elif len(extra_args) != 0:
+                raise ValueError(f"Provided more than 1 argument: {extra_args}")
 
 
 main = launch_new_instance = VoiciApp.launch_instance
