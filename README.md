@@ -6,7 +6,9 @@
 
 🚧 **WARNING: Voici is still a work in progress and should not be used for production workloads.** 🚧
 
-Voici is a tool for generating static dashboards from Jupyter Notebooks. Unlike [Voilà](https://github.com/voila-dashboards/voila), which renders interactive dashboards using server-side execution, Voici uses [WebAssembly](https://developer.mozilla.org/en-US/docs/WebAssembly) (Wasm) kernels to render notebooks in the browser, making the resulting dashboard entirely self-contained and distributable.
+Voici is a tool for generating static dashboards from Jupyter Notebooks. It can be used as a drop-in replacement for [Voilà](https://github.com/voila-dashboards/voila) and it has the same commands and supports most of Voila's configuration options.
+
+Unlike Voila, which renders interactive dashboards using server-side execution, Voici uses [WebAssembly](https://developer.mozilla.org/en-US/docs/WebAssembly) (Wasm) kernels to render notebooks in the browser, making the resulting dashboard entirely self-contained and distributable.
 
 This is made possible thanks to the amazing work done in the [JupyterLite project](https://github.com/jupyterlite/jupyterlite).
 
@@ -27,24 +29,35 @@ To use Voici, you'll need to install it first:
 pip install voici
 ```
 
-Then, you can generate static dashboards from a directory of Notebooks like this:
+Then, you can generate static dashboards from a notebook or a directory of Notebooks like this:
 
 ```bash
-voici build --contents notebooks/
+# Build a single dashboard
+voici my-notebook.ipynb
+# Build a directory of notebooks
+voici notebooks/
 ```
 
-Once your dashboards built, you can simply serve them with a simple static server, _e.g._:
+Once your dashboards are built, you can simply serve them with a simple static server, _e.g._:
 
 ```bash
 cd _output
 python -m http.server
 ```
 
-The `voici` command line interface is the same as the `jupyter lite` one. The only difference is that the `voici build` command will only generate Voici dashboards, excluding the full JupyterLab interface from the output. Running `voici build .` is equivalent to running `jupyter lite build . --apps voici`
+## Advanced usage
+The `voici` command line interface is a mix between `voila` and `jupyter lite`. For most cases, users can rely on the `voici` command by using the `voila` CLI syntax. 
+
+For advanced usage, users can invoke `voici` with the `jupyter lite` CLI syntax, _e.g._:
+```bash
+voici build --contents my-notebook.ipynb
+``` 
+The only difference is that the `voici build` command will only generate Voici dashboards, excluding the full JupyterLab interface from the output. Running `voici build --contents .` is equivalent to running `jupyter lite build --contents . --apps voici`.
+
 You can generate the classic `jupyter lite` output alongside your dashboards by specifying the additional apps you want:
 
 ```bash
-voici build --apps lab --apps retro
+voici build --contents . --apps lab --apps retro
 ```
 
 In order to get some help on how to use the `voici` command, you can run:
@@ -55,7 +68,7 @@ voici --help
 
 We'd also suggest looking into the [JupyterLite documentation](https://jupyterlite.readthedocs.io/en/latest/howto/index.html) for more insights on how to configure your `voici` deployment.
 
-### Build the demo site yourself
+## Build the demo site yourself
 
 Before you can build the demo site from this repository, you will need to install [jupyterlite-xeus-python](https://github.com/jupyterlite/xeus-python-kernel):
 
