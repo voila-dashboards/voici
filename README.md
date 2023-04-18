@@ -46,13 +46,16 @@ python -m http.server
 ```
 
 ## Advanced usage
-The `voici` command line interface is a mix between `voila` and `jupyter lite`. For most cases, users can rely on the `voici` command by using the `voila` CLI syntax. 
+
+The `voici` command line interface is a mix between `voila` and `jupyter lite`. For most cases, users can rely on the `voici` command by using the `voila` CLI syntax.
 
 Voici runs the `build` sub-command by default, the `voici my-notebook.ipynb` command is a shortcut for `voici build --contents my-notebook.ipynb`
 For advanced usage, users can invoke `voici` with the `jupyter lite` CLI syntax, _e.g._:
+
 ```bash
 voici build --contents my-notebook.ipynb
-``` 
+```
+
 The difference between `voici build` and `jupyter lite build` commands is that the voici one will only generate Voici dashboards, excluding the full JupyterLab interface from the output. Running `voici build --contents .` is equivalent to running `jupyter lite build --contents . --apps voici`.
 
 You can generate the classic `jupyter lite` output alongside your dashboards by specifying the additional apps you want:
