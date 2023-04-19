@@ -8,12 +8,12 @@
  ****************************************************************************/
 import '@jupyterlab/nbconvert-css/style/index.css';
 
+import 'react-dom';
 import { PageConfig, URLExt } from '@jupyterlab/coreutils';
 import { JupyterLiteServer } from '@jupyterlite/server';
 import { IKernelSpecs } from '@jupyterlite/kernel';
 
 import { VoilaShell } from '@voila-dashboards/voila';
-
 import { VoiciApp } from './app';
 import plugins from './plugins';
 import { loadComponent, createModule, activePlugins } from './utils';
