@@ -235,12 +235,10 @@ export class VoiciApp extends JupyterFrontEnd<IShell> {
         await new Promise((r) => setTimeout(r, 500));
         let executed = false;
 
-        const packagesSrc = PageConfig.getOption('packagesSrc');
         kernel.statusChanged.connect(async (_, status) => {
           if (!executed && status === 'idle') {
             executed = true;
             await App.executeCells({
-              packages: packagesSrc,
               source: notebookModel,
               rendermime,
               kernel: connection.kernel!,
@@ -292,19 +290,11 @@ export namespace App {
   }
 
   export async function executeCells(options: {
-    packages?: string;
     source: NotebookModel;
     rendermime: RenderMimeRegistry;
     kernel: IKernelConnection;
   }): Promise<void> {
-    const { packages, source, rendermime, kernel } = options;
-    if (packages && packages.length > 0) {
-      window.update_loading_text(0, 0, 'Installing dependencies');
-      const future = kernel.requestExecute({
-        code: packages,
-      });
-      await future.done;
-    }
+    const { source, rendermime, kernel } = options;
 
     const cellCount = source.cells.length;
     for (let idx = 0; idx < cellCount; idx++) {
