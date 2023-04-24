@@ -17,6 +17,8 @@ from jupyterlite_core.app import (
 )
 from traitlets import default
 
+from ._version import __version__
+
 voici_aliases = dict(
     **lite_aliases,
     show_tracebacks="VoilaConfiguration.show_tracebacks",
@@ -90,6 +92,8 @@ class VoiciArchiveApp(LiteArchiveApp, VoiciAppMixin):
 
 class VoiciApp(LiteApp):
     """build ready-to-serve (or -publish) Voici sites"""
+
+    version = __version__
 
     __sub_apps = dict(
         # special apps
