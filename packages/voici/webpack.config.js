@@ -45,10 +45,8 @@ fs.ensureDirSync(buildDir);
 
 // Copy files to the build directory
 const libDir = path.resolve(__dirname, 'lib');
-const style = path.resolve(__dirname, 'style.css');
 
 fs.copySync(libDir, buildDir);
-fs.copySync(style, path.resolve(buildDir, 'style.css'));
 
 const distRoot = path.resolve(
   __dirname,

@@ -6,8 +6,6 @@
  *                                                                          *
  * The full license is in the file LICENSE, distributed with this software. *
  ****************************************************************************/
-import '@jupyterlab/nbconvert-css/style/index.css';
-
 import { PageConfig, URLExt } from '@jupyterlab/coreutils';
 import { JupyterLiteServer } from '@jupyterlite/server';
 import {
