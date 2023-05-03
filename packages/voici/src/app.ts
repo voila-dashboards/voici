@@ -326,7 +326,11 @@ export namespace App {
           const wrapper = document.createElement('div');
           wrapper.classList.add('jp-Cell-outputWrapper');
           const collapser = document.createElement('div');
-          collapser.classList.add('jp-Collapser', 'jp-OutputCollapser', 'jp-Cell-outputCollapser');
+          collapser.classList.add(
+            'jp-Collapser',
+            'jp-OutputCollapser',
+            'jp-Cell-outputCollapser'
+          );
           wrapper.appendChild(collapser);
           element.lastElementChild?.appendChild(wrapper);
           area.node.classList.add('jp-Cell-outputArea');
