@@ -305,9 +305,6 @@ export namespace App {
       const cell = source.cells.get(idx);
       window.update_loading_text(idx + 1, cellCount, null);
       if (cell.type !== 'code') {
-        if (idx === cellCount - 1) {
-          window.display_cells();
-        }
         continue;
       }
       const model = new OutputAreaModel({ trusted: true });
@@ -345,14 +342,19 @@ export namespace App {
           );
           wrapper.appendChild(collapser);
           element.lastElementChild?.appendChild(wrapper);
-          area.node.classList.add('jp-Cell-outputArea', 'jp-OutputArea-child');
+
+          area.node.classList.add('jp-Cell-outputArea');
+
+          // Why do we need this? Are we missing a CSS class?
+          area.node.style.display = 'flex';
+          area.node.style.flexDirection = 'column';
+
           Widget.attach(area, wrapper);
         }
       }
-      if (idx === cellCount - 1) {
-        window.display_cells();
-        window.dispatchEvent(new Event('resize'));
-      }
     }
+
+    window.display_cells();
+    window.dispatchEvent(new Event('resize'));
   }
 }
