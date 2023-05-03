@@ -345,7 +345,7 @@ export namespace App {
           );
           wrapper.appendChild(collapser);
           element.lastElementChild?.appendChild(wrapper);
-          area.node.classList.add('jp-Cell-outputArea');
+          area.node.classList.add('jp-Cell-outputArea', 'jp-OutputArea-child');
           Widget.attach(area, wrapper);
         }
       }
