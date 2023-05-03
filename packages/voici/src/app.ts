@@ -5,7 +5,7 @@ import {
 } from '@jupyterlab/application';
 
 import { PageConfig } from '@jupyterlab/coreutils';
-import { OutputAreaModel, SimplifiedOutputArea } from '@jupyterlab/outputarea';
+import { OutputAreaModel, OutputArea } from '@jupyterlab/outputarea';
 import { IRenderMime } from '@jupyterlab/rendermime';
 import { NotebookModel } from '@jupyterlab/notebook';
 import { ServiceManager } from '@jupyterlab/services';
@@ -307,7 +307,7 @@ export namespace App {
         continue;
       }
       const model = new OutputAreaModel({ trusted: true });
-      const area = new SimplifiedOutputArea({
+      const area = new OutputArea({
         model,
         rendermime,
       });
@@ -325,8 +325,11 @@ export namespace App {
           );
           const wrapper = document.createElement('div');
           wrapper.classList.add('jp-Cell-outputWrapper');
+          const collapser = document.createElement('div');
+          collapser.classList.add('jp-Collapser', 'jp-OutputCollapser', 'jp-Cell-outputCollapser');
+          wrapper.appendChild(collapser);
           element.lastElementChild?.appendChild(wrapper);
-          area.node.classList.add('jp-Cell-outputArea', 'jp-OutputArea-child');
+          area.node.classList.add('jp-Cell-outputArea');
           Widget.attach(area, wrapper);
         }
       }
