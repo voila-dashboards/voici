@@ -126,7 +126,11 @@ class VoiciExporter(VoilaExporter):
         page_config_copy["notebookSrc"] = nb
 
         # We need to forward some Jinja configuration options to the frontend rendering logic
-        page_config_copy["include_output"] = resources["global_content_filter"]["include_output"]
-        page_config_copy["include_output_prompt"] = resources["global_content_filter"]["include_output_prompt"]
+        page_config_copy["include_output"] = resources["global_content_filter"][
+            "include_output"
+        ]
+        page_config_copy["include_output_prompt"] = resources["global_content_filter"][
+            "include_output_prompt"
+        ]
 
         return page_config_copy
