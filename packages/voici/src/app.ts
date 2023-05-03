@@ -313,7 +313,7 @@ export namespace App {
       const model = new OutputAreaModel({ trusted: true });
 
       let area: OutputArea | SimplifiedOutputArea;
-      if (PageConfig.getOption('include_output_prompt')) {
+      if (PageConfig.getOption('include_output_prompt') === 'true') {
         area = new OutputArea({
           model,
           rendermime,
