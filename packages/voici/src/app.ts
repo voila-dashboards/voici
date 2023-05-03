@@ -144,11 +144,6 @@ export class VoiciApp extends JupyterFrontEnd<IShell> {
   }
 
   async renderWidgets(): Promise<void> {
-    if (PageConfig.getOption('include_output')) {
-      // No need to execute anything, right?
-      return;
-    }
-
     const serviceManager = this._serviceManager;
     if (!serviceManager) {
       console.error('Missing service manager');
@@ -334,8 +329,7 @@ export namespace App {
       });
       await area.future.done;
       const element = document.querySelector(`[cell-index="${idx + 1}"]`);
-
-      if (element) {
+      if (element && PageConfig.getOption('include_output')) {
         if (area.node.childNodes.length > 0) {
           element.lastElementChild?.classList.remove(
             'jp-mod-noOutputs',
