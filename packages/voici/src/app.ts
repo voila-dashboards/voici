@@ -5,7 +5,7 @@ import {
 } from '@jupyterlab/application';
 
 import { PageConfig } from '@jupyterlab/coreutils';
-import { OutputAreaModel, OutputArea } from '@jupyterlab/outputarea';
+import { OutputAreaModel, OutputArea, SimplifiedOutputArea } from '@jupyterlab/outputarea';
 import { IRenderMime } from '@jupyterlab/rendermime';
 import { NotebookModel } from '@jupyterlab/notebook';
 import { ServiceManager } from '@jupyterlab/services';
@@ -140,6 +140,11 @@ export class VoiciApp extends JupyterFrontEnd<IShell> {
   }
 
   async renderWidgets(): Promise<void> {
+    if (PageConfig.getOption("include_output")) {
+      // No need to execute anything, right?
+      return;
+    }
+
     const serviceManager = this._serviceManager;
     if (!serviceManager) {
       console.error('Missing service manager');
@@ -307,10 +312,19 @@ export namespace App {
         continue;
       }
       const model = new OutputAreaModel({ trusted: true });
-      const area = new OutputArea({
-        model,
-        rendermime,
-      });
+
+      let area: OutputArea | SimplifiedOutputArea;
+      if (PageConfig.getOption('include_output_prompt')) {
+        area = new OutputArea({
+          model,
+          rendermime,
+        });
+      } else {
+        area = new SimplifiedOutputArea({
+          model,
+          rendermime,
+        });
+      }
       area.future = kernel.requestExecute({
         code: cell.value.text,
       });

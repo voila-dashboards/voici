@@ -78,7 +78,7 @@ class VoiciExporter(VoilaExporter):
         def notebook_execute(nb, kernel_id):
             return ""
 
-        page_config = self.update_page_config(nb, self.page_config)
+        page_config = self.update_page_config(nb, resources, self.page_config)
 
         # align the base url with the one used in the resources
         # this is because the base Voila template expects the base_url to be in the resources here:
@@ -120,9 +120,11 @@ class VoiciExporter(VoilaExporter):
         # assets like CSS and theming instead of serving them from the server
         return super(VoilaExporter, self)._init_resources(resources)
 
-    def update_page_config(self, nb, page_config):
+    def update_page_config(self, nb, resources, page_config):
         page_config_copy = deepcopy(page_config)
 
         page_config_copy["notebookSrc"] = nb
+        page_config_copy["include_output"] = resources["global_content_filter"]["include_output"]
+        page_config_copy["include_output_prompt"] = resources["global_content_filter"]["include_output_prompt"]
 
         return page_config_copy
