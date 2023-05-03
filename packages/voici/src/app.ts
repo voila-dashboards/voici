@@ -5,7 +5,11 @@ import {
 } from '@jupyterlab/application';
 
 import { PageConfig } from '@jupyterlab/coreutils';
-import { OutputAreaModel, OutputArea, SimplifiedOutputArea } from '@jupyterlab/outputarea';
+import {
+  OutputAreaModel,
+  OutputArea,
+  SimplifiedOutputArea,
+} from '@jupyterlab/outputarea';
 import { IRenderMime } from '@jupyterlab/rendermime';
 import { NotebookModel } from '@jupyterlab/notebook';
 import { ServiceManager } from '@jupyterlab/services';
@@ -140,7 +144,7 @@ export class VoiciApp extends JupyterFrontEnd<IShell> {
   }
 
   async renderWidgets(): Promise<void> {
-    if (PageConfig.getOption("include_output")) {
+    if (PageConfig.getOption('include_output')) {
       // No need to execute anything, right?
       return;
     }
