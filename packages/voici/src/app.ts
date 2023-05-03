@@ -5,7 +5,11 @@ import {
 } from '@jupyterlab/application';
 
 import { PageConfig } from '@jupyterlab/coreutils';
-import { OutputAreaModel, SimplifiedOutputArea } from '@jupyterlab/outputarea';
+import {
+  OutputAreaModel,
+  OutputArea,
+  SimplifiedOutputArea,
+} from '@jupyterlab/outputarea';
 import { IRenderMime } from '@jupyterlab/rendermime';
 import { NotebookModel } from '@jupyterlab/notebook';
 import { ServiceManager } from '@jupyterlab/services';
@@ -307,17 +311,25 @@ export namespace App {
         continue;
       }
       const model = new OutputAreaModel({ trusted: true });
-      const area = new SimplifiedOutputArea({
-        model,
-        rendermime,
-      });
+
+      let area: OutputArea | SimplifiedOutputArea;
+      if (PageConfig.getOption('include_output_prompt') === 'true') {
+        area = new OutputArea({
+          model,
+          rendermime,
+        });
+      } else {
+        area = new SimplifiedOutputArea({
+          model,
+          rendermime,
+        });
+      }
       area.future = kernel.requestExecute({
         code: cell.value.text,
       });
       await area.future.done;
       const element = document.querySelector(`[cell-index="${idx + 1}"]`);
-
-      if (element) {
+      if (element && PageConfig.getOption('include_output')) {
         if (area.node.childNodes.length > 0) {
           element.lastElementChild?.classList.remove(
             'jp-mod-noOutputs',
@@ -325,6 +337,13 @@ export namespace App {
           );
           const wrapper = document.createElement('div');
           wrapper.classList.add('jp-Cell-outputWrapper');
+          const collapser = document.createElement('div');
+          collapser.classList.add(
+            'jp-Collapser',
+            'jp-OutputCollapser',
+            'jp-Cell-outputCollapser'
+          );
+          wrapper.appendChild(collapser);
           element.lastElementChild?.appendChild(wrapper);
           area.node.classList.add('jp-Cell-outputArea', 'jp-OutputArea-child');
           Widget.attach(area, wrapper);
