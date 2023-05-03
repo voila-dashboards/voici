@@ -2,6 +2,28 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 0.4.2
+
+([Full Changelog](https://github.com/voila-dashboards/voici/compare/@voila-dashboards/voici@0.4.1...3af43dac56a9f9e26d6a2161e0b0cdbd1573949a))
+
+### Bugs fixed
+
+- Fix outputs DOM structure [#74](https://github.com/voila-dashboards/voici/pull/74) ([@martinRenou](https://github.com/martinRenou))
+- Remove custom styling [#71](https://github.com/voila-dashboards/voici/pull/71) ([@martinRenou](https://github.com/martinRenou))
+- Fix version printing [#72](https://github.com/voila-dashboards/voici/pull/72) ([@martinRenou](https://github.com/martinRenou))
+
+### Documentation improvements
+
+- Update WIP comment [#73](https://github.com/voila-dashboards/voici/pull/73) ([@martinRenou](https://github.com/martinRenou))
+
+### Contributors to this release
+
+([GitHub contributors page for this release](https://github.com/voila-dashboards/voici/graphs/contributors?from=2023-04-21&to=2023-05-03&type=c))
+
+[@github-actions](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Agithub-actions+updated%3A2023-04-21..2023-05-03&type=Issues) | [@martinRenou](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3AmartinRenou+updated%3A2023-04-21..2023-05-03&type=Issues)
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 0.4.1
 
 ([Full Changelog](https://github.com/voila-dashboards/voici/compare/@voila-dashboards/voici@0.4.0...417746aff5b4f3faa7b254e8c516a46e59a67155))
@@ -19,8 +41,6 @@
 ([GitHub contributors page for this release](https://github.com/voila-dashboards/voici/graphs/contributors?from=2023-04-18&to=2023-04-21&type=c))
 
 [@github-actions](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Agithub-actions+updated%3A2023-04-18..2023-04-21&type=Issues) | [@martinRenou](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3AmartinRenou+updated%3A2023-04-18..2023-04-21&type=Issues) | [@trungleduc](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Atrungleduc+updated%3A2023-04-18..2023-04-21&type=Issues)
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 0.4.0
 
