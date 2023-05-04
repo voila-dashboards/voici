@@ -6,15 +6,16 @@
  *                                                                          *
  * The full license is in the file LICENSE, distributed with this software. *
  ****************************************************************************/
-import 'react-dom';
-import { PageConfig, URLExt } from '@jupyterlab/coreutils';
-import { JupyterLiteServer } from '@jupyterlite/server';
-import { IKernelSpecs } from '@jupyterlite/kernel';
+import './sharedscope';
 
+import { PageConfig, URLExt } from '@jupyterlab/coreutils';
+import { IKernelSpecs } from '@jupyterlite/kernel';
+import { JupyterLiteServer } from '@jupyterlite/server';
 import { VoilaShell } from '@voila-dashboards/voila';
+
 import { VoiciApp } from './app';
 import plugins from './plugins';
-import { loadComponent, createModule, activePlugins } from './utils';
+import { activePlugins, createModule, loadComponent } from './utils';
 
 const serverExtensions = [import('@jupyterlite/server-extension')];
 
