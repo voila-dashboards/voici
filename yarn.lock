@@ -1365,7 +1365,7 @@
     jquery "^3.1.1"
     lodash "^4.17.4"
 
-"@jupyter-widgets/controls@^5.0.1", "@jupyter-widgets/controls@^5.0.5":
+"@jupyter-widgets/controls@^5.0.5":
   version "5.0.5"
   resolved "https://registry.yarnpkg.com/@jupyter-widgets/controls/-/controls-5.0.5.tgz#076b75a0c04a946a5bd8fd1d3401f428dbe673f3"
   integrity sha512-Y6NvKdE1Pkp/3tS/gJUIv1fxmRkCrbWx8SLDxA29QJrEriC/Kpjoq4qMBtL6JwS+UNcouLuX+jfhBtaDw8d5Xw==
@@ -1412,7 +1412,7 @@
     jquery "^3.1.1"
     semver "^7.3.5"
 
-"@jupyter-widgets/output@^6.0.1", "@jupyter-widgets/output@^6.0.4":
+"@jupyter-widgets/output@^6.0.4":
   version "6.0.4"
   resolved "https://registry.yarnpkg.com/@jupyter-widgets/output/-/output-6.0.4.tgz#991d1a1b904a28daa3fd74f0d148455b9e475623"
   integrity sha512-wwh/RjYNcP1dQsd4HcMYlRx+hlIAOJ2cnG/iQY+e34Fm90kzIElm9gNL8eRzHFmT3psg6c6zW9cIvg+q6Gd3ag==
