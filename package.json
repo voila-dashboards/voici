@@ -26,7 +26,6 @@
     "clean": "lerna run clean",
     "eslint": "eslint . --ext .ts,.tsx,.js,.jsx --fix",
     "eslint:check": "eslint . --ext .ts,.tsx,.js,.jsx",
-    "install": "lerna bootstrap",
     "prettier": "prettier --write \"**/*{.ts,.tsx,.js,.jsx,.css,.json,.md}\"",
     "prettier:check": "prettier --list-different \"**/*{.ts,.tsx,.js,.jsx,.css,.json,.md}\"",
     "test": "lerna run test"
@@ -49,7 +48,7 @@
     "jest-junit": "^15.0.0",
     "jest-raw-loader": "^1.0.1",
     "jest-summary-reporter": "^0.0.2",
-    "lerna": "^6.6.0",
+    "lerna": "^7.0.0",
     "lint-staged": "^10.4.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.8.6",

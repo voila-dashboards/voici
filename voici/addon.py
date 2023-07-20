@@ -25,6 +25,15 @@ from jupyterlite_core.constants import (
 
 from .tree_exporter import VoiciTreeExporter
 
+# Try to patch xeus-python's jupyter-widgets version st. we pull the right one
+try:
+    from jupyterlite_xeus_python.env_build_addon import XeusPythonEnv
+
+    if hasattr(XeusPythonEnv, "pin_packages"):
+        XeusPythonEnv.pin_packages = ["ipywidgets=8.0.6", "jupyterlab_widgets=3.0.7"]
+except ImportError:
+    pass
+
 
 class VoiciAddon(BaseAddon):
     """The Voici JupyterLite app"""

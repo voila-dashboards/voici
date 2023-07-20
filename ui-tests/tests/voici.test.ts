@@ -6,7 +6,12 @@ import { expect, test } from '@playwright/test';
 test.describe('Voici Tests', () => {
   test.beforeEach(({ page }) => {
     page.setDefaultTimeout(600000);
+
+    page.on('console', (message) => {
+      console.log('CONSOLE MSG ---', message.text());
+    });
   });
+
   test.afterEach(async ({ page }) => {
     await page.close({ runBeforeUnload: true });
   });
