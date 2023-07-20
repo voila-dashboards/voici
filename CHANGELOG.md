@@ -2,6 +2,26 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 0.4.5
+
+([Full Changelog](https://github.com/voila-dashboards/voici/compare/@voila-dashboards/voici@0.4.4...429caa514b916cfd68786098633e7612517603ed))
+
+### Bugs fixed
+
+- Pin hard Voila [#85](https://github.com/voila-dashboards/voici/pull/85) ([@martinRenou](https://github.com/martinRenou))
+
+### Documentation improvements
+
+- Fix launch lite link in the documentation [#81](https://github.com/voila-dashboards/voici/pull/81) ([@jtpio](https://github.com/jtpio))
+
+### Contributors to this release
+
+([GitHub contributors page for this release](https://github.com/voila-dashboards/voici/graphs/contributors?from=2023-05-04&to=2023-07-20&type=c))
+
+[@github-actions](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Agithub-actions+updated%3A2023-05-04..2023-07-20&type=Issues) | [@jtpio](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Ajtpio+updated%3A2023-05-04..2023-07-20&type=Issues) | [@martinRenou](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3AmartinRenou+updated%3A2023-05-04..2023-07-20&type=Issues)
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 0.4.4
 
 ([Full Changelog](https://github.com/voila-dashboards/voici/compare/v0.4.3...a8c9f8559318c28938f1b1a75c967a66b28e1f8f))
@@ -15,8 +35,6 @@
 ([GitHub contributors page for this release](https://github.com/voila-dashboards/voici/graphs/contributors?from=2023-05-03&to=2023-05-04&type=c))
 
 [@trungleduc](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Atrungleduc+updated%3A2023-05-03..2023-05-04&type=Issues)
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 0.4.3
 
