@@ -7,6 +7,7 @@ dependencies:
   - nodejs=18
   - sphinx
   - pydata-sphinx-theme
+  - jupyterlab-night
   - yarn=1
   - pip:
     - jupyterlite-xeus-python >= 0.9.0,<0.10.0
