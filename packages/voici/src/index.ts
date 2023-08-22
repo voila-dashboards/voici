@@ -169,7 +169,7 @@ async function main() {
 
   const serviceManager = jupyterLiteServer.serviceManager;
   const app = new VoiciApp({
-    serviceManager: serviceManager as any,
+    serviceManager: serviceManager,
     kernelspecs,
     mimeExtensions,
     shell: new VoilaShell(),

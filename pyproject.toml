@@ -31,7 +31,7 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
 ]
 dependencies = [
-    "voila==0.5.0a4",
+    "voila==0.5.0",
     "jupyterlite-core>=0.1.0,<0.2.0",
 ]
 dynamic = [

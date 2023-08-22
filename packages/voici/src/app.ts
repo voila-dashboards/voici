@@ -26,6 +26,7 @@ import {
 } from '@jupyter-widgets/jupyterlab-manager';
 import { PromiseDelegate } from '@lumino/coreutils';
 import { Widget } from '@lumino/widgets';
+import { IKernelspecMetadata } from '@jupyterlab/nbformat';
 
 const PACKAGE = require('../package.json');
 
@@ -156,10 +157,13 @@ export class VoiciApp extends JupyterFrontEnd<IShell> {
     const notebookModel = new NotebookModel();
     notebookModel.fromString(PageConfig.getOption('notebookSrc'));
 
-    let requestedKernelspec = notebookModel.metadata.get('kernelspec') as any;
+    let requestedKernelspec = notebookModel.metadata['kernelspec'] as
+      | IKernelspecMetadata
+      | undefined;
     if (!requestedKernelspec) {
       requestedKernelspec = {
         name: 'python',
+        display_name: 'python',
       };
     }
 
@@ -270,6 +274,7 @@ export namespace App {
       Partial<IInfo> {
     paths?: Partial<JupyterFrontEnd.IPaths>;
     kernelspecs?: IKernelSpecs;
+    serviceManager?: ServiceManager;
   }
 
   /**
@@ -321,8 +326,10 @@ export namespace App {
           rendermime,
         });
       }
+      console.log('executing', cell.sharedModel.getSource());
+
       area.future = kernel.requestExecute({
-        code: cell.value.text,
+        code: cell.sharedModel.getSource(),
       });
       await area.future.done;
       const element = document.querySelector(`[cell-index="${idx + 1}"]`);

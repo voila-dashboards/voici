@@ -35,6 +35,13 @@
       "pre-commit": "lint-staged"
     }
   },
+  "resolutions": {
+    "@jupyterlite/contents": "file:/home/trungle/work/jupyterlite/packages/contents",
+    "@jupyterlite/iframe-extension": "file:/home/trungle/work/jupyterlite/packages/iframe-extension",
+    "@jupyterlite/kernel": "file:/home/trungle/work/jupyterlite/packages/kernel",
+    "@jupyterlite/server": "file:/home/trungle/work/jupyterlite/packages/server",
+    "@jupyterlite/server-extension": "file:/home/trungle/work/jupyterlite/packages/server-extension"
+  },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.56.0",
     "@typescript-eslint/parser": "^5.56.0",
