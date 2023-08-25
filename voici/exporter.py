@@ -9,7 +9,8 @@
 
 
 from copy import deepcopy
-
+from functools import partial
+from voila.utils import include_lab_theme
 from jupyter_server.services.contents.largefilemanager import LargeFileManager
 
 from nbconvert.exporters import TemplateExporter
@@ -118,7 +119,9 @@ class VoiciExporter(VoilaExporter):
     def _init_resources(self, resources):
         # Not calling Voila's _init_resources, because we want to embed static
         # assets like CSS and theming instead of serving them from the server
-        return super(VoilaExporter, self)._init_resources(resources)
+        new_resources = super(VoilaExporter, self)._init_resources(resources)
+        new_resources['include_lab_theme'] = partial(include_lab_theme, self.base_url)
+        return new_resources
 
     def update_page_config(self, nb, resources, page_config):
         page_config_copy = deepcopy(page_config)

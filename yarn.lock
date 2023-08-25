@@ -3057,9 +3057,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jupyterlite/contents@file:/home/trungle/work/jupyterlite/packages/contents::locator=%40voila-dashboards%2Fvoici-root%40workspace%3A.":
+"@jupyterlite/contents@file:/home/trungle/WORK/jupyterlite/packages/contents::locator=%40voila-dashboards%2Fvoici-root%40workspace%3A.":
   version: 0.1.2
-  resolution: "@jupyterlite/contents@file:/home/trungle/work/jupyterlite/packages/contents#/home/trungle/work/jupyterlite/packages/contents::hash=ed9205&locator=%40voila-dashboards%2Fvoici-root%40workspace%3A."
+  resolution: "@jupyterlite/contents@file:/home/trungle/WORK/jupyterlite/packages/contents#/home/trungle/WORK/jupyterlite/packages/contents::hash=4e6ee6&locator=%40voila-dashboards%2Fvoici-root%40workspace%3A."
   dependencies:
     "@jupyterlab/nbformat": ~4.0.4
     "@jupyterlab/services": ~7.0.4
@@ -3068,24 +3068,24 @@ __metadata:
     "@types/emscripten": ^1.39.6
     localforage: ^1.9.0
     mime: ^3.0.0
-  checksum: 34152f7fdc45c08017f30528a8bcbebb3959ac54eafb8af2b243392101dbefdd4fac02df00026881a24d26dc265c0b86f32c4f33337e83207c951d21717bf1a2
+  checksum: 1db22cbba20d65f4a1722505cdb3ee8d93de520478e2286a890c5c85a62ac7ed548b2e7cda63544a3a1b41c53b201f88cb5ab5e446a74559ddc0388d67d0dbb5
   languageName: node
   linkType: hard
 
-"@jupyterlite/iframe-extension@file:/home/trungle/work/jupyterlite/packages/iframe-extension::locator=%40voila-dashboards%2Fvoici-root%40workspace%3A.":
+"@jupyterlite/iframe-extension@file:/home/trungle/WORK/jupyterlite/packages/iframe-extension::locator=%40voila-dashboards%2Fvoici-root%40workspace%3A.":
   version: 0.1.2
-  resolution: "@jupyterlite/iframe-extension@file:/home/trungle/work/jupyterlite/packages/iframe-extension#/home/trungle/work/jupyterlite/packages/iframe-extension::hash=eb5c53&locator=%40voila-dashboards%2Fvoici-root%40workspace%3A."
+  resolution: "@jupyterlite/iframe-extension@file:/home/trungle/WORK/jupyterlite/packages/iframe-extension#/home/trungle/WORK/jupyterlite/packages/iframe-extension::hash=a6e555&locator=%40voila-dashboards%2Fvoici-root%40workspace%3A."
   dependencies:
     "@jupyterlab/rendermime-interfaces": ~3.8.4
     "@lumino/coreutils": ^2.1.2
     "@lumino/widgets": ^2.3.0
-  checksum: db707c99dbea17c6db4abebe9442d43ad2ecd010f237f1d0a4240a5d5378840b2b58970b73b6cd0a2c53d9cd75281dd14c8a32def8eaed9eeb2a5893fe585a96
+  checksum: 2fd2ae0f5e6fbede95d0624323068da107c395754d3135dfeafa6bac4b1c2ed469e971cc01bdf3c9d6c30ebb07125b8658b4c7985ddfb8e3a6bae4b0078c3db0
   languageName: node
   linkType: hard
 
-"@jupyterlite/kernel@file:/home/trungle/work/jupyterlite/packages/kernel::locator=%40voila-dashboards%2Fvoici-root%40workspace%3A.":
+"@jupyterlite/kernel@file:/home/trungle/WORK/jupyterlite/packages/kernel::locator=%40voila-dashboards%2Fvoici-root%40workspace%3A.":
   version: 0.1.2
-  resolution: "@jupyterlite/kernel@file:/home/trungle/work/jupyterlite/packages/kernel#/home/trungle/work/jupyterlite/packages/kernel::hash=83422a&locator=%40voila-dashboards%2Fvoici-root%40workspace%3A."
+  resolution: "@jupyterlite/kernel@file:/home/trungle/WORK/jupyterlite/packages/kernel#/home/trungle/WORK/jupyterlite/packages/kernel::hash=52baa9&locator=%40voila-dashboards%2Fvoici-root%40workspace%3A."
   dependencies:
     "@jupyterlab/coreutils": ~6.0.4
     "@jupyterlab/observables": ~5.0.4
@@ -3096,11 +3096,11 @@ __metadata:
     async-mutex: ^0.3.1
     comlink: ^4.3.1
     mock-socket: ^9.1.0
-  checksum: e248964146bed66b3fefb093c059fc25692ced2a5e4675062d4ffeaff4670fdd1a050673f951fabc00a952d7a30229fd58a83938fa68df639db0c471b13e6952
+  checksum: d35e6e7eff5b837b3cf3ae743efb247cc2b1a458480f0fffa852e87564e681d6f48f8efed0ab6b3953b38dac09220ad9b8ac773a9b51f0aac4fd17a0fcc69547
   languageName: node
   linkType: hard
 
-"@jupyterlite/licenses@npm:^0.1.1":
+"@jupyterlite/licenses@npm:^0.1.2":
   version: 0.1.2
   resolution: "@jupyterlite/licenses@npm:0.1.2"
   dependencies:
@@ -3121,25 +3121,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jupyterlite/server-extension@file:/home/trungle/work/jupyterlite/packages/server-extension::locator=%40voila-dashboards%2Fvoici-root%40workspace%3A.":
+"@jupyterlite/server-extension@file:/home/trungle/WORK/jupyterlite/packages/server-extension::locator=%40voila-dashboards%2Fvoici-root%40workspace%3A.":
   version: 0.1.2
-  resolution: "@jupyterlite/server-extension@file:/home/trungle/work/jupyterlite/packages/server-extension#/home/trungle/work/jupyterlite/packages/server-extension::hash=9ff3f3&locator=%40voila-dashboards%2Fvoici-root%40workspace%3A."
+  resolution: "@jupyterlite/server-extension@file:/home/trungle/WORK/jupyterlite/packages/server-extension#/home/trungle/WORK/jupyterlite/packages/server-extension::hash=8bfc73&locator=%40voila-dashboards%2Fvoici-root%40workspace%3A."
   dependencies:
     "@jupyterlab/coreutils": ~6.0.4
-    "@jupyterlite/kernel": ^0.1.1
-    "@jupyterlite/licenses": ^0.1.1
+    "@jupyterlite/kernel": ^0.1.2
+    "@jupyterlite/licenses": ^0.1.2
     "@jupyterlite/localforage": ^0.1.2
     "@jupyterlite/server": ^0.1.2
     "@jupyterlite/session": ^0.1.2
     "@jupyterlite/settings": ^0.1.2
     "@jupyterlite/translation": ^0.1.2
-  checksum: 1b09538037d5def7b9948c61ed48758362b7b93f1bccb9f9f6c25be05a22bf44f8d0bd8117b1e58246582e82282107d3f6cff06b5af73640911df49f4832cb34
+  checksum: e7147670aa6ee6f30b5826b073eb8704969292da8b8e447d214e64edb5d6e1e2747368e4c1610b4dc27e5a1bb0e1efc8dabc7f6572c6825fc0afda5e0b08feab
   languageName: node
   linkType: hard
 
-"@jupyterlite/server@file:/home/trungle/work/jupyterlite/packages/server::locator=%40voila-dashboards%2Fvoici-root%40workspace%3A.":
+"@jupyterlite/server@file:/home/trungle/WORK/jupyterlite/packages/server::locator=%40voila-dashboards%2Fvoici-root%40workspace%3A.":
   version: 0.1.2
-  resolution: "@jupyterlite/server@file:/home/trungle/work/jupyterlite/packages/server#/home/trungle/work/jupyterlite/packages/server::hash=52a707&locator=%40voila-dashboards%2Fvoici-root%40workspace%3A."
+  resolution: "@jupyterlite/server@file:/home/trungle/WORK/jupyterlite/packages/server#/home/trungle/WORK/jupyterlite/packages/server::hash=0b76b7&locator=%40voila-dashboards%2Fvoici-root%40workspace%3A."
   dependencies:
     "@jupyterlab/coreutils": ~6.0.4
     "@jupyterlab/nbformat": ~4.0.4
@@ -3156,7 +3156,7 @@ __metadata:
     "@lumino/coreutils": ^2.1.2
     "@lumino/signaling": ^2.1.2
     mock-socket: ^9.1.0
-  checksum: c46415b048d1d9cf47215c0e7e48d302d0c3af4b9a242c4d953ecd3e64bedd44f17c68f7c716d234a2a592e761ce0a9c5ee71bea68bd34a39a7dafd1754b58bb
+  checksum: c8ebf063d4473b012463f40d21e9b3f50bc95a876c0b117276b24637220df7a5f39b4dbc2d5b92a6f07b1a4dddaa11e5c70689868ee7e34c88ecc8507a5caefe
   languageName: node
   linkType: hard
 
@@ -3350,12 +3350,12 @@ __metadata:
   linkType: hard
 
 "@lezer/javascript@npm:^1.0.0":
-  version: 1.4.6
-  resolution: "@lezer/javascript@npm:1.4.6"
+  version: 1.4.7
+  resolution: "@lezer/javascript@npm:1.4.7"
   dependencies:
     "@lezer/highlight": ^1.1.3
     "@lezer/lr": ^1.3.0
-  checksum: 0f2a44ebfe4a9177aaa755a42fcb1a00cf08bb8bf6149389754303f5aace2f94edc475c33637a55c66aab7e9367c1e087979ee37e342c84d541ff08eb9e8f695
+  checksum: 37c05793e0e45280fa5d7b845a3132a84596105d48b7d2c195abea0a198477ea6719b07d1c8967679e80fc466388151956901fd6962479c130ffda64a6d09591
   languageName: node
   linkType: hard
 
@@ -4354,11 +4354,11 @@ __metadata:
   linkType: hard
 
 "@types/jquery@npm:*":
-  version: 3.5.16
-  resolution: "@types/jquery@npm:3.5.16"
+  version: 3.5.17
+  resolution: "@types/jquery@npm:3.5.17"
   dependencies:
     "@types/sizzle": "*"
-  checksum: 13c995f15d1c2f1d322103dc1cb0a22b95eecc3e7546f00279b8731aea21d7ec04550af40e609ee48e755d4e11bf61c25b4aa9f53df3bcbec4b8fe8e81471732
+  checksum: be289003382a8d4a1c6eab9c68845e919e467926557493033e78f6793ed8acd482b01b7b47955e4bf51f65f9b05607beccb32d31d649a2b42f3b07f1444d1f1a
   languageName: node
   linkType: hard
 
@@ -4391,9 +4391,9 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*":
-  version: 20.5.2
-  resolution: "@types/node@npm:20.5.2"
-  checksum: 46d032bb9a1db687693f6351702572d2f1e12face32caf8182323413918de27d4ac16cc2b15ff6b891651313e602da18edbdd095d16d2b5a26588c2edffca892
+  version: 20.5.3
+  resolution: "@types/node@npm:20.5.3"
+  checksum: fe67a0fd7402218bdf91523a2b1c2e41d619f7294b1a471e0a778b8bc7bb3fcf291aed12041bcbe9622d50a3d1295a9adea0e7e19bb9386a246bf66071404721
   languageName: node
   linkType: hard
 
@@ -4426,13 +4426,13 @@ __metadata:
   linkType: hard
 
 "@types/react@npm:^18.0.26":
-  version: 18.2.20
-  resolution: "@types/react@npm:18.2.20"
+  version: 18.2.21
+  resolution: "@types/react@npm:18.2.21"
   dependencies:
     "@types/prop-types": "*"
     "@types/scheduler": "*"
     csstype: ^3.0.2
-  checksum: 30f699c60e5e4bfef273ce64d320651cdd60f5c6a08361c6c7eca8cebcccda1ac953d2ee57c9f321b5ae87f8a62c72b6d35ca42df0e261d337849952daab2141
+  checksum: ffed203bfe7aad772b8286f7953305c9181ac3a8f27d3f5400fbbc2a8e27ca8e5bbff818ee014f39ca0d19d2b3bb154e5bdbec7e232c6f80b59069375aa78349
   languageName: node
   linkType: hard
 
@@ -4472,9 +4472,9 @@ __metadata:
   linkType: hard
 
 "@types/underscore@npm:*":
-  version: 1.11.6
-  resolution: "@types/underscore@npm:1.11.6"
-  checksum: 89b92c35d1b464c9fcddc2683ea41ad1aaa0b298e7243e5ae808ea3dfd545062ca83b0d63515f89578f84cb479de877dbb61f1bb2fcc2a7e5755812f42b09b8b
+  version: 1.11.7
+  resolution: "@types/underscore@npm:1.11.7"
+  checksum: 6e60e22e509687a9b15668c08db9fd27fe61e26564f0c74466d80a8501bcbdca80247f722a4aadc503f62cfdc9a8dfa5f7a0f30f3e61946c88e8088eef5b61f5
   languageName: node
   linkType: hard
 
@@ -6965,9 +6965,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.477":
-  version: 1.4.498
-  resolution: "electron-to-chromium@npm:1.4.498"
-  checksum: 01962ae42e9097c321cb6ff63ca97dfd36457050727893d1768e6eb1b7d5a48ece568b94b1128fd0211f7ce3a31aca0c17eb72b1292d9b5ef7b0664d90dfe3aa
+  version: 1.4.499
+  resolution: "electron-to-chromium@npm:1.4.499"
+  checksum: 9002f3bcd9018f38b3496c2ced5393c6144d3a09bc5e1ea9866541045f6364841a6d11afe8c5977838835bc70f50f8caee63ba928a910e68ac1eed45afd18120
   languageName: node
   linkType: hard
 
@@ -13882,21 +13882,21 @@ __metadata:
 
 "typescript@patch:typescript@>=3 < 6#~builtin<compat/typescript>":
   version: 5.1.6
-  resolution: "typescript@patch:typescript@npm%3A5.1.6#~builtin<compat/typescript>::version=5.1.6&hash=85af82"
+  resolution: "typescript@patch:typescript@npm%3A5.1.6#~builtin<compat/typescript>::version=5.1.6&hash=5da071"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 21e88b0a0c0226f9cb9fd25b9626fb05b4c0f3fddac521844a13e1f30beb8f14e90bd409a9ac43c812c5946d714d6e0dee12d5d02dfc1c562c5aacfa1f49b606
+  checksum: f53bfe97f7c8b2b6d23cf572750d4e7d1e0c5fff1c36d859d0ec84556a827b8785077bc27676bf7e71fae538e517c3ecc0f37e7f593be913d884805d931bc8be
   languageName: node
   linkType: hard
 
 "typescript@patch:typescript@~5.0.2#~builtin<compat/typescript>":
   version: 5.0.4
-  resolution: "typescript@patch:typescript@npm%3A5.0.4#~builtin<compat/typescript>::version=5.0.4&hash=85af82"
+  resolution: "typescript@patch:typescript@npm%3A5.0.4#~builtin<compat/typescript>::version=5.0.4&hash=b5f058"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: bb309d320c59a26565fb3793dba550576ab861018ff3fd1b7fccabbe46ae4a35546bc45f342c0a0b6f265c801ccdf64ffd68f548f117ceb7f0eac4b805cd52a9
+  checksum: d26b6ba97b6d163c55dbdffd9bbb4c211667ebebc743accfeb2c8c0154aace7afd097b51165a72a5bad2cf65a4612259344ff60f8e642362aa1695c760d303ac
   languageName: node
   linkType: hard
 

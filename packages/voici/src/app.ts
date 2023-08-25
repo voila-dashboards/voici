@@ -243,14 +243,19 @@ export class VoiciApp extends JupyterFrontEnd<IShell> {
         await new Promise((r) => setTimeout(r, 500));
         let executed = false;
 
-        kernel.statusChanged.connect(async (_, status) => {
+        kernel.statusChanged.connect(async (kernelConnection, status) => {
           if (!executed && status === 'idle') {
             executed = true;
             await App.executeCells({
               source: notebookModel,
               rendermime,
-              kernel: connection.kernel!,
+              kernel: kernelConnection,
             });
+            const node = document.getElementById('rendered_cells');
+            if (node) {
+              const cells = new Widget({ node });
+              this.shell.add(cells, 'main');
+            }
           }
         });
       }

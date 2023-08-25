@@ -79,7 +79,6 @@ class VoiciTreeExporter(HTMLExporter):
 
         self.notebook_paths = []
 
-        self.resources = self._init_resources({})
 
     def allowed_content(self, content: Dict) -> bool:
         return content["type"] == "notebook" or content["type"] == "directory"
@@ -125,8 +124,7 @@ class VoiciTreeExporter(HTMLExporter):
                     page_title=page_title,
                     breadcrumbs=breadcrumbs,
                     page_config=page_config,
-                    base_url=page_config["baseUrl"],
-                    **self.resources,
+                    base_url=page_config["baseUrl"]
                 )
             )
 

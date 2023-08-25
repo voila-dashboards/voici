@@ -7,15 +7,18 @@
  * The full license is in the file LICENSE, distributed with this software. *
  ****************************************************************************/
 import './sharedscope';
-
 import { PageConfig, URLExt } from '@jupyterlab/coreutils';
 import { IKernelSpecs } from '@jupyterlite/kernel';
 import { JupyterLiteServer } from '@jupyterlite/server';
-import { VoilaShell } from '@voila-dashboards/voila';
+import {
+  VoilaShell,
+  loadComponent,
+  activePlugins,
+  createModule,
+} from '@voila-dashboards/voila';
 
 import { VoiciApp } from './app';
-import plugins from './plugins';
-import { activePlugins, createModule, loadComponent } from './utils';
+import plugins from './voiciplugins';
 
 const serverExtensions = [import('@jupyterlite/server-extension')];
 
@@ -39,8 +42,6 @@ async function main() {
     require('@jupyterlab/markdownviewer-extension'),
     require('@jupyterlab/mathjax2-extension'),
     require('@jupyterlab/rendermime-extension'),
-    // TODO: add the settings endpoint to re-enable the theme plugins?
-    // This would also need the theme manager plugin and settings
     require('@jupyterlab/theme-light-extension'),
     require('@jupyterlab/theme-dark-extension'),
     plugins,

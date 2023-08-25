@@ -11,3 +11,6 @@ declare function update_loading_text(
   text: string | null
 );
 declare function display_cells();
+
+declare var themeLoaded: boolean;
+declare var cellLoaded: boolean;

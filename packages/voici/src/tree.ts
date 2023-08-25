@@ -12,11 +12,13 @@ import {
   pathsPlugin,
   translatorPlugin,
   VoilaShell,
+  activePlugins,
+  createModule,
+  loadComponent,
 } from '@voila-dashboards/voila';
 
 import { VoiciApp } from './app';
-import { themePlugin } from './plugins';
-import { activePlugins, createModule, loadComponent } from './utils';
+import { themePlugin } from './plugins/themes';
 
 const serverExtensions = [import('@jupyterlite/server-extension')];
 
