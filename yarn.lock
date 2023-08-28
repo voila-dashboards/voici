@@ -4731,9 +4731,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@voila-dashboards/voila@npm:^0.5.0":
-  version: 0.5.0
-  resolution: "@voila-dashboards/voila@npm:0.5.0"
+"@voila-dashboards/voila@file:/home/trungle/WORK/voila/packages/voila::locator=%40voila-dashboards%2Fvoici-root%40workspace%3A.":
+  version: 0.5.1
+  resolution: "@voila-dashboards/voila@file:/home/trungle/WORK/voila/packages/voila#/home/trungle/WORK/voila/packages/voila::hash=7ad815&locator=%40voila-dashboards%2Fvoici-root%40workspace%3A."
   dependencies:
     "@jupyter-widgets/base": ^6.0.5
     "@jupyter-widgets/jupyterlab-manager": ^5.0.8
@@ -4778,7 +4778,7 @@ __metadata:
     react: ^18.2.0
     react-dom: ^18.2.0
     style-mod: ^4.0.3
-  checksum: a5aeef8db0a39e8f022aaaff3d13079467aa3498299a687238f00b3c32de389083c115cad6b1b4dab75f11e4d36cb0ff6075bf4d49dbad067a6d2fa455f82bdf
+  checksum: dc9b11bdedfdbc04b66a7f3263139595c3efdff71bd61f819e5f45260661aa6c5a8cde132adba06b7ee47d140204b1c3f216c2aa03b4537e0c00ebbebff98dbd
   languageName: node
   linkType: hard
 

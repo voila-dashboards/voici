@@ -1,2 +1,2 @@
 import('./index.js');
-import '../style/index.js';
+import '@voila-dashboards/voila/style/index.js';

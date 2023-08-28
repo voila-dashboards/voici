@@ -9,21 +9,23 @@
 import { PageConfig, URLExt } from '@jupyterlab/coreutils';
 import { JupyterLiteServer } from '@jupyterlite/server';
 import {
-  pathsPlugin,
-  translatorPlugin,
-  VoilaShell,
   activePlugins,
   createModule,
   loadComponent,
+  pathsPlugin,
+  themesManagerPlugin,
+  translatorPlugin,
+  VoilaShell,
 } from '@voila-dashboards/voila';
-
 import { VoiciApp } from './app';
 import { themePlugin } from './plugins/themes';
+import { treeWidgetPlugin } from './plugins/tree';
 
 const serverExtensions = [import('@jupyterlite/server-extension')];
 
 const disabled = [
   '@jupyter-widgets/jupyterlab-manager:plugin',
+  '@jupyter-widgets/jupyterlab-manager:base',
   '@jupyter-widgets/jupyterlab-manager:saveWidgetState',
 ];
 
@@ -33,17 +35,13 @@ const disabled = [
 async function main() {
   const mods = [
     // @jupyterlab plugins
-    require('@jupyterlab/apputils-extension').default.filter((m: any) =>
-      [
-        '@jupyterlab/apputils-extension:settings',
-        '@jupyterlab/apputils-extension:themes',
-      ].includes(m.id)
-    ),
     require('@jupyterlab/theme-light-extension'),
     require('@jupyterlab/theme-dark-extension'),
+    themesManagerPlugin,
     translatorPlugin,
     pathsPlugin,
     themePlugin,
+    treeWidgetPlugin,
   ];
 
   const mimeExtensions: any[] = [];

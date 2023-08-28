@@ -15,6 +15,7 @@ import {
   loadComponent,
   activePlugins,
   createModule,
+  themesManagerPlugin,
 } from '@voila-dashboards/voila';
 
 import { VoiciApp } from './app';
@@ -33,17 +34,12 @@ const disabled = [
 async function main() {
   const mods = [
     // @jupyterlab plugins
-    require('@jupyterlab/apputils-extension').default.filter((m: any) =>
-      [
-        '@jupyterlab/apputils-extension:settings',
-        '@jupyterlab/apputils-extension:themes',
-      ].includes(m.id)
-    ),
     require('@jupyterlab/markdownviewer-extension'),
     require('@jupyterlab/mathjax2-extension'),
     require('@jupyterlab/rendermime-extension'),
     require('@jupyterlab/theme-light-extension'),
     require('@jupyterlab/theme-dark-extension'),
+    themesManagerPlugin,
     plugins,
   ];
 

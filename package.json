@@ -40,7 +40,8 @@
     "@jupyterlite/iframe-extension": "file:/home/trungle/WORK/jupyterlite/packages/iframe-extension",
     "@jupyterlite/kernel": "file:/home/trungle/WORK/jupyterlite/packages/kernel",
     "@jupyterlite/server": "file:/home/trungle/WORK/jupyterlite/packages/server",
-    "@jupyterlite/server-extension": "file:/home/trungle/WORK/jupyterlite/packages/server-extension"
+    "@jupyterlite/server-extension": "file:/home/trungle/WORK/jupyterlite/packages/server-extension",
+    "@voila-dashboards/voila": "file:/home/trungle/WORK/voila/packages/voila"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.56.0",

@@ -30,7 +30,10 @@ export const themePlugin: JupyterFrontEndPlugin<void> = {
   id: '@voila-dashboards/voici:theme-manager',
   autoStart: true,
   optional: [IThemeManager],
-  activate: (app: JupyterFrontEnd, themeManager: IThemeManager | null) => {
+  activate: async (
+    app: JupyterFrontEnd,
+    themeManager: IThemeManager | null
+  ) => {
     if (!themeManager) {
       return;
     }
@@ -42,30 +45,34 @@ export const themePlugin: JupyterFrontEndPlugin<void> = {
     // retrieve the name of the theme as it may already be set as a data attribute on the page
     const labThemeName = PageConfig.getOption('jpThemeName');
     // query string parameter takes precedence over the page config value
+
     let theme = urltheme ? decodeURIComponent(urltheme) : labThemeName;
 
     // default to the light theme if the theme is not specified (empty)
     theme = theme || 'light';
 
-    if (theme === 'dark' || theme === DEFAULT_JUPYTERLAB_DARK_THEME) {
-      theme = 'JupyterLab Dark';
+    if (theme === 'dark') {
+      theme = DEFAULT_JUPYTERLAB_DARK_THEME;
     }
-    if (theme === 'light' || theme === DEFAULT_JUPYTERLAB_LIGHT_THEME) {
-      theme = 'JupyterLab Light';
+    if (theme === 'light') {
+      theme = DEFAULT_JUPYTERLAB_LIGHT_THEME;
     }
-    let cellDisplayed = false;
-    themeManager.themeChanged.connect((_, b) => {
-      console.log('changed', b);
-      if (!cellDisplayed) {
-        cellDisplayed = true;
-        window.themeLoaded = true;
-        if (window.cellLoaded) {
-          window.display_cells();
-        }
+
+    if (theme !== labThemeName) {
+      // Use the theme manager if the theme is specified via URL.
+      await themeManager.setTheme(theme);
+    } else {
+      if (
+        // The light and dark theme is embedded in the page.
+        theme !== DEFAULT_JUPYTERLAB_DARK_THEME &&
+        theme !== DEFAULT_JUPYTERLAB_LIGHT_THEME
+      ) {
+        await themeManager.setTheme(theme);
       }
-      if (!b.oldValue) {
-        themeManager.setTheme(theme);
-      }
-    });
+    }
+    window.themeLoaded = true;
+    if (window.cellLoaded) {
+      window.display_cells();
+    }
   },
 };
