@@ -70,11 +70,19 @@ def patch_page_config(
     else:
         themeName = config.theme
     page_config_copy["jpThemeName"] = themeName
+
+    page_config_copy[
+        "fullMathjaxUrl"
+    ] = f'{page_config_copy["baseUrl"]}{page_config_copy["fullMathjaxUrl"]}'
     return page_config_copy
 
+
 def resources_include_css(env, name):
-    code = """<style type="text/css">\n%s</style>""" % (env.loader.get_source(env, name)[0])
+    code = """<style type="text/css">\n%s</style>""" % (
+        env.loader.get_source(env, name)[0]
+    )
     return markupsafe.Markup(code)
+
 
 class VoiciTreeExporter(HTMLExporter):
     def __init__(
@@ -140,7 +148,7 @@ class VoiciTreeExporter(HTMLExporter):
                     base_url=page_config["baseUrl"],
                     include_css=partial(resources_include_css, self.jinja2_env),
                     include_lab_theme=partial(include_lab_theme, None),
-                    theme=self.validate_theme(self.theme, False)
+                    theme=self.validate_theme(self.theme, False),
                 )
             )
 

@@ -10,13 +10,9 @@ import {
   OutputArea,
   SimplifiedOutputArea,
 } from '@jupyterlab/outputarea';
-import { IRenderMime } from '@jupyterlab/rendermime';
+import { IRenderMime, IRenderMimeRegistry } from '@jupyterlab/rendermime';
 import { NotebookModel } from '@jupyterlab/notebook';
 import { ServiceManager } from '@jupyterlab/services';
-import {
-  RenderMimeRegistry,
-  standardRendererFactories,
-} from '@jupyterlab/rendermime';
 import { IShell, VoilaShell } from '@voila-dashboards/voila';
 import { IKernelConnection } from '@jupyterlab/services/lib/kernel/kernel';
 import { IKernelSpecs } from '@jupyterlite/kernel';
@@ -215,10 +211,9 @@ export class VoiciApp extends JupyterFrontEnd<IShell> {
     kernel.connectionStatusChanged.connect(async (_, status) => {
       if (status === 'connected') {
         window.update_loading_text(0, 0, 'Starting up kernel...');
-        const rendermime = new RenderMimeRegistry({
-          initialFactories: standardRendererFactories,
-        });
-
+        const rendermime = await this.resolveRequiredService(
+          IRenderMimeRegistry
+        );
         // Create Voila widget manager
         const widgetManager = new KernelWidgetManager(kernel, rendermime);
         rendermime.removeMimeType(WIDGET_MIMETYPE);
@@ -305,11 +300,10 @@ export namespace App {
 
   export async function executeCells(options: {
     source: NotebookModel;
-    rendermime: RenderMimeRegistry;
+    rendermime: IRenderMimeRegistry;
     kernel: IKernelConnection;
   }): Promise<void> {
     const { source, rendermime, kernel } = options;
-
     const cellCount = source.cells.length;
     for (let idx = 0; idx < cellCount; idx++) {
       const cell = source.cells.get(idx);
@@ -331,11 +325,10 @@ export namespace App {
           rendermime,
         });
       }
-      console.log('executing', cell.sharedModel.getSource());
-
       area.future = kernel.requestExecute({
         code: cell.sharedModel.getSource(),
       });
+
       await area.future.done;
       const element = document.querySelector(`[cell-index="${idx + 1}"]`);
       if (element && PageConfig.getOption('include_output')) {

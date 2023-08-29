@@ -34,6 +34,10 @@ const disabled = [
 async function main() {
   const mods = [
     // @jupyterlab plugins
+    require('@jupyterlab/codemirror-extension').default.filter(
+      (p: any) => p.id === '@jupyterlab/codemirror-extension:languages'
+    ),
+    require('@jupyterlab/markedparser-extension'),
     require('@jupyterlab/markdownviewer-extension'),
     require('@jupyterlab/mathjax2-extension'),
     require('@jupyterlab/rendermime-extension'),
@@ -46,6 +50,8 @@ async function main() {
   const mimeExtensions = [
     require('@jupyterlite/iframe-extension'),
     require('@jupyterlab/json-extension'),
+    require('@jupyterlab/javascript-extension'),
+    require('@jupyterlab/vega5-extension'),
   ];
 
   const extensionData = JSON.parse(
@@ -165,6 +171,7 @@ async function main() {
   );
 
   const serviceManager = jupyterLiteServer.serviceManager;
+
   const app = new VoiciApp({
     serviceManager: serviceManager,
     kernelspecs,

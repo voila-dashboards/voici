@@ -34,6 +34,12 @@ export const treeWidgetPlugin: JupyterFrontEndPlugin<void> = {
     const fbModel = new FilterFileBrowserModel({
       manager: docManager,
       refreshInterval: 2147483646,
+      filter: (value) => {
+        if (value.type === 'notebook' || value.type === 'directory') {
+          return {};
+        }
+        return null;
+      },
     });
     const urlFactory = (path: string) => {
       const dir = PathExt.dirname(path);
