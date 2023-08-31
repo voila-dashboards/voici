@@ -16,7 +16,7 @@ from jupyterlite_core.app import (
     lite_aliases,
 )
 from traitlets import default
-
+from jupyter_core.application import JupyterApp
 from ._version import __version__
 
 voici_aliases = dict(
@@ -25,6 +25,7 @@ voici_aliases = dict(
     strip_sources="VoilaConfiguration.strip_sources",
     template="VoilaConfiguration.template",
     theme="VoilaConfiguration.theme",
+    **{"classic-tree": "VoilaConfiguration.classic_tree"},
 )
 
 

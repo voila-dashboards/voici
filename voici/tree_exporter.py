@@ -187,8 +187,10 @@ class VoiciTreeExporter(HTMLExporter):
             breadcrumbs = self.generate_breadcrumbs(
                 relative_path, len(relative_path.parts)
             )
+        classic_tree = self.voici_configuration.classic_tree
+        template_name = "tree-lab.html" if not classic_tree else "tree.html"
 
-        template = self.jinja2_env.get_template("tree-lab.html")
+        template = self.jinja2_env.get_template(template_name)
 
         page_title = self.generate_page_title(path)
 
