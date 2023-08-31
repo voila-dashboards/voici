@@ -47,7 +47,7 @@ export const treeWidgetPlugin: JupyterFrontEndPlugin<void> = {
       const ext = PathExt.extname(path);
       const newPath = `${dir}/${baseName.replace(ext, '.html')}`;
       const baseUrl = PageConfig.getBaseUrl();
-      const query = PageConfig.getOption('query');
+      const query = new URLSearchParams(window.location.search).toString();
       return URLExt.join(baseUrl, 'voici', 'render', newPath) + `?${query}`;
     };
     const fb = new VoilaFileBrowser({

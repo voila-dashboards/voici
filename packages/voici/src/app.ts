@@ -1,28 +1,21 @@
 import {
-  JupyterFrontEnd,
-  JupyterFrontEndPlugin,
-  createRendermimePlugins,
-} from '@jupyterlab/application';
-
-import { PageConfig } from '@jupyterlab/coreutils';
-import {
-  OutputAreaModel,
-  OutputArea,
-  SimplifiedOutputArea,
-} from '@jupyterlab/outputarea';
-import { IRenderMime, IRenderMimeRegistry } from '@jupyterlab/rendermime';
-import { NotebookModel } from '@jupyterlab/notebook';
-import { ServiceManager } from '@jupyterlab/services';
-import { IShell, VoilaShell } from '@voila-dashboards/voila';
-import { IKernelConnection } from '@jupyterlab/services/lib/kernel/kernel';
-import { IKernelSpecs } from '@jupyterlite/kernel';
-import {
   KernelWidgetManager,
   WidgetRenderer,
 } from '@jupyter-widgets/jupyterlab-manager';
-import { PromiseDelegate } from '@lumino/coreutils';
-import { Widget } from '@lumino/widgets';
+import { PageConfig } from '@jupyterlab/coreutils';
 import { IKernelspecMetadata } from '@jupyterlab/nbformat';
+import { NotebookModel } from '@jupyterlab/notebook';
+import {
+  OutputArea,
+  OutputAreaModel,
+  SimplifiedOutputArea,
+} from '@jupyterlab/outputarea';
+import { IRenderMimeRegistry } from '@jupyterlab/rendermime';
+import { ServiceManager } from '@jupyterlab/services';
+import { IKernelConnection } from '@jupyterlab/services/lib/kernel/kernel';
+import { IKernelSpecs } from '@jupyterlite/kernel';
+import { Widget } from '@lumino/widgets';
+import { App as VoilaAppNameSpace, VoilaApp } from '@voila-dashboards/voila';
 
 const PACKAGE = require('../package.json');
 
@@ -31,23 +24,14 @@ const WIDGET_MIMETYPE = 'application/vnd.jupyter.widget-view+json';
 /**
  * App is the main application class. It is instantiated once and shared.
  */
-export class VoiciApp extends JupyterFrontEnd<IShell> {
+export class VoiciApp extends VoilaApp {
   /**
    * Construct a new App object.
    *
    * @param options The instantiation options for an application.
    */
   constructor(options: App.IOptions) {
-    super({
-      ...options,
-      shell: options.shell ?? new VoilaShell(),
-    });
-    if (options.mimeExtensions) {
-      for (const plugin of createRendermimePlugins(options.mimeExtensions)) {
-        this.registerPlugin(plugin);
-      }
-    }
-
+    super(options);
     this._kernelspecs = options.kernelspecs;
     this._serviceManager = options.serviceManager;
   }
@@ -55,90 +39,12 @@ export class VoiciApp extends JupyterFrontEnd<IShell> {
   /**
    * The name of the application.
    */
-  readonly name = 'Voici';
-
-  /**
-   * A namespace/prefix plugins may use to denote their provenance.
-   */
-  readonly namespace = this.name;
+  readonly name: string = 'Voici';
 
   /**
    * The version of the application.
    */
   readonly version = PACKAGE['version'];
-
-  /**
-   * A promise that resolves when the Voici Widget Manager is created
-   */
-  get widgetManagerPromise(): PromiseDelegate<KernelWidgetManager> {
-    return this._widgetManagerPromise;
-  }
-
-  /**
-   * The JupyterLab application paths dictionary.
-   */
-  get paths(): JupyterFrontEnd.IPaths {
-    return {
-      urls: {
-        base: PageConfig.getOption('baseUrl'),
-        notFound: PageConfig.getOption('notFoundUrl'),
-        app: PageConfig.getOption('appUrl'),
-        static: PageConfig.getOption('staticUrl'),
-        settings: PageConfig.getOption('settingsUrl'),
-        themes: PageConfig.getOption('themesUrl'),
-        doc: PageConfig.getOption('docUrl'),
-        translations: PageConfig.getOption('translationsApiUrl'),
-        hubHost: PageConfig.getOption('hubHost') || undefined,
-        hubPrefix: PageConfig.getOption('hubPrefix') || undefined,
-        hubUser: PageConfig.getOption('hubUser') || undefined,
-        hubServerName: PageConfig.getOption('hubServerName') || undefined,
-      },
-      directories: {
-        appSettings: PageConfig.getOption('appSettingsDir'),
-        schemas: PageConfig.getOption('schemasDir'),
-        static: PageConfig.getOption('staticDir'),
-        templates: PageConfig.getOption('templatesDir'),
-        themes: PageConfig.getOption('themesDir'),
-        userSettings: PageConfig.getOption('userSettingsDir'),
-        serverRoot: PageConfig.getOption('serverRoot'),
-        workspaces: PageConfig.getOption('workspacesDir'),
-      },
-    };
-  }
-
-  /**
-   * Register plugins from a plugin module.
-   *
-   * @param mod - The plugin module to register.
-   */
-  registerPluginModule(mod: App.IPluginModule): void {
-    let data = mod.default;
-    // Handle commonjs exports.
-    if (!Object.prototype.hasOwnProperty.call(mod, '__esModule')) {
-      data = mod as any;
-    }
-    if (!Array.isArray(data)) {
-      data = [data];
-    }
-    data.forEach((item) => {
-      try {
-        this.registerPlugin(item);
-      } catch (error) {
-        console.error(error);
-      }
-    });
-  }
-
-  /**
-   * Register the plugins from multiple plugin modules.
-   *
-   * @param mods - The plugin modules to register.
-   */
-  registerPluginModules(mods: App.IPluginModule[]): void {
-    mods.forEach((mod) => {
-      this.registerPluginModule(mod);
-    });
-  }
 
   async renderWidgets(): Promise<void> {
     const serviceManager = this._serviceManager;
@@ -226,7 +132,7 @@ export class VoiciApp extends JupyterFrontEnd<IShell> {
           },
           -10
         );
-        this._widgetManagerPromise.resolve(widgetManager);
+        this.widgetManager = widgetManager;
         if (!connection.kernel) {
           return;
         }
@@ -259,7 +165,6 @@ export class VoiciApp extends JupyterFrontEnd<IShell> {
 
   private _serviceManager?: ServiceManager;
   private _kernelspecs?: IKernelSpecs;
-  private _widgetManagerPromise = new PromiseDelegate<KernelWidgetManager>();
 }
 
 /**
@@ -269,33 +174,9 @@ export namespace App {
   /**
    * The instantiation options for an App application.
    */
-  export interface IOptions
-    extends JupyterFrontEnd.IOptions<IShell>,
-      Partial<IInfo> {
-    paths?: Partial<JupyterFrontEnd.IPaths>;
+  export interface IOptions extends VoilaAppNameSpace.IOptions {
     kernelspecs?: IKernelSpecs;
     serviceManager?: ServiceManager;
-  }
-
-  /**
-   * The information about a Voila application.
-   */
-  export interface IInfo {
-    /**
-     * The mime renderer extensions.
-     */
-    readonly mimeExtensions: IRenderMime.IExtensionModule[];
-  }
-
-  /**
-   * The interface for a module that exports a plugin or plugins as
-   * the default value.
-   */
-  export interface IPluginModule {
-    /**
-     * The default export.
-     */
-    default: JupyterFrontEndPlugin<any> | JupyterFrontEndPlugin<any>[];
   }
 
   export async function executeCells(options: {

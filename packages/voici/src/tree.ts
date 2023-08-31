@@ -6,6 +6,8 @@
  *                                                                          *
  * The full license is in the file LICENSE, distributed with this software. *
  ****************************************************************************/
+import '@voila-dashboards/voila/style/index.js';
+
 import { PageConfig, URLExt } from '@jupyterlab/coreutils';
 import { JupyterLiteServer } from '@jupyterlite/server';
 import {
@@ -23,10 +25,12 @@ import { treeWidgetPlugin } from './plugins/tree';
 
 const serverExtensions = [import('@jupyterlite/server-extension')];
 
-const disabled = [
+export const TREE_DISABLED_EXTENSIONS = [
   '@jupyter-widgets/jupyterlab-manager:plugin',
-  '@jupyter-widgets/jupyterlab-manager:base',
   '@jupyter-widgets/jupyterlab-manager:saveWidgetState',
+  '@jupyter-widgets/jupyterlab-manager:base-2.0.0',
+  '@jupyter-widgets/jupyterlab-manager:controls-2.0.0',
+  '@jupyter-widgets/jupyterlab-manager:output-1.0.0',
 ];
 
 /**
@@ -37,9 +41,9 @@ async function main() {
     // @jupyterlab plugins
     require('@jupyterlab/theme-light-extension'),
     require('@jupyterlab/theme-dark-extension'),
-    themesManagerPlugin,
-    translatorPlugin,
     pathsPlugin,
+    translatorPlugin,
+    themesManagerPlugin,
     themePlugin,
     treeWidgetPlugin,
   ];
@@ -95,7 +99,7 @@ async function main() {
   );
   federatedExtensions.forEach((p) => {
     if (p.status === 'fulfilled') {
-      for (const plugin of activePlugins(p.value, disabled)) {
+      for (const plugin of activePlugins(p.value, TREE_DISABLED_EXTENSIONS)) {
         mods.push(plugin);
       }
     } else {
@@ -109,7 +113,7 @@ async function main() {
   );
   federatedMimeExtensions.forEach((p) => {
     if (p.status === 'fulfilled') {
-      for (const plugin of activePlugins(p.value, disabled)) {
+      for (const plugin of activePlugins(p.value, TREE_DISABLED_EXTENSIONS)) {
         mimeExtensions.push(plugin);
       }
     } else {
@@ -127,7 +131,7 @@ async function main() {
   const litePluginsToRegister: any[] = [];
   const baseServerExtensions = await Promise.all(serverExtensions);
   baseServerExtensions.forEach((p) => {
-    for (const plugin of activePlugins(p, disabled)) {
+    for (const plugin of activePlugins(p, TREE_DISABLED_EXTENSIONS)) {
       litePluginsToRegister.push(plugin);
     }
   });
@@ -141,7 +145,7 @@ async function main() {
 
   const serviceManager = jupyterLiteServer.serviceManager;
   const app = new VoiciApp({
-    serviceManager: serviceManager as any,
+    serviceManager: serviceManager,
     shell: new VoilaShell(),
   });
 

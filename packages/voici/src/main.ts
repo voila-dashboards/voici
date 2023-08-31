@@ -6,16 +6,18 @@
  *                                                                          *
  * The full license is in the file LICENSE, distributed with this software. *
  ****************************************************************************/
-import './sharedscope';
+
+import '@voila-dashboards/voila/style/index.js';
+import '@voila-dashboards/voila/lib/sharedscope';
 import { PageConfig, URLExt } from '@jupyterlab/coreutils';
 import { IKernelSpecs } from '@jupyterlite/kernel';
 import { JupyterLiteServer } from '@jupyterlite/server';
 import {
-  VoilaShell,
-  loadComponent,
   activePlugins,
   createModule,
+  loadComponent,
   themesManagerPlugin,
+  VoilaShell,
 } from '@voila-dashboards/voila';
 
 import { VoiciApp } from './app';
