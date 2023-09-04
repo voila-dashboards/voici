@@ -3085,7 +3085,7 @@ __metadata:
 
 "@jupyterlite/kernel@file:/home/trungle/WORK/jupyterlite/packages/kernel::locator=%40voila-dashboards%2Fvoici-root%40workspace%3A.":
   version: 0.1.2
-  resolution: "@jupyterlite/kernel@file:/home/trungle/WORK/jupyterlite/packages/kernel#/home/trungle/WORK/jupyterlite/packages/kernel::hash=52baa9&locator=%40voila-dashboards%2Fvoici-root%40workspace%3A."
+  resolution: "@jupyterlite/kernel@file:/home/trungle/WORK/jupyterlite/packages/kernel#/home/trungle/WORK/jupyterlite/packages/kernel::hash=218ede&locator=%40voila-dashboards%2Fvoici-root%40workspace%3A."
   dependencies:
     "@jupyterlab/coreutils": ~6.0.4
     "@jupyterlab/observables": ~5.0.4
@@ -3096,7 +3096,7 @@ __metadata:
     async-mutex: ^0.3.1
     comlink: ^4.3.1
     mock-socket: ^9.1.0
-  checksum: d35e6e7eff5b837b3cf3ae743efb247cc2b1a458480f0fffa852e87564e681d6f48f8efed0ab6b3953b38dac09220ad9b8ac773a9b51f0aac4fd17a0fcc69547
+  checksum: 5955321afeb83344b1eaa78860477425894bb9035fd92607fdd20beb271916fe63329466cf577404121b9ba67fe124de0d33eb5f186ba8dc9e610a5d03da08e8
   languageName: node
   linkType: hard
 
@@ -4733,7 +4733,7 @@ __metadata:
 
 "@voila-dashboards/voila@file:/home/trungle/WORK/voila/packages/voila::locator=%40voila-dashboards%2Fvoici-root%40workspace%3A.":
   version: 0.5.1
-  resolution: "@voila-dashboards/voila@file:/home/trungle/WORK/voila/packages/voila#/home/trungle/WORK/voila/packages/voila::hash=3cfa62&locator=%40voila-dashboards%2Fvoici-root%40workspace%3A."
+  resolution: "@voila-dashboards/voila@file:/home/trungle/WORK/voila/packages/voila#/home/trungle/WORK/voila/packages/voila::hash=39fa79&locator=%40voila-dashboards%2Fvoici-root%40workspace%3A."
   dependencies:
     "@jupyter-widgets/base": ^6.0.5
     "@jupyter-widgets/jupyterlab-manager": ^5.0.8
@@ -4778,7 +4778,7 @@ __metadata:
     react: ^18.2.0
     react-dom: ^18.2.0
     style-mod: ^4.0.3
-  checksum: 8f47d72c172e8f5f1782081b9dada01149b9f0615167489dae4c286f21a4fcfa0f8d43c94b3f8d0bceed64f1a7bcc0a232687f1cb70b19fe3a3008e6f6e71150
+  checksum: ac435674b1af276f936d6139c3a449b586da9dc5f3bda025a1bee63d11714190a0d5eb201cb70a2c093a1718eec75f715798d80d8e520de53eb1c3142f8a2891
   languageName: node
   linkType: hard
 
@@ -13882,21 +13882,21 @@ __metadata:
 
 "typescript@patch:typescript@>=3 < 6#~builtin<compat/typescript>":
   version: 5.1.6
-  resolution: "typescript@patch:typescript@npm%3A5.1.6#~builtin<compat/typescript>::version=5.1.6&hash=5da071"
+  resolution: "typescript@patch:typescript@npm%3A5.1.6#~builtin<compat/typescript>::version=5.1.6&hash=85af82"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: f53bfe97f7c8b2b6d23cf572750d4e7d1e0c5fff1c36d859d0ec84556a827b8785077bc27676bf7e71fae538e517c3ecc0f37e7f593be913d884805d931bc8be
+  checksum: 21e88b0a0c0226f9cb9fd25b9626fb05b4c0f3fddac521844a13e1f30beb8f14e90bd409a9ac43c812c5946d714d6e0dee12d5d02dfc1c562c5aacfa1f49b606
   languageName: node
   linkType: hard
 
 "typescript@patch:typescript@~5.0.2#~builtin<compat/typescript>":
   version: 5.0.4
-  resolution: "typescript@patch:typescript@npm%3A5.0.4#~builtin<compat/typescript>::version=5.0.4&hash=b5f058"
+  resolution: "typescript@patch:typescript@npm%3A5.0.4#~builtin<compat/typescript>::version=5.0.4&hash=85af82"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: d26b6ba97b6d163c55dbdffd9bbb4c211667ebebc743accfeb2c8c0154aace7afd097b51165a72a5bad2cf65a4612259344ff60f8e642362aa1695c760d303ac
+  checksum: bb309d320c59a26565fb3793dba550576ab861018ff3fd1b7fccabbe46ae4a35546bc45f342c0a0b6f265c801ccdf64ffd68f548f117ceb7f0eac4b805cd52a9
   languageName: node
   linkType: hard
 

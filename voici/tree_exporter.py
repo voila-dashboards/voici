@@ -7,7 +7,7 @@ from typing import Dict, List, Tuple
 import jinja2
 import markupsafe
 from jupyter_server.utils import url_escape, url_path_join
-from nbconvert.exporters import HTMLExporter
+from nbconvert.exporters.html import HTMLExporter
 from voila.configuration import VoilaConfiguration
 from voila.utils import include_lab_theme
 
@@ -70,6 +70,7 @@ def patch_page_config(
     else:
         themeName = config.theme
     page_config_copy["jpThemeName"] = themeName
+    page_config_copy["extensionConfig"] = config.extension_config
 
     page_config_copy[
         "fullMathjaxUrl"
@@ -137,7 +138,6 @@ class VoiciTreeExporter(HTMLExporter):
             page_config = patch_page_config(
                 page_config, relative_path, self.voici_configuration
             )
-
             return StringIO(
                 template.render(
                     frontend="voici",

@@ -171,7 +171,6 @@ async function main() {
   const kernelspecs = await jupyterLiteServer.resolveRequiredService(
     IKernelSpecs
   );
-
   const serviceManager = jupyterLiteServer.serviceManager;
 
   const app = new VoiciApp({
