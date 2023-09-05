@@ -2398,7 +2398,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jupyterlab/coreutils@npm:^6.0.0, @jupyterlab/coreutils@npm:^6.0.5, @jupyterlab/coreutils@npm:~6.0.4":
+"@jupyterlab/coreutils@npm:^6.0.0, @jupyterlab/coreutils@npm:^6.0.5, @jupyterlab/coreutils@npm:~6.0.5":
   version: 6.0.5
   resolution: "@jupyterlab/coreutils@npm:6.0.5"
   dependencies:
@@ -2683,7 +2683,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jupyterlab/nbformat@npm:^3.0.0 || ^4.0.0, @jupyterlab/nbformat@npm:^3.0.0 || ^4.0.0-alpha.21 || ^4.0.0, @jupyterlab/nbformat@npm:^4.0.0, @jupyterlab/nbformat@npm:^4.0.5, @jupyterlab/nbformat@npm:~4.0.4":
+"@jupyterlab/nbformat@npm:^3.0.0 || ^4.0.0, @jupyterlab/nbformat@npm:^3.0.0 || ^4.0.0-alpha.21 || ^4.0.0, @jupyterlab/nbformat@npm:^4.0.0, @jupyterlab/nbformat@npm:^4.0.5, @jupyterlab/nbformat@npm:~4.0.5":
   version: 4.0.5
   resolution: "@jupyterlab/nbformat@npm:4.0.5"
   dependencies:
@@ -2750,7 +2750,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jupyterlab/observables@npm:^5.0.5, @jupyterlab/observables@npm:~5.0.4":
+"@jupyterlab/observables@npm:^5.0.5, @jupyterlab/observables@npm:~5.0.5":
   version: 5.0.5
   resolution: "@jupyterlab/observables@npm:5.0.5"
   dependencies:
@@ -2798,7 +2798,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jupyterlab/rendermime-interfaces@npm:^3.0.0 || ^4.0.0, @jupyterlab/rendermime-interfaces@npm:^3.8.0, @jupyterlab/rendermime-interfaces@npm:^3.8.5, @jupyterlab/rendermime-interfaces@npm:~3.8.4":
+"@jupyterlab/rendermime-interfaces@npm:^3.0.0 || ^4.0.0, @jupyterlab/rendermime-interfaces@npm:^3.8.0, @jupyterlab/rendermime-interfaces@npm:^3.8.5, @jupyterlab/rendermime-interfaces@npm:~3.8.5":
   version: 3.8.5
   resolution: "@jupyterlab/rendermime-interfaces@npm:3.8.5"
   dependencies:
@@ -2828,7 +2828,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jupyterlab/services@npm:^6.0.0 || ^7.0.0, @jupyterlab/services@npm:^7.0.0, @jupyterlab/services@npm:^7.0.5, @jupyterlab/services@npm:~7.0.4":
+"@jupyterlab/services@npm:^6.0.0 || ^7.0.0, @jupyterlab/services@npm:^7.0.0, @jupyterlab/services@npm:^7.0.5, @jupyterlab/services@npm:~7.0.5":
   version: 7.0.5
   resolution: "@jupyterlab/services@npm:7.0.5"
   dependencies:
@@ -2867,7 +2867,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jupyterlab/settingregistry@npm:^3.0.0 || ^4.0.0, @jupyterlab/settingregistry@npm:^4.0.0, @jupyterlab/settingregistry@npm:^4.0.5, @jupyterlab/settingregistry@npm:~4.0.4":
+"@jupyterlab/settingregistry@npm:^3.0.0 || ^4.0.0, @jupyterlab/settingregistry@npm:^4.0.0, @jupyterlab/settingregistry@npm:^4.0.5, @jupyterlab/settingregistry@npm:~4.0.5":
   version: 4.0.5
   resolution: "@jupyterlab/settingregistry@npm:4.0.5"
   dependencies:
@@ -2929,7 +2929,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jupyterlab/statedb@npm:^4.0.5, @jupyterlab/statedb@npm:~4.0.4":
+"@jupyterlab/statedb@npm:^4.0.5, @jupyterlab/statedb@npm:~4.0.5":
   version: 4.0.5
   resolution: "@jupyterlab/statedb@npm:4.0.5"
   dependencies:
@@ -3057,46 +3057,46 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jupyterlite/contents@file:/home/trungle/WORK/jupyterlite/packages/contents::locator=%40voila-dashboards%2Fvoici-root%40workspace%3A.":
+"@jupyterlite/contents@file:/home/trungle/work/jupyterlite/packages/contents::locator=%40voila-dashboards%2Fvoici-root%40workspace%3A.":
   version: 0.1.2
-  resolution: "@jupyterlite/contents@file:/home/trungle/WORK/jupyterlite/packages/contents#/home/trungle/WORK/jupyterlite/packages/contents::hash=4e6ee6&locator=%40voila-dashboards%2Fvoici-root%40workspace%3A."
+  resolution: "@jupyterlite/contents@file:/home/trungle/work/jupyterlite/packages/contents#/home/trungle/work/jupyterlite/packages/contents::hash=8304c8&locator=%40voila-dashboards%2Fvoici-root%40workspace%3A."
   dependencies:
-    "@jupyterlab/nbformat": ~4.0.4
-    "@jupyterlab/services": ~7.0.4
+    "@jupyterlab/nbformat": ~4.0.5
+    "@jupyterlab/services": ~7.0.5
     "@jupyterlite/localforage": ^0.1.2
     "@lumino/coreutils": ^2.1.2
     "@types/emscripten": ^1.39.6
     localforage: ^1.9.0
     mime: ^3.0.0
-  checksum: 1db22cbba20d65f4a1722505cdb3ee8d93de520478e2286a890c5c85a62ac7ed548b2e7cda63544a3a1b41c53b201f88cb5ab5e446a74559ddc0388d67d0dbb5
+  checksum: a1216d508485fda9569bb5c95347be33920c2b3c9923b5ae5123890b5a77550a9dc6cca8cb041a409255b484a24076e9875cd6d1ea6aa1e5260d5030a25ae6d3
   languageName: node
   linkType: hard
 
-"@jupyterlite/iframe-extension@file:/home/trungle/WORK/jupyterlite/packages/iframe-extension::locator=%40voila-dashboards%2Fvoici-root%40workspace%3A.":
+"@jupyterlite/iframe-extension@file:/home/trungle/work/jupyterlite/packages/iframe-extension::locator=%40voila-dashboards%2Fvoici-root%40workspace%3A.":
   version: 0.1.2
-  resolution: "@jupyterlite/iframe-extension@file:/home/trungle/WORK/jupyterlite/packages/iframe-extension#/home/trungle/WORK/jupyterlite/packages/iframe-extension::hash=a6e555&locator=%40voila-dashboards%2Fvoici-root%40workspace%3A."
+  resolution: "@jupyterlite/iframe-extension@file:/home/trungle/work/jupyterlite/packages/iframe-extension#/home/trungle/work/jupyterlite/packages/iframe-extension::hash=be58ae&locator=%40voila-dashboards%2Fvoici-root%40workspace%3A."
   dependencies:
-    "@jupyterlab/rendermime-interfaces": ~3.8.4
+    "@jupyterlab/rendermime-interfaces": ~3.8.5
     "@lumino/coreutils": ^2.1.2
     "@lumino/widgets": ^2.3.0
-  checksum: 2fd2ae0f5e6fbede95d0624323068da107c395754d3135dfeafa6bac4b1c2ed469e971cc01bdf3c9d6c30ebb07125b8658b4c7985ddfb8e3a6bae4b0078c3db0
+  checksum: 5f49cd76cdff2bc933be5917845b9c2241abc477d897de4dc77436ad71449b85ff4441b4b0b6639eda41ab60d54cf527f1276c0d66ff743896cdd5c3f569046d
   languageName: node
   linkType: hard
 
-"@jupyterlite/kernel@file:/home/trungle/WORK/jupyterlite/packages/kernel::locator=%40voila-dashboards%2Fvoici-root%40workspace%3A.":
+"@jupyterlite/kernel@file:/home/trungle/work/jupyterlite/packages/kernel::locator=%40voila-dashboards%2Fvoici-root%40workspace%3A.":
   version: 0.1.2
-  resolution: "@jupyterlite/kernel@file:/home/trungle/WORK/jupyterlite/packages/kernel#/home/trungle/WORK/jupyterlite/packages/kernel::hash=218ede&locator=%40voila-dashboards%2Fvoici-root%40workspace%3A."
+  resolution: "@jupyterlite/kernel@file:/home/trungle/work/jupyterlite/packages/kernel#/home/trungle/work/jupyterlite/packages/kernel::hash=d24444&locator=%40voila-dashboards%2Fvoici-root%40workspace%3A."
   dependencies:
-    "@jupyterlab/coreutils": ~6.0.4
-    "@jupyterlab/observables": ~5.0.4
-    "@jupyterlab/services": ~7.0.4
+    "@jupyterlab/coreutils": ~6.0.5
+    "@jupyterlab/observables": ~5.0.5
+    "@jupyterlab/services": ~7.0.5
     "@lumino/coreutils": ^2.1.2
     "@lumino/disposable": ^2.1.2
     "@lumino/signaling": ^2.1.2
     async-mutex: ^0.3.1
     comlink: ^4.3.1
     mock-socket: ^9.1.0
-  checksum: 5955321afeb83344b1eaa78860477425894bb9035fd92607fdd20beb271916fe63329466cf577404121b9ba67fe124de0d33eb5f186ba8dc9e610a5d03da08e8
+  checksum: 8aefb8a572546eac49215d66c1e3a3f19696cba61e8942e0e1822ab1f84945d950ae59e831e0993680f4c7e3b5d77293750ec95af8e18c2812c6129599170aa2
   languageName: node
   linkType: hard
 
@@ -3121,11 +3121,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jupyterlite/server-extension@file:/home/trungle/WORK/jupyterlite/packages/server-extension::locator=%40voila-dashboards%2Fvoici-root%40workspace%3A.":
+"@jupyterlite/server-extension@file:/home/trungle/work/jupyterlite/packages/server-extension::locator=%40voila-dashboards%2Fvoici-root%40workspace%3A.":
   version: 0.1.2
-  resolution: "@jupyterlite/server-extension@file:/home/trungle/WORK/jupyterlite/packages/server-extension#/home/trungle/WORK/jupyterlite/packages/server-extension::hash=8bfc73&locator=%40voila-dashboards%2Fvoici-root%40workspace%3A."
+  resolution: "@jupyterlite/server-extension@file:/home/trungle/work/jupyterlite/packages/server-extension#/home/trungle/work/jupyterlite/packages/server-extension::hash=023caf&locator=%40voila-dashboards%2Fvoici-root%40workspace%3A."
   dependencies:
-    "@jupyterlab/coreutils": ~6.0.4
+    "@jupyterlab/coreutils": ~6.0.5
     "@jupyterlite/kernel": ^0.1.2
     "@jupyterlite/licenses": ^0.1.2
     "@jupyterlite/localforage": ^0.1.2
@@ -3133,20 +3133,20 @@ __metadata:
     "@jupyterlite/session": ^0.1.2
     "@jupyterlite/settings": ^0.1.2
     "@jupyterlite/translation": ^0.1.2
-  checksum: e7147670aa6ee6f30b5826b073eb8704969292da8b8e447d214e64edb5d6e1e2747368e4c1610b4dc27e5a1bb0e1efc8dabc7f6572c6825fc0afda5e0b08feab
+  checksum: eb5ac90c359879f27decc7f6cc8c737412140d5d7fccd0871beb78a4f2055b6572ef254f5f5abcc2b6666328d787cb976883e5316ecd2784d1dc03225c05a4ae
   languageName: node
   linkType: hard
 
-"@jupyterlite/server@file:/home/trungle/WORK/jupyterlite/packages/server::locator=%40voila-dashboards%2Fvoici-root%40workspace%3A.":
+"@jupyterlite/server@file:/home/trungle/work/jupyterlite/packages/server::locator=%40voila-dashboards%2Fvoici-root%40workspace%3A.":
   version: 0.1.2
-  resolution: "@jupyterlite/server@file:/home/trungle/WORK/jupyterlite/packages/server#/home/trungle/WORK/jupyterlite/packages/server::hash=0b76b7&locator=%40voila-dashboards%2Fvoici-root%40workspace%3A."
+  resolution: "@jupyterlite/server@file:/home/trungle/work/jupyterlite/packages/server#/home/trungle/work/jupyterlite/packages/server::hash=78a5c3&locator=%40voila-dashboards%2Fvoici-root%40workspace%3A."
   dependencies:
-    "@jupyterlab/coreutils": ~6.0.4
-    "@jupyterlab/nbformat": ~4.0.4
-    "@jupyterlab/observables": ~5.0.4
-    "@jupyterlab/services": ~7.0.4
-    "@jupyterlab/settingregistry": ~4.0.4
-    "@jupyterlab/statedb": ~4.0.4
+    "@jupyterlab/coreutils": ~6.0.5
+    "@jupyterlab/nbformat": ~4.0.5
+    "@jupyterlab/observables": ~5.0.5
+    "@jupyterlab/services": ~7.0.5
+    "@jupyterlab/settingregistry": ~4.0.5
+    "@jupyterlab/statedb": ~4.0.5
     "@jupyterlite/contents": ^0.1.2
     "@jupyterlite/kernel": ^0.1.2
     "@jupyterlite/session": ^0.1.2
@@ -3156,7 +3156,7 @@ __metadata:
     "@lumino/coreutils": ^2.1.2
     "@lumino/signaling": ^2.1.2
     mock-socket: ^9.1.0
-  checksum: c8ebf063d4473b012463f40d21e9b3f50bc95a876c0b117276b24637220df7a5f39b4dbc2d5b92a6f07b1a4dddaa11e5c70689868ee7e34c88ecc8507a5caefe
+  checksum: de35e2d4ea25e4ee0b523c8e28d1213a3e315da348911d7f618ad605cf9bfee82f7571ef1fc228447eb2564cc85d5818db7e2c5cdd6b9fc6fa94327862cf8493
   languageName: node
   linkType: hard
 
@@ -13932,21 +13932,21 @@ __metadata:
 
 "typescript@patch:typescript@>=3 < 6#~builtin<compat/typescript>":
   version: 5.2.2
-  resolution: "typescript@patch:typescript@npm%3A5.2.2#~builtin<compat/typescript>::version=5.2.2&hash=f3b441"
+  resolution: "typescript@patch:typescript@npm%3A5.2.2#~builtin<compat/typescript>::version=5.2.2&hash=85af82"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 0f4da2f15e6f1245e49db15801dbee52f2bbfb267e1c39225afdab5afee1a72839cd86000e65ee9d7e4dfaff12239d28beaf5ee431357fcced15fb08583d72ca
+  checksum: 07106822b4305de3f22835cbba949a2b35451cad50888759b6818421290ff95d522b38ef7919e70fb381c5fe9c1c643d7dea22c8b31652a717ddbd57b7f4d554
   languageName: node
   linkType: hard
 
 "typescript@patch:typescript@~5.0.2#~builtin<compat/typescript>":
   version: 5.0.4
-  resolution: "typescript@patch:typescript@npm%3A5.0.4#~builtin<compat/typescript>::version=5.0.4&hash=b5f058"
+  resolution: "typescript@patch:typescript@npm%3A5.0.4#~builtin<compat/typescript>::version=5.0.4&hash=85af82"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: d26b6ba97b6d163c55dbdffd9bbb4c211667ebebc743accfeb2c8c0154aace7afd097b51165a72a5bad2cf65a4612259344ff60f8e642362aa1695c760d303ac
+  checksum: bb309d320c59a26565fb3793dba550576ab861018ff3fd1b7fccabbe46ae4a35546bc45f342c0a0b6f265c801ccdf64ffd68f548f117ceb7f0eac4b805cd52a9
   languageName: node
   linkType: hard
 
