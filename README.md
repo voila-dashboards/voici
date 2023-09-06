@@ -94,7 +94,7 @@ Run the following command to build the demo site:
 git clone https://github.com/voila-dashboards/voici
 cd voici/demo
 
-voici build --contents notebooks
+voici notebooks
 ```
 
 Then serve it!
