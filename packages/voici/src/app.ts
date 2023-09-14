@@ -138,12 +138,7 @@ export class VoiciApp extends VoilaApp {
         }
         // Execute Notebook
 
-        // The wheels loading step will take way more than 500ms,
-        // Let's wait a little bit before listening for the
-        // `idle` status of the kernel.
-        await new Promise((r) => setTimeout(r, 500));
         let executed = false;
-
         kernel.statusChanged.connect(async (kernelConnection, status) => {
           if (!executed && status === 'idle') {
             executed = true;

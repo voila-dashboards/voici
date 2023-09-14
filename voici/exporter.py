@@ -119,7 +119,7 @@ class VoiciExporter(VoilaExporter):
         # Not calling Voila's _init_resources, because we want to embed static
         # assets like CSS and theming instead of serving them from the server
         new_resources = super(VoilaExporter, self)._init_resources(resources)
-        new_resources['include_lab_theme'] = partial(include_lab_theme, self.base_url)
+        new_resources["include_lab_theme"] = partial(include_lab_theme, self.base_url)
         return new_resources
 
     def update_page_config(self, nb, resources, page_config):

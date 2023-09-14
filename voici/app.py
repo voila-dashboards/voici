@@ -16,7 +16,6 @@ from jupyterlite_core.app import (
     lite_aliases,
 )
 from traitlets import default
-from jupyter_core.application import JupyterApp
 from ._version import __version__
 
 voici_aliases = dict(

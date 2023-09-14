@@ -227,7 +227,7 @@ class VoiciTreeExporter(HTMLExporter):
             supported_themes = ["dark", "light", "JupyterLab Dark", "JupyterLab Light"]
             if theme not in supported_themes:
                 self.log.warn(
-                    "Custom JupyterLab theme is not supported in the classic tree, failback to the light theme!"
+                    "Custom JupyterLab theme is not supported in the classic tree"
                 )
                 return "light"
             else:
