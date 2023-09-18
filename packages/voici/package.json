@@ -4,7 +4,7 @@
   "description": "The Voici Frontend",
   "author": "Voilà contributors",
   "license": "BSD-3-Clause",
-  "main": "lib/index.js",
+  "main": "lib/main.js",
   "browserslist": ">0.8%, not ie 11, not op_mini all, not dead",
   "dependencies": {
     "@jupyter-widgets/base": "^6.0.5",
