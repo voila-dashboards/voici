@@ -9,7 +9,7 @@ import markupsafe
 from jupyter_server.utils import url_escape, url_path_join
 from nbconvert.exporters.html import HTMLExporter
 from voila.configuration import VoilaConfiguration
-from voila.utils import include_lab_theme
+from voila.utils import include_lab_theme, filter_extension
 
 from .exporter import VoiciExporter
 
@@ -75,6 +75,17 @@ def patch_page_config(
     page_config_copy[
         "fullMathjaxUrl"
     ] = f'{page_config_copy["baseUrl"]}{page_config_copy["fullMathjaxUrl"]}'
+
+    federated_extensions = page_config_copy["federated_extensions"]
+    disabled_extensions = [
+        "@voila-dashboards/jupyterlab-preview",
+        "@jupyter/collaboration-extension",
+        "@jupyter-widgets/jupyterlab-manager",
+    ]
+    page_config_copy["federated_extensions"] = filter_extension(
+        federated_extensions=federated_extensions,
+        disabled_extensions=disabled_extensions,
+    )
     return page_config_copy
 
 

@@ -25,14 +25,6 @@ import { treeWidgetPlugin } from './plugins/tree';
 
 const serverExtensions = [import('@jupyterlite/server-extension')];
 
-export const TREE_DISABLED_EXTENSIONS = [
-  '@jupyter-widgets/jupyterlab-manager:plugin',
-  '@jupyter-widgets/jupyterlab-manager:saveWidgetState',
-  '@jupyter-widgets/jupyterlab-manager:base-2.0.0',
-  '@jupyter-widgets/jupyterlab-manager:controls-2.0.0',
-  '@jupyter-widgets/jupyterlab-manager:output-1.0.0',
-];
-
 /**
  * The main function
  */
@@ -99,7 +91,7 @@ async function main() {
   );
   federatedExtensions.forEach((p) => {
     if (p.status === 'fulfilled') {
-      for (const plugin of activePlugins(p.value, TREE_DISABLED_EXTENSIONS)) {
+      for (const plugin of activePlugins(p.value, [])) {
         mods.push(plugin);
       }
     } else {
@@ -113,7 +105,7 @@ async function main() {
   );
   federatedMimeExtensions.forEach((p) => {
     if (p.status === 'fulfilled') {
-      for (const plugin of activePlugins(p.value, TREE_DISABLED_EXTENSIONS)) {
+      for (const plugin of activePlugins(p.value, [])) {
         mimeExtensions.push(plugin);
       }
     } else {
@@ -131,7 +123,7 @@ async function main() {
   const litePluginsToRegister: any[] = [];
   const baseServerExtensions = await Promise.all(serverExtensions);
   baseServerExtensions.forEach((p) => {
-    for (const plugin of activePlugins(p, TREE_DISABLED_EXTENSIONS)) {
+    for (const plugin of activePlugins(p, [])) {
       litePluginsToRegister.push(plugin);
     }
   });

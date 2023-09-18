@@ -25,11 +25,6 @@ import plugins from './voiciplugins';
 
 const serverExtensions = [import('@jupyterlite/server-extension')];
 
-const disabled = [
-  '@jupyter-widgets/jupyterlab-manager:plugin',
-  '@jupyter-widgets/jupyterlab-manager:saveWidgetState',
-];
-
 /**
  * The main function
  */
@@ -45,6 +40,9 @@ async function main() {
     require('@jupyterlab/rendermime-extension'),
     require('@jupyterlab/theme-light-extension'),
     require('@jupyterlab/theme-dark-extension'),
+    require('@jupyter-widgets/jupyterlab-manager/lib/plugin').default.filter(
+      (p: any) => p.id !== '@jupyter-widgets/jupyterlab-manager:plugin'
+    ),
     themesManagerPlugin,
     plugins,
   ];
@@ -110,7 +108,7 @@ async function main() {
   );
   federatedExtensions.forEach((p) => {
     if (p.status === 'fulfilled') {
-      for (const plugin of activePlugins(p.value, disabled)) {
+      for (const plugin of activePlugins(p.value, [])) {
         mods.push(plugin);
       }
     } else {
@@ -124,7 +122,7 @@ async function main() {
   );
   federatedMimeExtensions.forEach((p) => {
     if (p.status === 'fulfilled') {
-      for (const plugin of activePlugins(p.value, disabled)) {
+      for (const plugin of activePlugins(p.value, [])) {
         mimeExtensions.push(plugin);
       }
     } else {
@@ -142,7 +140,7 @@ async function main() {
   const litePluginsToRegister: any[] = [];
   const baseServerExtensions = await Promise.all(serverExtensions);
   baseServerExtensions.forEach((p) => {
-    for (const plugin of activePlugins(p, disabled)) {
+    for (const plugin of activePlugins(p, [])) {
       litePluginsToRegister.push(plugin);
     }
   });
@@ -153,7 +151,7 @@ async function main() {
   );
   federatedLiteExtensions.forEach((p) => {
     if (p.status === 'fulfilled') {
-      for (const plugin of activePlugins(p.value, disabled)) {
+      for (const plugin of activePlugins(p.value, [])) {
         litePluginsToRegister.push(plugin);
       }
     } else {
