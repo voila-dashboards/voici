@@ -8,7 +8,7 @@ dependencies:
   - nodejs=18
   - pip:
     - ruff==0.0.258
-    - voila==0.5.0a4
+    - voila==0.5.4
     - voila-material>=0.4.3
-    - jupyterlite-core[lab]>=0.1.0,<0.2.0
+    - jupyterlite-core[lab]>=0.2.0a0,<0.3.0
     - jupyterlite-xeus-python >= 0.9.0
