@@ -32,7 +32,7 @@ classifiers = [
 ]
 dependencies = [
     "voila>=0.5,<0.6",
-    "jupyterlite-core>=0.2.0a0,<0.3.0",
+    "jupyterlite-core>=0.2.0a1,<0.3.0",
 ]
 dynamic = [
     "version",

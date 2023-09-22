@@ -104,7 +104,7 @@ module.exports = [
           resourceQuery: /text/,
           type: 'asset/resource',
           generator: {
-            filename: '[name]-[contenthash:7][ext]',
+            filename: '[name][ext]',
           },
         },
       ],
