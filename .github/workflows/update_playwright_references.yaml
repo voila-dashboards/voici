@@ -35,11 +35,12 @@ jobs:
       - name: Install Micromamba
         uses: mamba-org/provision-with-micromamba@main
 
-      - name: Install dependencies
+      - name: Install dependencies and build tests
         run: |
           python -m pip install .
           cd ui-tests
           yarn install --frozen-lockfile
+          yarn run build
 
       - uses: jupyterlab/maintainer-tools/.github/actions/update-snapshots@main
         with:
