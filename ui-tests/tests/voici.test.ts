@@ -114,8 +114,7 @@ test.describe('Voici Tests', () => {
       'voici-subtree-material.png'
     );
 
-    const goUp = await page.getByTitle('Jupyter Server Root').locator('svg');
-    await goUp.click();
+    await page.click('a:text("..")');
 
     const voici = page.getByText('voici.ipynb');
 
