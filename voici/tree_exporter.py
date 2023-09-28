@@ -5,7 +5,6 @@ from pathlib import Path
 from typing import Dict, List, Tuple
 
 import jinja2
-import markupsafe
 from jupyter_server.utils import url_escape, url_path_join
 from nbconvert.exporters.html import HTMLExporter
 from voila.configuration import VoilaConfiguration
@@ -89,13 +88,6 @@ def patch_page_config(
     return page_config_copy
 
 
-def resources_include_css(env, name):
-    code = """<style type="text/css">\n%s</style>""" % (
-        env.loader.get_source(env, name)[0]
-    )
-    return markupsafe.Markup(code)
-
-
 class VoiciTreeExporter(HTMLExporter):
     def __init__(
         self,
@@ -103,13 +95,21 @@ class VoiciTreeExporter(HTMLExporter):
         voici_configuration: VoilaConfiguration,
         **kwargs,
     ):
-        self.jinja2_env = jinja2_env
+        self.jinja2_env = self._environment_cached = jinja2_env
         self.voici_configuration = voici_configuration
 
         self.theme = voici_configuration.theme
         self.template_name = voici_configuration.template
 
         self.notebook_paths = []
+        self.resources = self._init_resources()
+
+    def _init_resources(self):
+        resources = super()._init_resources({})
+        resources["include_lab_theme"] = partial(include_lab_theme, None)
+        resources["theme"] = self.validate_theme(self.theme, False)
+
+        return resources
 
     def allowed_content(self, content: Dict) -> bool:
         return content["type"] == "notebook" or content["type"] == "directory"
@@ -157,9 +157,7 @@ class VoiciTreeExporter(HTMLExporter):
                     breadcrumbs=breadcrumbs,
                     page_config=page_config,
                     base_url=page_config["baseUrl"],
-                    include_css=partial(resources_include_css, self.jinja2_env),
-                    include_lab_theme=partial(include_lab_theme, None),
-                    theme=self.validate_theme(self.theme, False),
+                    **self.resources,
                 )
             )
 
