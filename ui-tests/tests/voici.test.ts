@@ -107,8 +107,10 @@ test.describe('Voici Tests', () => {
     await page.waitForTimeout(1000);
 
     expect(await page.screenshot()).toMatchSnapshot('voici-tree-material.png');
+    await page.waitForTimeout(1000);
 
     await widget.click();
+    await page.waitForTimeout(1000);
 
     expect(await page.screenshot()).toMatchSnapshot(
       'voici-subtree-material.png'
