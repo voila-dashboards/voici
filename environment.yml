@@ -4,6 +4,7 @@ channels:
 dependencies:
   - pip
   - black
+  - pytest
   - yarn=3
   - nodejs=18
   - pip:

@@ -49,10 +49,13 @@ jobs:
       run: |
         python -m pip install .
         cd ui-tests
-        yarn install --frozen-lockfile
+        yarn install --immutable
         yarn run build
 
-    - name: Test
+    - name: Voici Test
+      run: pytest tests/
+
+    - name: UI Test
       run: yarn run test
       working-directory: ui-tests
 
