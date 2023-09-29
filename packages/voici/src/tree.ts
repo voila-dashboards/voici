@@ -6,24 +6,24 @@
  *                                                                          *
  * The full license is in the file LICENSE, distributed with this software. *
  ****************************************************************************/
+import '@voila-dashboards/voila/style/index.js';
+
 import { PageConfig, URLExt } from '@jupyterlab/coreutils';
 import { JupyterLiteServer } from '@jupyterlite/server';
 import {
+  activePlugins,
+  createModule,
+  loadComponent,
   pathsPlugin,
+  themesManagerPlugin,
   translatorPlugin,
   VoilaShell,
 } from '@voila-dashboards/voila';
-
 import { VoiciApp } from './app';
-import { themePlugin } from './plugins';
-import { activePlugins, createModule, loadComponent } from './utils';
+import { themePlugin } from './plugins/themes';
+import { treeWidgetPlugin } from './plugins/tree';
 
 const serverExtensions = [import('@jupyterlite/server-extension')];
-
-const disabled = [
-  '@jupyter-widgets/jupyterlab-manager:plugin',
-  '@jupyter-widgets/jupyterlab-manager:saveWidgetState',
-];
 
 /**
  * The main function
@@ -31,17 +31,13 @@ const disabled = [
 async function main() {
   const mods = [
     // @jupyterlab plugins
-    require('@jupyterlab/apputils-extension').default.filter((m: any) =>
-      [
-        '@jupyterlab/apputils-extension:settings',
-        '@jupyterlab/apputils-extension:themes',
-      ].includes(m.id)
-    ),
     require('@jupyterlab/theme-light-extension'),
     require('@jupyterlab/theme-dark-extension'),
-    translatorPlugin,
     pathsPlugin,
+    translatorPlugin,
+    themesManagerPlugin,
     themePlugin,
+    treeWidgetPlugin,
   ];
 
   const mimeExtensions: any[] = [];
@@ -95,7 +91,7 @@ async function main() {
   );
   federatedExtensions.forEach((p) => {
     if (p.status === 'fulfilled') {
-      for (const plugin of activePlugins(p.value, disabled)) {
+      for (const plugin of activePlugins(p.value, [])) {
         mods.push(plugin);
       }
     } else {
@@ -109,7 +105,7 @@ async function main() {
   );
   federatedMimeExtensions.forEach((p) => {
     if (p.status === 'fulfilled') {
-      for (const plugin of activePlugins(p.value, disabled)) {
+      for (const plugin of activePlugins(p.value, [])) {
         mimeExtensions.push(plugin);
       }
     } else {
@@ -127,7 +123,7 @@ async function main() {
   const litePluginsToRegister: any[] = [];
   const baseServerExtensions = await Promise.all(serverExtensions);
   baseServerExtensions.forEach((p) => {
-    for (const plugin of activePlugins(p, disabled)) {
+    for (const plugin of activePlugins(p, [])) {
       litePluginsToRegister.push(plugin);
     }
   });
@@ -141,7 +137,7 @@ async function main() {
 
   const serviceManager = jupyterLiteServer.serviceManager;
   const app = new VoiciApp({
-    serviceManager: serviceManager as any,
+    serviceManager: serviceManager,
     shell: new VoilaShell(),
   });
 

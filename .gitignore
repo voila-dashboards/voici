@@ -44,3 +44,5 @@ _output
 ui-tests/lite
 ui-tests/material
 .jupyterlite.doit.db
+
+.yarn/

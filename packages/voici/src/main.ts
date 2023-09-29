@@ -6,23 +6,24 @@
  *                                                                          *
  * The full license is in the file LICENSE, distributed with this software. *
  ****************************************************************************/
-import './sharedscope';
 
+import '@voila-dashboards/voila/style/index.js';
+import '@voila-dashboards/voila/lib/sharedscope';
 import { PageConfig, URLExt } from '@jupyterlab/coreutils';
 import { IKernelSpecs } from '@jupyterlite/kernel';
 import { JupyterLiteServer } from '@jupyterlite/server';
-import { VoilaShell } from '@voila-dashboards/voila';
+import {
+  activePlugins,
+  createModule,
+  loadComponent,
+  themesManagerPlugin,
+  VoilaShell,
+} from '@voila-dashboards/voila';
 
 import { VoiciApp } from './app';
-import plugins from './plugins';
-import { activePlugins, createModule, loadComponent } from './utils';
+import plugins from './voiciplugins';
 
 const serverExtensions = [import('@jupyterlite/server-extension')];
-
-const disabled = [
-  '@jupyter-widgets/jupyterlab-manager:plugin',
-  '@jupyter-widgets/jupyterlab-manager:saveWidgetState',
-];
 
 /**
  * The main function
@@ -30,25 +31,27 @@ const disabled = [
 async function main() {
   const mods = [
     // @jupyterlab plugins
-    require('@jupyterlab/apputils-extension').default.filter((m: any) =>
-      [
-        '@jupyterlab/apputils-extension:settings',
-        '@jupyterlab/apputils-extension:themes',
-      ].includes(m.id)
+    require('@jupyterlab/codemirror-extension').default.filter(
+      (p: any) => p.id === '@jupyterlab/codemirror-extension:languages'
     ),
+    require('@jupyterlab/markedparser-extension'),
     require('@jupyterlab/markdownviewer-extension'),
     require('@jupyterlab/mathjax2-extension'),
     require('@jupyterlab/rendermime-extension'),
-    // TODO: add the settings endpoint to re-enable the theme plugins?
-    // This would also need the theme manager plugin and settings
     require('@jupyterlab/theme-light-extension'),
     require('@jupyterlab/theme-dark-extension'),
+    require('@jupyter-widgets/jupyterlab-manager/lib/plugin').default.filter(
+      (p: any) => p.id !== '@jupyter-widgets/jupyterlab-manager:plugin'
+    ),
+    themesManagerPlugin,
     plugins,
   ];
 
   const mimeExtensions = [
     require('@jupyterlite/iframe-extension'),
     require('@jupyterlab/json-extension'),
+    require('@jupyterlab/javascript-extension'),
+    require('@jupyterlab/vega5-extension'),
   ];
 
   const extensionData = JSON.parse(
@@ -105,7 +108,7 @@ async function main() {
   );
   federatedExtensions.forEach((p) => {
     if (p.status === 'fulfilled') {
-      for (const plugin of activePlugins(p.value, disabled)) {
+      for (const plugin of activePlugins(p.value, [])) {
         mods.push(plugin);
       }
     } else {
@@ -119,7 +122,7 @@ async function main() {
   );
   federatedMimeExtensions.forEach((p) => {
     if (p.status === 'fulfilled') {
-      for (const plugin of activePlugins(p.value, disabled)) {
+      for (const plugin of activePlugins(p.value, [])) {
         mimeExtensions.push(plugin);
       }
     } else {
@@ -137,7 +140,7 @@ async function main() {
   const litePluginsToRegister: any[] = [];
   const baseServerExtensions = await Promise.all(serverExtensions);
   baseServerExtensions.forEach((p) => {
-    for (const plugin of activePlugins(p, disabled)) {
+    for (const plugin of activePlugins(p, [])) {
       litePluginsToRegister.push(plugin);
     }
   });
@@ -148,7 +151,7 @@ async function main() {
   );
   federatedLiteExtensions.forEach((p) => {
     if (p.status === 'fulfilled') {
-      for (const plugin of activePlugins(p.value, disabled)) {
+      for (const plugin of activePlugins(p.value, [])) {
         litePluginsToRegister.push(plugin);
       }
     } else {
@@ -166,10 +169,10 @@ async function main() {
   const kernelspecs = await jupyterLiteServer.resolveRequiredService(
     IKernelSpecs
   );
-
   const serviceManager = jupyterLiteServer.serviceManager;
+
   const app = new VoiciApp({
-    serviceManager: serviceManager as any,
+    serviceManager,
     kernelspecs,
     mimeExtensions,
     shell: new VoilaShell(),

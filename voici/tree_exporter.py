@@ -1,15 +1,14 @@
+from copy import deepcopy
+from functools import partial
 from io import StringIO
-from typing import Dict, List, Tuple
 from pathlib import Path
+from typing import Dict, List, Tuple
 
 import jinja2
-
-from copy import deepcopy
-from jupyter_server.utils import url_path_join, url_escape
-
-from nbconvert.exporters import HTMLExporter
-
+from jupyter_server.utils import url_escape, url_path_join
+from nbconvert.exporters.html import HTMLExporter
 from voila.configuration import VoilaConfiguration
+from voila.utils import include_lab_theme, filter_extension
 
 from .exporter import VoiciExporter
 
@@ -40,7 +39,9 @@ def path_to_content(path: Path, relative_to: Path):
     return None
 
 
-def patch_page_config(page_config: Dict, relative_path: Path):
+def patch_page_config(
+    page_config: Dict, relative_path: Path, config: VoilaConfiguration
+):
     page_config_copy = deepcopy(page_config)
 
     # Align the base url with the relative path
@@ -61,6 +62,29 @@ def patch_page_config(page_config: Dict, relative_path: Path):
     # JupyterLite main application
     page_config_copy["themesUrl"] = "./build/themes"
 
+    if config.theme == "light":
+        themeName = "JupyterLab Light"
+    elif config.theme == "dark":
+        themeName = "JupyterLab Dark"
+    else:
+        themeName = config.theme
+    page_config_copy["jpThemeName"] = themeName
+    page_config_copy["extensionConfig"] = config.extension_config
+
+    page_config_copy[
+        "fullMathjaxUrl"
+    ] = f'{page_config_copy["baseUrl"]}{page_config_copy["fullMathjaxUrl"]}'
+
+    federated_extensions = page_config_copy["federated_extensions"]
+    disabled_extensions = [
+        "@voila-dashboards/jupyterlab-preview",
+        "@jupyter/collaboration-extension",
+        "@jupyter-widgets/jupyterlab-manager",
+    ]
+    page_config_copy["federated_extensions"] = filter_extension(
+        federated_extensions=federated_extensions,
+        disabled_extensions=disabled_extensions,
+    )
     return page_config_copy
 
 
@@ -71,15 +95,21 @@ class VoiciTreeExporter(HTMLExporter):
         voici_configuration: VoilaConfiguration,
         **kwargs,
     ):
-        self.jinja2_env = jinja2_env
+        self.jinja2_env = self._environment_cached = jinja2_env
         self.voici_configuration = voici_configuration
 
         self.theme = voici_configuration.theme
         self.template_name = voici_configuration.template
 
         self.notebook_paths = []
+        self.resources = self._init_resources()
 
-        self.resources = self._init_resources({})
+    def _init_resources(self):
+        resources = super()._init_resources({})
+        resources["include_lab_theme"] = partial(include_lab_theme, None)
+        resources["theme"] = self.validate_theme(self.theme, False)
+
+        return resources
 
     def allowed_content(self, content: Dict) -> bool:
         return content["type"] == "notebook" or content["type"] == "directory"
@@ -116,8 +146,9 @@ class VoiciTreeExporter(HTMLExporter):
         """Return a function that will render the tree into a StringIO and return it."""
 
         def render_tree(page_config) -> StringIO:
-            page_config = patch_page_config(page_config, relative_path)
-
+            page_config = patch_page_config(
+                page_config, relative_path, self.voici_configuration
+            )
             return StringIO(
                 template.render(
                     frontend="voici",
@@ -136,7 +167,9 @@ class VoiciTreeExporter(HTMLExporter):
         """Return a function that will render the notebook into a StringIO and return it."""
 
         def render_notebook(page_config) -> StringIO:
-            page_config = patch_page_config(page_config, relative_path)
+            page_config = patch_page_config(
+                page_config, relative_path, self.voici_configuration
+            )
 
             voici_exporter = VoiciExporter(
                 voici_config=self.voici_configuration,
@@ -163,8 +196,10 @@ class VoiciTreeExporter(HTMLExporter):
             breadcrumbs = self.generate_breadcrumbs(
                 relative_path, len(relative_path.parts)
             )
+        classic_tree = self.voici_configuration.classic_tree
+        template_name = "tree-lab.html" if not classic_tree else "tree.html"
 
-        template = self.jinja2_env.get_template("tree.html")
+        template = self.jinja2_env.get_template(template_name)
 
         page_title = self.generate_page_title(path)
 
@@ -194,3 +229,19 @@ class VoiciTreeExporter(HTMLExporter):
                     path / file["name"], lite_files_output, relative_to
                 ):
                     yield subcontent
+
+    def validate_theme(self, theme: str, classic_tree: bool) -> str:
+        """Check the compatibility between the requested theme and the tree page"""
+        if classic_tree:
+            supported_themes = ["dark", "light", "JupyterLab Dark", "JupyterLab Light"]
+            if theme not in supported_themes:
+                self.log.warn(
+                    "Custom JupyterLab theme is not supported in the classic tree"
+                )
+                return "light"
+            else:
+                if theme == "JupyterLab Dark":
+                    return "dark"
+                if theme == "JupyterLab Light":
+                    return "light"
+        return theme

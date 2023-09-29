@@ -9,12 +9,13 @@
 
 
 from copy import deepcopy
-
+from functools import partial
+from voila.utils import include_lab_theme
 from jupyter_server.services.contents.largefilemanager import LargeFileManager
 
-from nbconvert.exporters import TemplateExporter
+from nbconvert.exporters.templateexporter import TemplateExporter
 from nbconvert.filters.highlight import Highlight2HTML
-from nbconvert.preprocessors import ClearOutputPreprocessor
+from nbconvert.preprocessors.clearoutput import ClearOutputPreprocessor
 
 from traitlets import default
 
@@ -26,8 +27,8 @@ class VoiciExporter(VoilaExporter):
     def __init__(self, *args, **kwargs):
         kwargs.setdefault("contents_manager", LargeFileManager())
 
-        self.voici_configuration = kwargs.get("voici_config")
-        self.page_config = kwargs.get("page_config", {})
+        self.voici_configuration = kwargs.pop("voici_config")
+        self.page_config = kwargs.pop("page_config", {})
         self.theme = self.voici_configuration.theme
         self.template_name = self.voici_configuration.template
 
@@ -86,7 +87,6 @@ class VoiciExporter(VoilaExporter):
         # TODO: investigate whether there is something to do in Voila to avoid this
         base_url = page_config["baseUrl"]
         resources["base_url"] = base_url
-
         html = []
         for html_snippet in self.template.generate(
             nb=nb_copy,
@@ -118,7 +118,9 @@ class VoiciExporter(VoilaExporter):
     def _init_resources(self, resources):
         # Not calling Voila's _init_resources, because we want to embed static
         # assets like CSS and theming instead of serving them from the server
-        return super(VoilaExporter, self)._init_resources(resources)
+        new_resources = super(VoilaExporter, self)._init_resources(resources)
+        new_resources["include_lab_theme"] = partial(include_lab_theme, self.base_url)
+        return new_resources
 
     def update_page_config(self, nb, resources, page_config):
         page_config_copy = deepcopy(page_config)

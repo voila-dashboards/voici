@@ -7,8 +7,8 @@ dependencies:
   - nodejs=18
   - sphinx
   - pydata-sphinx-theme
-  - yarn=1
+  - yarn=3
   - pip:
-    - jupyterlite-xeus-python >= 0.9.0,<0.10.0
+    - jupyterlite-xeus-python >= 1.0.0a0
     - sphinxcontrib-video
     - ..

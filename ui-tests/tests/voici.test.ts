@@ -19,18 +19,19 @@ test.describe('Voici Tests', () => {
   test('Render Tree', async ({ page }, testInfo) => {
     await page.goto('lite');
 
-    await page.waitForSelector('a:text("widgets")');
+    const widget = await page.getByText('widgets');
 
     // Wait a bit for the theme to be applied
     await page.waitForTimeout(1000);
 
     expect(await page.screenshot()).toMatchSnapshot('voici-tree.png');
 
-    await page.click('a:text("widgets")');
+    await widget.click();
 
     expect(await page.screenshot()).toMatchSnapshot('voici-subtree.png');
 
-    await page.click('a:text("..")');
+    const goUp = await page.getByTitle('Jupyter Server Root').locator('svg');
+    await goUp.click();
 
     expect(await page.screenshot()).toMatchSnapshot('voici-tree.png');
   });
@@ -38,13 +39,10 @@ test.describe('Voici Tests', () => {
   test('Render Simple Notebook', async ({ page, context }, testInfo) => {
     await page.goto('lite');
     // Wait for page to load
-    await page.waitForSelector('a:text("voici.ipynb")');
+    const voici = await page.getByText('voici.ipynb');
 
     // Open the notebook in a new tab
-    [page] = await Promise.all([
-      context.waitForEvent('page'),
-      page.click('a:text("voici.ipynb")'),
-    ]);
+    [page] = await Promise.all([context.waitForEvent('page'), voici.click()]);
 
     // Wait for page to load
     await page.waitForSelector('.jupyter-widgets');
@@ -56,16 +54,12 @@ test.describe('Voici Tests', () => {
 
   test('Render bqplot Notebook', async ({ page, context }, testInfo) => {
     await page.goto('lite');
-
-    await page.waitForSelector('a:text("widgets")');
-    await page.click('a:text("widgets")');
-    await page.waitForSelector('a:text("bqplot.ipynb")');
+    const widget = await page.getByText('widgets');
+    await widget.click();
+    const bqplot = await page.getByText('bqplot.ipynb');
 
     // Open the notebook in a new tab
-    [page] = await Promise.all([
-      context.waitForEvent('page'),
-      page.click('a:text("bqplot.ipynb")'),
-    ]);
+    [page] = await Promise.all([context.waitForEvent('page'), bqplot.click()]);
 
     // Wait for page to load
     await page.waitForSelector('.jupyter-widgets');
@@ -77,14 +71,14 @@ test.describe('Voici Tests', () => {
   test('Render ipycanvas Notebook', async ({ page, context }, testInfo) => {
     await page.goto('lite');
 
-    await page.waitForSelector('a:text("widgets")');
-    await page.click('a:text("widgets")');
-    await page.waitForSelector('a:text("ipycanvas.ipynb")');
+    const widget = await page.getByText('widgets');
+    await widget.click();
+    const ipycanvas = await page.getByText('ipycanvas.ipynb');
 
     // Open the notebook in a new tab
     [page] = await Promise.all([
       context.waitForEvent('page'),
-      page.click('a:text("ipycanvas.ipynb")'),
+      ipycanvas.click(),
     ]);
 
     // Wait for page to load
@@ -107,14 +101,16 @@ test.describe('Voici Tests', () => {
   test('Render material template', async ({ page, context }, testInfo) => {
     await page.goto('material');
 
-    await page.waitForSelector('a:text("widgets")');
+    const widget = await page.getByText('widgets');
 
     // Wait a bit for the theme to be applied
     await page.waitForTimeout(1000);
 
     expect(await page.screenshot()).toMatchSnapshot('voici-tree-material.png');
+    await page.waitForTimeout(1000);
 
-    await page.click('a:text("widgets")');
+    await widget.click();
+    await page.waitForTimeout(1000);
 
     expect(await page.screenshot()).toMatchSnapshot(
       'voici-subtree-material.png'
@@ -122,12 +118,12 @@ test.describe('Voici Tests', () => {
 
     await page.click('a:text("..")');
 
-    await page.waitForSelector('a:text("voici.ipynb")');
+    const voici = page.getByText('voici.ipynb');
 
     expect(await page.screenshot()).toMatchSnapshot('voici-tree-material.png');
 
     // Open the notebook (The material template does not open in a new tab?)
-    await page.click('a:text("voici.ipynb")');
+    await voici.click();
 
     // Wait for page to load
     await page.waitForSelector('.jupyter-widgets');

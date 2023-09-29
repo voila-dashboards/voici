@@ -16,7 +16,6 @@ from jupyterlite_core.app import (
     lite_aliases,
 )
 from traitlets import default
-
 from ._version import __version__
 
 voici_aliases = dict(
@@ -25,6 +24,7 @@ voici_aliases = dict(
     strip_sources="VoilaConfiguration.strip_sources",
     template="VoilaConfiguration.template",
     theme="VoilaConfiguration.theme",
+    **{"classic-tree": "VoilaConfiguration.classic_tree"},
 )
 
 
@@ -118,7 +118,6 @@ class VoiciApp(LiteApp):
             if len(arg_list) > 0 and not arg_list[0].startswith("-")
             else None
         )
-
         if sub_app is None or sub_app in self.__sub_apps:
             super().initialize(argv)
         else:
@@ -129,10 +128,9 @@ class VoiciApp(LiteApp):
 
             subapp: VoiciBuildApp = self.subapp
             extra_args = subapp.extra_args
-
             if len(extra_args) == 1:
                 content_path = subapp.extra_args[0]
-                subapp.contents = (os.path.abspath(content_path),)
+                subapp.contents = subapp.contents + (os.path.abspath(content_path),)
             elif len(extra_args) != 0:
                 raise ValueError(f"Provided more than 1 argument: {extra_args}")
 

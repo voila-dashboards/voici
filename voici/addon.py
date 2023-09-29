@@ -25,15 +25,6 @@ from jupyterlite_core.constants import (
 
 from .tree_exporter import VoiciTreeExporter
 
-# Try to patch xeus-python's jupyter-widgets version st. we pull the right one
-try:
-    from jupyterlite_xeus_python.env_build_addon import XeusPythonEnv
-
-    if hasattr(XeusPythonEnv, "pin_packages"):
-        XeusPythonEnv.pin_packages = ["ipywidgets=8.0.6", "jupyterlab_widgets=3.0.7"]
-except ImportError:
-    pass
-
 
 class VoiciAddon(BaseAddon):
     """The Voici JupyterLite app"""
@@ -153,8 +144,14 @@ class VoiciAddon(BaseAddon):
     def update_index(self, desc: Path):
         """Update the redirect URL"""
 
-        if len(self.manager.contents) == 1 and self.manager.contents[0].is_file():
-            file_name = self.manager.contents[0].stem
+        single_dashboard = False
+        file_name = None
+        for content in self.manager.contents:
+            if content.is_file():
+                single_dashboard = True
+                file_name = content.stem
+                break
+        if single_dashboard and file_name is not None:
             new_url = f"/voici/render/{file_name}.html"
         else:
             new_url = "/voici/tree/index.html"
