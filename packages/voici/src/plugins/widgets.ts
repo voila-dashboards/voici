@@ -21,7 +21,7 @@ export const widgetManager = {
   activate: async (app: JupyterFrontEnd): Promise<any> => {
     if (!(app instanceof VoiciApp)) {
       throw Error(
-        'The Voici Widget Manager plugin must be activated in a VoilaApp'
+        'The Voici Widget Manager plugin must be activated in a VoiciApp'
       );
     }
     const managerPromise = app.widgetManagerPromise;
