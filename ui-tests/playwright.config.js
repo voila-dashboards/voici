@@ -3,6 +3,7 @@ module.exports = {
   reporter: [[process.env.CI ? 'dot' : 'list'], ['html']],
   use: {
     baseURL: 'http://localhost:8866',
+    trace: 'on-first-retry',
     video: 'retain-on-failure',
   },
   retries: 2,
