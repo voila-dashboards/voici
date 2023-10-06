@@ -11,5 +11,5 @@ dependencies:
     - ruff==0.0.258
     - voila==0.5.4
     - voila-material>=0.4.3
-    - jupyterlite-core[lab]>=0.2.0a1,<0.3.0
+    - jupyterlite-core[lab]>=0.2.0b1,<0.3.0
     - jupyterlite-xeus-python >= 1.0.0a0
