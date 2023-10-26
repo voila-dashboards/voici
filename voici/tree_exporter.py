@@ -70,11 +70,6 @@ def patch_page_config(
         themeName = config.theme
     page_config_copy["jpThemeName"] = themeName
     page_config_copy["extensionConfig"] = config.extension_config
-
-    page_config_copy[
-        "fullMathjaxUrl"
-    ] = f'{page_config_copy["baseUrl"]}{page_config_copy["fullMathjaxUrl"]}'
-
     federated_extensions = page_config_copy["federated_extensions"]
     disabled_extensions = [
         "@voila-dashboards/jupyterlab-preview",

@@ -36,7 +36,6 @@ async function main() {
     ),
     require('@jupyterlab/markedparser-extension'),
     require('@jupyterlab/markdownviewer-extension'),
-    require('@jupyterlab/mathjax2-extension'),
     require('@jupyterlab/rendermime-extension'),
     require('@jupyterlab/theme-light-extension'),
     require('@jupyterlab/theme-dark-extension'),
