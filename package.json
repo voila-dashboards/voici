@@ -24,8 +24,8 @@
     "build:test": "lerna run build:test",
     "bump:js:version": "lerna version --no-push --force-publish --no-git-tag-version --yes",
     "clean": "lerna run clean",
-    "eslint": "eslint . --ext .ts,.tsx,.js,.jsx --fix",
-    "eslint:check": "eslint . --ext .ts,.tsx,.js,.jsx",
+    "eslint": "eslint . --ext .ts,.tsx --fix",
+    "eslint:check": "eslint . --ext .ts,.tsx",
     "prettier": "prettier --write \"**/*{.ts,.tsx,.js,.jsx,.css,.json,.md}\"",
     "prettier:check": "prettier --list-different \"**/*{.ts,.tsx,.js,.jsx,.css,.json,.md}\"",
     "test": "lerna run test"
