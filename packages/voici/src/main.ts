@@ -11,7 +11,7 @@ import '@voila-dashboards/voila/style/index.js';
 import '@voila-dashboards/voila/lib/sharedscope';
 import { PageConfig, URLExt } from '@jupyterlab/coreutils';
 import { IKernelSpecs } from '@jupyterlite/kernel';
-import { JupyterLiteServer } from '@jupyterlite/server';
+import { IServiceWorkerManager, JupyterLiteServer } from '@jupyterlite/server';
 import {
   activePlugins,
   createModule,
@@ -181,6 +181,14 @@ async function main() {
   app.registerPluginModules(mods);
 
   await app.start();
+
+  const serviceWorkerManager = await jupyterLiteServer.resolveOptionalService(
+    IServiceWorkerManager
+  );
+  if (serviceWorkerManager) {
+    await serviceWorkerManager.ready;
+  }
+
   await app.renderWidgets();
   window.jupyterapp = app;
 }

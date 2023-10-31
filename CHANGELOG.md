@@ -1,4 +1,17 @@
-# Changelog
+# Voici Changelog
+
+## 0.5.0 - Highlights
+
+Below are the major highlights in Voici 0.5.0
+
+- Voici frontend is updated to JupyterLab 4, Voila 0.5.0 components.
+- Tree page is now a Lab remix app.
+- New argument `--classic-tree` to use the jinja2-based tree page instead of the Lab-based one.
+- Voici CLI can be used in the same way as Voila, e.g:
+  - `voici .`
+  - `voici notebook.ipynb`
+- Voici now supports the [`files` directory](https://jupyterlite.readthedocs.io/en/latest/howto/content/files.html#content-with-the-cli) to copy additional files to the Voici deployment.
+- Latex expressions are rendered by `@jupyterlab/mathjax-extension` instead of relying on MathJax 2 coming from CDN.
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
