@@ -15,7 +15,11 @@ import { ServiceManager } from '@jupyterlab/services';
 import { IKernelConnection } from '@jupyterlab/services/lib/kernel/kernel';
 import { IKernelSpecs } from '@jupyterlite/kernel';
 import { Widget } from '@lumino/widgets';
-import { App as VoilaAppNameSpace, VoilaApp } from '@voila-dashboards/voila';
+import {
+  App as VoilaAppNameSpace,
+  RenderedCells,
+  VoilaApp,
+} from '@voila-dashboards/voila';
 
 const PACKAGE = require('../package.json');
 
@@ -52,6 +56,10 @@ export class VoiciApp extends VoilaApp {
       console.error('Missing service manager');
       return;
     }
+
+    const rendermime = await this.resolveRequiredService(IRenderMimeRegistry);
+    App.typesetMarkdown(rendermime);
+
     await serviceManager.ready;
     const sessionManager = serviceManager.sessions;
     await sessionManager.ready;
@@ -86,9 +94,7 @@ export class VoiciApp extends VoilaApp {
       for (const name in specs) {
         if (requestedKernelspec.language === specs[name]?.language) {
           console.log(
-            `${
-              requestedKernelspec.name
-            } kernel is not available, fallback to using ${specs[name]!.name}`
+            `${requestedKernelspec.name} kernel is not available, fallback to using ${specs[name]?.name}`
           );
           spec = specs[name];
           break;
@@ -117,9 +123,6 @@ export class VoiciApp extends VoilaApp {
     kernel.connectionStatusChanged.connect(async (_, status) => {
       if (status === 'connected') {
         window.update_loading_text(0, 0, 'Starting up kernel...');
-        const rendermime = await this.resolveRequiredService(
-          IRenderMimeRegistry
-        );
         // Create Voila widget manager
         const widgetManager = new KernelWidgetManager(kernel, rendermime);
         rendermime.removeMimeType(WIDGET_MIMETYPE);
@@ -149,7 +152,7 @@ export class VoiciApp extends VoilaApp {
             });
             const node = document.getElementById('rendered_cells');
             if (node) {
-              const cells = new Widget({ node });
+              const cells = new RenderedCells({ node });
               this.shell.add(cells, 'main');
             }
           }
@@ -172,6 +175,14 @@ export namespace App {
   export interface IOptions extends VoilaAppNameSpace.IOptions {
     kernelspecs?: IKernelSpecs;
     serviceManager?: ServiceManager;
+  }
+
+  export function typesetMarkdown(rendermime: IRenderMimeRegistry): void {
+    // Render latex in markdown cells
+    const mdOutput = document.body.querySelectorAll('div.jp-MarkdownOutput');
+    mdOutput.forEach((md) => {
+      rendermime.latexTypesetter?.typeset(md as HTMLElement);
+    });
   }
 
   export async function executeCells(options: {
