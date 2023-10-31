@@ -60,6 +60,9 @@ export class VoiciApp extends VoilaApp {
     const rendermime = await this.resolveRequiredService(IRenderMimeRegistry);
     App.typesetMarkdown(rendermime);
 
+    const ws = await navigator.serviceWorker.ready;
+    await ws.update();
+
     await serviceManager.ready;
     const sessionManager = serviceManager.sessions;
     await sessionManager.ready;
