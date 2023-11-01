@@ -15,6 +15,22 @@ Below are the major highlights in Voici 0.5.0
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 0.5.0
+
+([Full Changelog](https://github.com/voila-dashboards/voici/compare/v0.5.0rc0...1129bbabcc4b3cbed390ecd8a311ae1f5fb6c5df))
+
+### Bugs fixed
+
+- Handle missing service worker [#98](https://github.com/voila-dashboards/voici/pull/98) ([@trungleduc](https://github.com/trungleduc))
+
+### Contributors to this release
+
+([GitHub contributors page for this release](https://github.com/voila-dashboards/voici/graphs/contributors?from=2023-10-31&to=2023-11-01&type=c))
+
+[@trungleduc](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Atrungleduc+updated%3A2023-10-31..2023-11-01&type=Issues)
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 0.5.0rc0
 
 ([Full Changelog](https://github.com/voila-dashboards/voici/compare/v0.5.0a0...dc6c1d041083215e429ab0853d6e5d07b76756fa))
@@ -38,8 +54,6 @@ Below are the major highlights in Voici 0.5.0
 ([GitHub contributors page for this release](https://github.com/voila-dashboards/voici/graphs/contributors?from=2023-09-29&to=2023-10-31&type=c))
 
 [@github-actions](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Agithub-actions+updated%3A2023-09-29..2023-10-31&type=Issues) | [@jtpio](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Ajtpio+updated%3A2023-09-29..2023-10-31&type=Issues) | [@trungleduc](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Atrungleduc+updated%3A2023-09-29..2023-10-31&type=Issues)
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 0.5.0a0
 
