@@ -186,7 +186,11 @@ async function main() {
     IServiceWorkerManager
   );
   if (serviceWorkerManager) {
-    await serviceWorkerManager.ready;
+    try {
+      await serviceWorkerManager.ready;
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   await app.renderWidgets();
