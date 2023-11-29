@@ -25,6 +25,14 @@ To use Voici, you'll need to install it first:
 
 ```bash
 pip install voici
+
+# OR BETTER
+
+conda install -c conda-forge voici
+
+# OR EVEN FASTER
+
+mamba install -c conda-forge voici
 ```
 
 Then, you can generate static dashboards from a notebook or a directory of Notebooks like this:
