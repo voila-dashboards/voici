@@ -37,7 +37,7 @@ version = ".".join(map(str, _release["version_info"][:2]))
 release = _release["__version__"]
 language = "en"
 
-html_logo = "voila-logo.svg"
+html_logo = "voici-logo.svg"
 
 exclude_patterns = []
 highlight_language = "python"
