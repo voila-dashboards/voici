@@ -5,8 +5,8 @@
 %
 % The full license is in the file LICENSE, distributed with this software.
 
-```{image} voila-logo.svg
-:alt: voila
+```{image} voici-logo.svg
+:alt: voici
 ```
 
 _From notebooks to static web applications and dashboards._
