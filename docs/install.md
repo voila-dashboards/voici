@@ -9,6 +9,8 @@
 
 # Installing Voici
 
+## Using pip
+
 You can install Voici using pip:
 
 ```bash
@@ -22,6 +24,14 @@ If you are using a `requirements.txt` file, you can add the following line:
 # ...
 # add Voici as a dependency
 voici
+```
+
+## Using conda/mamba
+
+You can install Voici using mamba or conda:
+
+```bash
+mamba install -c conda-forge voici
 ```
 
 If you are using an `environment.yml` file, you can add the dependency under `pip`:
