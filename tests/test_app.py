@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 from shutil import rmtree
-from voici.app import VoiciApp, VoiciBuildApp
+from voici_core.app import VoiciApp, VoiciBuildApp
 import sys
 import pytest
 from contextlib import contextmanager

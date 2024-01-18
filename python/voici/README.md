@@ -80,19 +80,12 @@ We'd also suggest looking into the [JupyterLite documentation](https://jupyterli
 
 ## Build the demo site yourself
 
-Before you can build the demo site from this repository, you will need to install [jupyterlite-xeus-python](https://github.com/jupyterlite/xeus-python-kernel):
-
-```bash
-pip install jupyterlite-xeus-python
-```
-
-You will also need either [micromamba](https://mamba.readthedocs.io/en/latest/user_guide/micromamba.html), [mamba](https://mamba.readthedocs.io/en/latest) or conda installed in order to build the emscripten environment.
+You will need either [micromamba](https://mamba.readthedocs.io/en/latest/user_guide/micromamba.html), [mamba](https://mamba.readthedocs.io/en/latest) or conda installed in order to build the emscripten environment.
 
 The [demo directory](https://github.com/voila-dashboards/voici/tree/main/demo) contains:
 
 - `notebooks/`: The directory of Notebooks that will be served by Voici
 - `environment.yml`: The file specifying the Emscripten environment that will be used for rendering the dashboards, this must contain all your Notebook dependencies
-- `jupyter-lite.json`: The JupyterLite config file, this config will disable the default Python kernel JupyterLite provides, allowing to use xeus-python instead.
 
 Run the following command to build the demo site:
 

@@ -9,6 +9,7 @@ dependencies:
   - pydata-sphinx-theme
   - yarn=3
   - pip:
-    - jupyterlite-xeus-python >= 1.0.0a0
     - sphinxcontrib-video
-    - ..
+    - jupyterlite-xeus-python
+    - ../python/voici-core
+    - ../python/voici

@@ -25,13 +25,6 @@ You can also deploy Voici as a standalone application so it can be hosted anywhe
 
 First install Voici by following the [installation instructions](install.md).
 
-You also need to install a kernel for the language you want to use. For example, to use Python, you can install the `jupyterlite-xeus-python` package.
-Add it to your dependencies, or install it with the following command:
-
-```bash
-pip install jupyterlite-xeus-python
-```
-
 ### Build
 
 Let's assume you have a folder named `notebooks` with some notebooks in it. To build your Voici application, run the following command:

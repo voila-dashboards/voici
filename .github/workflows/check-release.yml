@@ -1,4 +1,5 @@
 name: Check Release
+
 on:
   push:
     branches:
@@ -17,8 +18,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Base Setup
-        uses: jupyterlab/maintainer-tools/.github/actions/base-setup@v1
+      - name: Install Conda environment with Micromamba
+        uses: mamba-org/setup-micromamba@v1
+        with:
+          environment-name: voici
+          create-args: >-
+            python=3.9
+            yarn=3
 
       - name: Check Release
         uses: jupyter-server/jupyter_releaser/.github/actions/check-release@v2
