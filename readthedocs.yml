@@ -7,7 +7,8 @@ build:
 
   jobs:
     post_build:
-      - yarn build:demo
+      - cd demo
+      - voici build --contents notebooks
       - cp -r demo/_output _readthedocs/html/_static/lite
 
 conda:
