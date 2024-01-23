@@ -1,0 +1,131 @@
+[build-system]
+requires = [
+    "hatchling>=1.8.1",
+    "jupyter_core",
+]
+build-backend = "hatchling.build"
+
+[project]
+name = "voici-core"
+description = "Voici turns Jupyter notebooks into static web applications"
+readme = "README.md"
+requires-python = ">=3.8"
+authors = [
+    { name = "Voila Development Team" },
+]
+keywords = [
+    "Jupyter",
+    "JupyterLite",
+    "Emscripten",
+    "Voila",
+    "Voici",
+]
+classifiers = [
+    "Framework :: Jupyter",
+    "License :: OSI Approved :: BSD License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "voila>=0.5.5,<0.6",
+    "jupyterlite-core>=0.2.0,<0.3.0",
+]
+dynamic = [
+    "version",
+]
+
+[project.license]
+file = "LICENSE"
+
+[project.optional-dependencies]
+dev = [
+    "black",
+    "ruff==0.0.258",
+    "hatch",
+]
+
+docs = [
+    "myst-parser",
+    "pydata-sphinx-theme",
+    "sphinx",
+    "sphinx-autobuild",
+    "sphinxcontrib-video",
+]
+
+[project.scripts]
+voici = "voici_core.app:main"
+
+[project.entry-points."jupyterlite.addon.v0"]
+voici = "voici_core.addon:VoiciAddon"
+
+[project.urls]
+Homepage = "https://github.com/voila-dashboards/voici"
+
+[tool.hatch.version]
+path = "voici_core/_version.py"
+
+[tool.hatch.build]
+artifacts = [
+    "voici_core/static/build",
+]
+
+[tool.hatch.build.targets.sdist]
+exclude = [
+    ".github",
+    "*.gif",
+]
+
+[tool.hatch.build.hooks.jupyter-builder]
+dependencies = [
+    "hatch-jupyter-builder>=0.5.3",
+]
+build-function = "hatch_jupyter_builder.npm_builder"
+ensured-targets = [
+    "voici_core/static/build/voici.js",
+]
+skip-if-exists = [
+    "voici_core/static/build/voici.js",
+]
+
+[tool.hatch.build.hooks.jupyter-builder.editable-build-kwargs]
+build_cmd = "build"
+npm = [
+    "yarn",
+]
+force = true
+
+[tool.hatch.build.hooks.jupyter-builder.build-kwargs]
+build_cmd = "build:prod"
+npm = [
+    "yarn",
+]
+
+[tool.jupyter-releaser]
+skip = [
+    "check-links",
+]
+
+[tool.jupyter-releaser.hooks]
+before-bump-version = [
+    "python -m pip install hatch",
+]
+before-build-npm = [
+    "yarn",
+    "yarn clean",
+    "yarn build:prod",
+]
+before-build-python = [
+    "yarn clean",
+]
+
+[tool.check-wheel-contents]
+ignore = ["W002"]
+
+[tool.ruff]
+target-version = "py38"
+line-length = 100

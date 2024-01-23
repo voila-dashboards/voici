@@ -52,7 +52,7 @@ const distRoot = path.resolve(
   __dirname,
   '..',
   '..',
-  'voici',
+  'voici_core',
   'static',
   'build'
 );

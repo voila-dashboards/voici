@@ -1,0 +1,92 @@
+[build-system]
+requires = [
+    "hatchling>=1.8.1",
+    "jupyter_core",
+]
+build-backend = "hatchling.build"
+
+[project]
+name = "voici"
+description = "Voici turns Jupyter notebooks into static web applications"
+readme = "README.md"
+requires-python = ">=3.8"
+authors = [
+    { name = "Voila Development Team" },
+]
+keywords = [
+    "Jupyter",
+    "JupyterLite",
+    "Emscripten",
+    "Voila",
+    "Voici",
+]
+classifiers = [
+    "Framework :: Jupyter",
+    "License :: OSI Approved :: BSD License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "voici-core",
+    "jupyterlite-xeus-python",
+]
+dynamic = [
+    "version",
+]
+
+[project.license]
+file = "LICENSE"
+
+[project.optional-dependencies]
+dev = [
+    "black",
+    "ruff==0.0.258",
+    "hatch",
+]
+
+docs = [
+    "myst-parser",
+    "pydata-sphinx-theme",
+    "sphinx",
+    "sphinx-autobuild",
+    "sphinxcontrib-video",
+]
+
+[project.urls]
+Homepage = "https://github.com/voila-dashboards/voici"
+
+[tool.hatch.version]
+path = "voici/_version.py"
+
+[tool.hatch.build]
+artifacts = [
+    "static/build",
+]
+
+[tool.hatch.build.targets.sdist]
+exclude = [
+    ".github",
+    "*.gif",
+]
+
+[tool.jupyter-releaser]
+skip = [
+    "check-links",
+]
+
+[tool.jupyter-releaser.hooks]
+before-bump-version = [
+    "python -m pip install hatch",
+]
+
+[tool.check-wheel-contents]
+ignore = ["W002"]
+
+[tool.ruff]
+target-version = "py38"
+line-length = 100

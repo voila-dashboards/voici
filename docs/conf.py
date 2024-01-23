@@ -3,17 +3,13 @@ import os
 # Add dev disclaimer.
 _release = {}
 exec(
-    compile(open("../voici/_version.py").read(), "../voici/_version.py", "exec"),
+    compile(
+        open("../python/voici/voici/_version.py").read(),
+        "../python/voici/voici/_version.py",
+        "exec",
+    ),
     _release,
 )
-if _release["version_info"][-1] == "dev":
-    rst_prolog = """
-    .. note::
-
-        This documentation is for a development version of Voilà. There may be
-        significant differences from the latest stable release.
-
-    """
 
 on_rtd = os.environ.get("READTHEDOCS", None) == "True"
 
@@ -33,7 +29,7 @@ master_doc = "index"
 project = "voici"
 copyright = "2020, The Voilà Development Team"
 author = "The Voilà Development Team"
-version = ".".join(map(str, _release["version_info"][:2]))
+version = _release["__version__"]
 release = _release["__version__"]
 language = "en"
 
