@@ -24,7 +24,7 @@ jobs:
           node-version: "18"
 
       - name: Setup yarn
-        run: npm install -g yarn@3
+        run: npm install -g @yarnpkg/cli@3
 
       - name: Check Release
         uses: jupyter-server/jupyter_releaser/.github/actions/check-release@v2
