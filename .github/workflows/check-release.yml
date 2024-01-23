@@ -8,10 +8,6 @@ on:
     branches:
       - main
 
-defaults:
-  run:
-    shell: bash -l {0}
-
 permissions:
   contents: write
 
@@ -22,14 +18,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Install Conda environment with Micromamba
-        uses: mamba-org/setup-micromamba@v1
+      - name: Setup Nodejs and npm
+        uses: actions/setup-node@v2
         with:
-          init-shell: bash
-          environment-name: voici
-          create-args: >-
-            python=3.9
-            yarn=3
+          node-version: "18"
+
+      - name: Setup yarn
+        run: npm install -g yarn@3
 
       - name: Check Release
         uses: jupyter-server/jupyter_releaser/.github/actions/check-release@v2
