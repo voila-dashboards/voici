@@ -8,6 +8,10 @@ on:
     branches:
       - main
 
+defaults:
+  run:
+    shell: bash -l {0}
+
 permissions:
   contents: write
 
@@ -21,6 +25,7 @@ jobs:
       - name: Install Conda environment with Micromamba
         uses: mamba-org/setup-micromamba@v1
         with:
+          init-shell: bash
           environment-name: voici
           create-args: >-
             python=3.9
