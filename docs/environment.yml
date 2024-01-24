@@ -10,6 +10,6 @@ dependencies:
   - yarn=3
   - pip:
     - sphinxcontrib-video
-    - jupyterlite-xeus-python
+    - jupyterlite-xeus
     - ../python/voici-core
     - ../python/voici
