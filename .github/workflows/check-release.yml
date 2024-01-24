@@ -6,10 +6,6 @@ on:
   pull_request:
     branches: ['*']
 
-defaults:
-  run:
-    shell: bash -l {0}
-
 jobs:
   check_release:
     runs-on: ubuntu-latest
@@ -27,30 +23,15 @@ jobs:
             pip
             jupyter_releaser
 
-    - id: prep-release
-      run: |
-        export RH_DRY_RUN="true"
-        export GITHUB_ACCESS_TOKEN=${{ secrets.GITHUB_TOKEN }}
-        export RH_VERSION_SPEC=${{ next }}
-        python -m jupyter_releaser.actions.prep_release
-
-    - id: populate-release
-      run: |
-        export RH_DRY_RUN="true"
-        export GITHUB_ACCESS_TOKEN=${{ secrets.GITHUB_TOKEN }}
-        export RH_RELEASE_URL=${{ steps.prep-release.outputs.release_url }}
-        export YARN_UNSAFE_HTTP_WHITELIST=0.0.0.0
-        python -m jupyter_releaser.actions.populate_release
-
-    - id: finalize-release
-      run: |
-        export RH_DRY_RUN="true"
-        export GITHUB_ACCESS_TOKEN=${{ secrets.GITHUB_TOKEN }}
-        export RH_RELEASE_URL=${{ steps.populate-release.outputs.release_url }}
-        python -m jupyter_releaser.actions.finalize_release
+      - name: Check Release
+        uses: jupyter-server/jupyter_releaser/.github/actions/check-release@main
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          version_spec: next
+          shell: bash -l {0}
 
       - name: Upload Distributions
         uses: actions/upload-artifact@v3
         with:
-          name: jupytercad-releaser-dist-${{ github.run_number }}
+          name: voici-releaser-dist-${{ github.run_number }}
           path: .jupyter_releaser_checkout/dist
