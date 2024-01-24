@@ -21,7 +21,7 @@ jobs:
             python=3.9
             yarn=3
             pip
-            jupyter_releaser
+            jupyter-releaser
 
       - name: Check Release
         uses: jupyter-server/jupyter_releaser/.github/actions/check-release@main
