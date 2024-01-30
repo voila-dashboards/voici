@@ -1,3 +1,1 @@
-```{include} python/voici/README.md
-
-```
+python/voici/README.md

@@ -51,12 +51,12 @@ def patch_page_config(
     page_config_copy["fullStaticUrl"] = f"../{'../' * len(relative_path.parts)}build"
 
     # Grabbing from the jupyterlite static folders
-    page_config_copy[
-        "settingsUrl"
-    ] = f"../../{'../' * len(relative_path.parts)}build/schemas"
-    page_config_copy[
-        "fullLabextensionsUrl"
-    ] = f"../../{'../' * len(relative_path.parts)}extensions"
+    page_config_copy["settingsUrl"] = (
+        f"../../{'../' * len(relative_path.parts)}build/schemas"
+    )
+    page_config_copy["fullLabextensionsUrl"] = (
+        f"../../{'../' * len(relative_path.parts)}extensions"
+    )
 
     # The Themes URL will be joined with the base URL in the
     # JupyterLite main application
