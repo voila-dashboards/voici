@@ -23,8 +23,8 @@ https://user-images.githubusercontent.com/591645/222892327-2a5b1341-640d-49c2-9e
 
 Voici is split between two Python packages:
 
-- The `voici-core` package is the core functionalities of voici, mainly the voici CLI.
-- The `voici` package is a meta-package installing both `voici-core` and [`jupyterlite-xeus`](https://github.com/jupyterlite/xeus).
+- The `voici-core` package provides the core functionalities of voici, mainly the voici CLI.
+- The `voici` package is a meta-package that depends on both `voici-core` and [`jupyterlite-xeus`](https://github.com/jupyterlite/xeus).
 
 `jupyterlite-xeus` allows you to pre-install packages for running your dashboard. For example, if your dashboard requires Matplotlib you can provide an `environment.yml` file in the folder where you run the voici command, containing the following:
 
@@ -46,7 +46,7 @@ Note that you can install multiple xeus kernels like [xeus-python](https://githu
 See the [jupyterlite-xeus documentation](https://jupyterlite-xeus.readthedocs.io/en/latest/) for more information
 ```
 
-If you would like to use https://github.com/jupyterlite/pyodide-kernel or another non-xeus kernel, you probably want to depend on `voici-core` instead.
+If you would like to use https://github.com/jupyterlite/pyodide-kernel or another non-xeus kernel, you may want to depend on `voici-core` and `jupyterlite-pyodide-kernel` instead.
 
 ## Getting Started 🏁
 
