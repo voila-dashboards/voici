@@ -17,7 +17,36 @@ https://user-images.githubusercontent.com/591645/222892327-2a5b1341-640d-49c2-9e
 - Generates self-contained HTML files with embedded Wasm kernels.
 - Works offline, without requiring a server to run the dashboard.
 - Supports custom templates for styling dashboards, powered by Jinja2.
-- Supports all programming languages that have JupyterLite kernels available. _e.g._ the default JavaScript and Python kernels JupyterLite provides, [python with xeus-python](https://github.com/jupyterlite/xeus-python-kernel), [lua](https://github.com/jupyterlite/xeus-lua-kernel), [nelson](https://github.com/jupyterlite/xeus-nelson-kernel)
+- Supports all programming languages that have JupyterLite kernels available. _e.g._ the default JavaScript and Python kernels JupyterLite provides, and [xeus kernels](https://github.com/jupyterlite/xeus)
+
+## Python packages provided by voici:
+
+Voici is split between two Python packages:
+
+- The `voici-core` package provides the core functionalities of voici, mainly the voici CLI.
+- The `voici` package is a meta-package that depends on both `voici-core` and [`jupyterlite-xeus`](https://github.com/jupyterlite/xeus).
+
+`jupyterlite-xeus` allows you to pre-install packages for running your dashboard. For example, if your dashboard requires Matplotlib you can provide an `environment.yml` file in the folder where you run the voici command, containing the following:
+
+```yml
+name: my-dashboard-env
+channels:
+  - https://repo.mamba.pm/emscripten-forge
+  - conda-forge
+dependencies:
+  - xeus-python
+  - matplotlib
+```
+
+It has been decided that `voici` would depend on `jupyterlite-xeus` for convenience, **allowing to easily switch from voila to voici without the need to update the Notebook code.**.
+
+Note that you can install multiple xeus kernels like [xeus-python](https://github.com/jupyter-xeus/xeus-python), [xeus-lua](https://github.com/jupyter-xeus/xeus-lua) or [xeus-javascript](https://github.com/jupyter-xeus/xeus-javascript).
+
+```{note}
+See the [jupyterlite-xeus documentation](https://jupyterlite-xeus.readthedocs.io/en/latest/) for more information
+```
+
+If you would like to use https://github.com/jupyterlite/pyodide-kernel or another non-xeus kernel, you may want to depend on `voici-core` and `jupyterlite-pyodide-kernel` instead.
 
 ## Getting Started 🏁
 
