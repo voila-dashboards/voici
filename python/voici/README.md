@@ -19,7 +19,9 @@ https://user-images.githubusercontent.com/591645/222892327-2a5b1341-640d-49c2-9e
 - Supports custom templates for styling dashboards, powered by Jinja2.
 - Supports all programming languages that have JupyterLite kernels available. _e.g._ the default JavaScript and Python kernels JupyterLite provides, and [xeus kernels](https://github.com/jupyterlite/xeus)
 
-## Difference between `voici` and `voici-core` packages
+## Python packages provided by voici:
+
+Voici is split between two Python packages:
 
 - The `voici-core` package is the core functionalities of voici, mainly the voici CLI.
 - The `voici` package is a meta-package installing both `voici-core` and [`jupyterlite-xeus`](https://github.com/jupyterlite/xeus).
@@ -36,7 +38,15 @@ dependencies:
   - matplotlib
 ```
 
-If you'd like to use https://github.com/jupyterlite/pyodide-kernel or another non-xeus kernel, you should probably depend on `voici-core` instead.
+It has been decided that `voici` would depend on `jupyterlite-xeus` for convenience, **allowing to easily switch from voila to voici without the need to update the Notebook code.**.
+
+Note that you can install multiple xeus kernels like [xeus-python](https://github.com/jupyter-xeus/xeus-python), [xeus-lua](https://github.com/jupyter-xeus/xeus-lua) or [xeus-javascript](https://github.com/jupyter-xeus/xeus-javascript).
+
+```{note}
+See the [jupyterlite-xeus documentation](https://jupyterlite-xeus.readthedocs.io/en/latest/) for more information
+```
+
+If you would like to use https://github.com/jupyterlite/pyodide-kernel or another non-xeus kernel, you probably want to depend on `voici-core` instead.
 
 ## Getting Started 🏁
 
