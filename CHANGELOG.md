@@ -15,6 +15,45 @@ Below are the major highlights in Voici 0.5.0
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 0.6.0
+
+([Full Changelog](https://github.com/voila-dashboards/voici/compare/@voila-dashboards/voici@0.5.0...e168a9ee9e6be15a45726e248dc2e38fc007f483))
+
+### Highlights
+
+Voici 0.6.0 is splitting the package in two:
+
+- The `voici-core` package includes the core functionalities of voici, mainly the voici CLI.
+- The `voici` package is a meta-package installing both `voici-core` and [`jupyterlite-xeus`](https://github.com/jupyterlite/xeus).
+
+From now on, users can seamlessly use features provided by `jupyterlite-xeus`, mainly [the environment creation feature](https://jupyterlite-xeus.readthedocs.io/en/latest/environment.html) when using `voici`.
+
+Users can also depend on `voici-core` if they don't want to use features provided by `jupyterlite-xeus`.
+
+### Enhancements made
+
+- Spit the package into voici-core and voici [#106](https://github.com/voila-dashboards/voici/pull/106) ([@martinRenou](https://github.com/martinRenou)) and [#107](https://github.com/voila-dashboards/voici/pull/107) ([@martinRenou](https://github.com/martinRenou))
+
+### Maintenance and upkeep improvements
+
+- Use check-release v2 workflow [#108](https://github.com/voila-dashboards/voici/pull/108) ([@martinRenou](https://github.com/martinRenou))
+- Update publish workflow for trusted publishers [#105](https://github.com/voila-dashboards/voici/pull/105) ([@jtpio](https://github.com/jtpio))
+
+### Documentation improvements
+
+- README: clarify voici and voici-core differences [#110](https://github.com/voila-dashboards/voici/pull/110) ([@martinRenou](https://github.com/martinRenou))
+- Symlink readme [#109](https://github.com/voila-dashboards/voici/pull/109) ([@martinRenou](https://github.com/martinRenou))
+- Add Voici logo [#101](https://github.com/voila-dashboards/voici/pull/101) ([@martinRenou](https://github.com/martinRenou))
+- Update installation instructions [#100](https://github.com/voila-dashboards/voici/pull/100) ([@martinRenou](https://github.com/martinRenou))
+
+### Contributors to this release
+
+([GitHub contributors page for this release](https://github.com/voila-dashboards/voici/graphs/contributors?from=2023-11-01&to=2024-01-30&type=c))
+
+[@github-actions](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Agithub-actions+updated%3A2023-11-01..2024-01-30&type=Issues) | [@jtpio](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Ajtpio+updated%3A2023-11-01..2024-01-30&type=Issues) | [@martinRenou](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3AmartinRenou+updated%3A2023-11-01..2024-01-30&type=Issues) | [@trungleduc](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Atrungleduc+updated%3A2023-11-01..2024-01-30&type=Issues)
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 0.5.0
 
 ([Full Changelog](https://github.com/voila-dashboards/voici/compare/v0.5.0rc0...1129bbabcc4b3cbed390ecd8a311ae1f5fb6c5df))
@@ -28,8 +67,6 @@ Below are the major highlights in Voici 0.5.0
 ([GitHub contributors page for this release](https://github.com/voila-dashboards/voici/graphs/contributors?from=2023-10-31&to=2023-11-01&type=c))
 
 [@trungleduc](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Atrungleduc+updated%3A2023-10-31..2023-11-01&type=Issues)
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 0.5.0rc0
 
