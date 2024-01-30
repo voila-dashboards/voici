@@ -4,20 +4,7 @@
 [![JupyterLite](https://jupyterlite.rtfd.io/en/latest/_static/badge-launch.svg)](https://voici.readthedocs.io/en/latest/_static/lite)
 [![Documentation Status](https://readthedocs.org/projects/voici/badge/?version=latest)](https://voici.readthedocs.io/en/latest/?badge=latest)
 
-Voici is a tool for generating static dashboards from Jupyter Notebooks. It can be used as a drop-in replacement for [Voilà](https://github.com/voila-dashboards/voila) and it has the same commands and supports most of Voila's configuration options.
-
-Unlike Voila, which renders interactive dashboards using server-side execution, Voici uses [WebAssembly](https://developer.mozilla.org/en-US/docs/WebAssembly) (Wasm) kernels to render notebooks in the browser, making the resulting dashboard entirely self-contained and distributable.
-
-This is made possible thanks to the amazing work done in the [JupyterLite project](https://github.com/jupyterlite/jupyterlite).
-
-https://user-images.githubusercontent.com/591645/222892327-2a5b1341-640d-49c2-9e95-1f2d3ec122be.mp4
-
-## Features 🚀
-
-- Generates self-contained HTML files with embedded Wasm kernels.
-- Works offline, without requiring a server to run the dashboard.
-- Supports custom templates for styling dashboards, powered by Jinja2.
-- Supports all programming languages that have JupyterLite kernels available. _e.g._ the default JavaScript and Python kernels JupyterLite provides, [python, lua or nelson with xeus](https://github.com/jupyterlite/xeus)
+The `voici-core` package provides the core functionality for building voici dashboards using the voici CLI.
 
 ## Getting Started 🏁
 
