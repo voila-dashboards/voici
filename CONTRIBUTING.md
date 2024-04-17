@@ -19,7 +19,8 @@ mamba env create -f environment.yml
 mamba activate voici-dev
 
 # Install package in development mode
-pip install -e ".[dev,docs]"
+pip install -e python/voici-core
+pip install -e python/voici
 ```
 
 `voici` follows a monorepo structure. To build all the packages at once:
@@ -82,22 +83,28 @@ This will trigger a GitHub Action that will run the UI tests automatically and p
 
 First, follow the instructions above to set up a development environment.
 
+Then, install the docs dependencies:
+
+```bash
+pip install myst-parser pydata-sphinx-theme sphinx sphinx-autobuild sphinxcontrib-video
+```
+
 Then, to build the documentation:
 
 ```bash
-hatch run docs:build
+sphinx-build -W -b html docs docs/build/html
 ```
 
 In a separate terminal, start the documentation server:
 
 ```bash
-hatch run docs:serve
+python -m http.server --directory docs/build/html
 ```
 
 You can also build and watch the documentation using the following command:
 
 ```bash
-hatch run docs:watch
+sphinx-autobuild -W -b html docs docs/build/html --host 0.0.0.0
 ```
 
 Then open a web browser and navigate to `http://localhost:8000` to access the documentation.
