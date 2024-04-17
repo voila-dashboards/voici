@@ -49,14 +49,6 @@ dev = [
     "hatch",
 ]
 
-docs = [
-    "myst-parser",
-    "pydata-sphinx-theme",
-    "sphinx",
-    "sphinx-autobuild",
-    "sphinxcontrib-video",
-]
-
 [project.scripts]
 voici = "voici_core.app:main"
 
