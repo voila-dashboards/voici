@@ -2866,7 +2866,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jupyterlab/services@npm:^6.0.0 || ^7.0.0, @jupyterlab/services@npm:^7.0.0, @jupyterlab/services@npm:^7.0.11, @jupyterlab/services@npm:^7.0.7":
+"@jupyterlab/services@npm:^6.0.0 || ^7.0.0, @jupyterlab/services@npm:^7.0.0, @jupyterlab/services@npm:^7.0.11":
   version: 7.0.11
   resolution: "@jupyterlab/services@npm:7.0.11"
   dependencies:
@@ -2885,7 +2885,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jupyterlab/services@npm:~7.1.5":
+"@jupyterlab/services@npm:^7.1.6, @jupyterlab/services@npm:~7.1.5":
   version: 7.1.6
   resolution: "@jupyterlab/services@npm:7.1.6"
   dependencies:
@@ -4726,7 +4726,7 @@ __metadata:
     "@jupyterlab/outputarea": ^4.0.7
     "@jupyterlab/rendermime": ^4.0.7
     "@jupyterlab/rendermime-extension": ^4.0.7
-    "@jupyterlab/services": ^7.0.7
+    "@jupyterlab/services": ^7.1.6
     "@jupyterlab/settingregistry": ^4.0.7
     "@jupyterlab/theme-dark-extension": ^4.0.7
     "@jupyterlab/theme-light-extension": ^4.0.7

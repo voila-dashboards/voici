@@ -33,7 +33,7 @@
     "@jupyterlab/outputarea": "^4.0.7",
     "@jupyterlab/rendermime": "^4.0.7",
     "@jupyterlab/rendermime-extension": "^4.0.7",
-    "@jupyterlab/services": "^7.0.7",
+    "@jupyterlab/services": "^7.1.6",
     "@jupyterlab/settingregistry": "^4.0.7",
     "@jupyterlab/theme-dark-extension": "^4.0.7",
     "@jupyterlab/theme-light-extension": "^4.0.7",
