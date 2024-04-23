@@ -15,6 +15,30 @@ Below are the major highlights in Voici 0.5.0
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 0.6.1
+
+([Full Changelog](https://github.com/voila-dashboards/voici/compare/v0.6.0...9f588308ea8a39aa0fc033f0f2595dd9b2b2f29b))
+
+### Enhancements made
+
+- Allow for JupyterLite 0.3.0 [#117](https://github.com/voila-dashboards/voici/pull/117) ([@jtpio](https://github.com/jtpio))
+
+### Maintenance and upkeep improvements
+
+- Update releaser workflows [#114](https://github.com/voila-dashboards/voici/pull/114) ([@jtpio](https://github.com/jtpio))
+
+### Documentation improvements
+
+- Fix CONTRIBUTING docs [#116](https://github.com/voila-dashboards/voici/pull/116) ([@martinRenou](https://github.com/martinRenou))
+
+### Contributors to this release
+
+([GitHub contributors page for this release](https://github.com/voila-dashboards/voici/graphs/contributors?from=2024-01-30&to=2024-04-23&type=c))
+
+[@github-actions](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Agithub-actions+updated%3A2024-01-30..2024-04-23&type=Issues) | [@jtpio](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Ajtpio+updated%3A2024-01-30..2024-04-23&type=Issues) | [@martinRenou](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3AmartinRenou+updated%3A2024-01-30..2024-04-23&type=Issues)
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 0.6.0
 
 ([Full Changelog](https://github.com/voila-dashboards/voici/compare/@voila-dashboards/voici@0.5.0...e168a9ee9e6be15a45726e248dc2e38fc007f483))
@@ -51,8 +75,6 @@ Users can also depend on `voici-core` if they don't want to use features provide
 ([GitHub contributors page for this release](https://github.com/voila-dashboards/voici/graphs/contributors?from=2023-11-01&to=2024-01-30&type=c))
 
 [@github-actions](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Agithub-actions+updated%3A2023-11-01..2024-01-30&type=Issues) | [@jtpio](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Ajtpio+updated%3A2023-11-01..2024-01-30&type=Issues) | [@martinRenou](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3AmartinRenou+updated%3A2023-11-01..2024-01-30&type=Issues) | [@trungleduc](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Atrungleduc+updated%3A2023-11-01..2024-01-30&type=Issues)
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 0.5.0
 
