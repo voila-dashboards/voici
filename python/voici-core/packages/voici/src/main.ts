@@ -6,11 +6,10 @@
  *                                                                          *
  * The full license is in the file LICENSE, distributed with this software. *
  ****************************************************************************/
-
-import '@voila-dashboards/voila/style/index.js';
 import '@voila-dashboards/voila/lib/sharedscope';
+import '@voila-dashboards/voila/style/index.js';
+
 import { PageConfig, URLExt } from '@jupyterlab/coreutils';
-import { IKernelSpecs } from '@jupyterlite/kernel';
 import { IServiceWorkerManager, JupyterLiteServer } from '@jupyterlite/server';
 import {
   activePlugins,
@@ -21,6 +20,7 @@ import {
 } from '@voila-dashboards/voila';
 
 import { VoiciApp } from './app';
+import { VoiciKernelManager } from './kernelmanager';
 import plugins from './voiciplugins';
 
 const serverExtensions = [import('@jupyterlite/server-extension')];
@@ -46,7 +46,6 @@ async function main() {
     themesManagerPlugin,
     plugins,
   ];
-
   const mimeExtensions = [
     require('@jupyterlite/iframe-extension'),
     require('@jupyterlab/json-extension'),
@@ -166,14 +165,12 @@ async function main() {
   // start the server
   await jupyterLiteServer.start();
 
-  const kernelspecs = await jupyterLiteServer.resolveRequiredService(
-    IKernelSpecs
-  );
-  const serviceManager = jupyterLiteServer.serviceManager;
+  const kernelManager = new VoiciKernelManager({ jupyterLiteServer });
+  await kernelManager.init();
 
   const app = new VoiciApp({
-    serviceManager,
-    kernelspecs,
+    serviceManager: jupyterLiteServer.serviceManager,
+    kernelManager,
     mimeExtensions,
     shell: new VoilaShell(),
   });

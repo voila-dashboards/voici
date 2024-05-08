@@ -2,7 +2,7 @@ from copy import deepcopy
 from functools import partial
 from io import StringIO
 from pathlib import Path
-from typing import Dict, List, Tuple
+from typing import Dict, List, Optional, Tuple
 
 import jinja2
 from jupyter_server.utils import url_escape, url_path_join
@@ -40,10 +40,12 @@ def path_to_content(path: Path, relative_to: Path):
 
 
 def patch_page_config(
-    page_config: Dict, relative_path: Path, config: VoilaConfiguration
+    page_config: Dict,
+    relative_path: Path,
+    config: VoilaConfiguration,
+    notebook_path: Optional[str] = None,
 ):
     page_config_copy = deepcopy(page_config)
-
     # Align the base url with the relative path
     page_config_copy["baseUrl"] = "../../" + "../" * len(relative_path.parts)
 
@@ -80,6 +82,16 @@ def patch_page_config(
         federated_extensions=federated_extensions,
         disabled_extensions=disabled_extensions,
     )
+    if notebook_path:
+
+        voici_remote_kernel = page_config_copy.get("extensionConfig", {}).get(
+            "VoiciRemoteKernel", {}
+        )
+        remote_kernel_config = voici_remote_kernel.get(notebook_path, None)
+
+        if remote_kernel_config:
+            page_config_copy["remoteKernelConfig"] = remote_kernel_config
+
     return page_config_copy
 
 
@@ -158,12 +170,21 @@ class VoiciTreeExporter(HTMLExporter):
 
         return render_tree
 
-    def will_render_notebook(self, notebook_path, relative_path):
+    def will_render_notebook(
+        self, lite_files_output: Path, notebook_html_path: str, relative_path
+    ):
         """Return a function that will render the notebook into a StringIO and return it."""
 
+        original_notebook_path = notebook_html_path.replace(".html", ".ipynb")
+        notebook_path = lite_files_output / original_notebook_path
+
         def render_notebook(page_config) -> StringIO:
+
             page_config = patch_page_config(
-                page_config, relative_path, self.voici_configuration
+                page_config,
+                relative_path,
+                self.voici_configuration,
+                original_notebook_path,
             )
 
             voici_exporter = VoiciExporter(
@@ -212,11 +233,11 @@ class VoiciTreeExporter(HTMLExporter):
 
         for file in contents.get("content", []):
             if file["type"] == "notebook":
+
                 yield (
                     Path("render") / file["path"],
                     self.will_render_notebook(
-                        lite_files_output / file["path"].replace(".html", ".ipynb"),
-                        relative_path,
+                        lite_files_output, file["path"], relative_path
                     ),
                 )
             elif file["type"] == "directory":

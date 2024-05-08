@@ -11,15 +11,15 @@ import {
   SimplifiedOutputArea,
 } from '@jupyterlab/outputarea';
 import { IRenderMimeRegistry } from '@jupyterlab/rendermime';
-import { ServiceManager } from '@jupyterlab/services';
 import { IKernelConnection } from '@jupyterlab/services/lib/kernel/kernel';
-import { IKernelSpecs } from '@jupyterlite/kernel';
 import { Widget } from '@lumino/widgets';
 import {
   App as VoilaAppNameSpace,
   RenderedCells,
   VoilaApp,
 } from '@voila-dashboards/voila';
+
+import { VoiciKernelManager } from './kernelmanager';
 
 const PACKAGE = require('../package.json');
 
@@ -36,8 +36,7 @@ export class VoiciApp extends VoilaApp {
    */
   constructor(options: App.IOptions) {
     super(options);
-    this._kernelspecs = options.kernelspecs;
-    this._serviceManager = options.serviceManager;
+    this._kernelManager = options.kernelManager;
   }
 
   /**
@@ -51,18 +50,12 @@ export class VoiciApp extends VoilaApp {
   readonly version = PACKAGE['version'];
 
   async renderWidgets(): Promise<void> {
-    const serviceManager = this._serviceManager;
-    if (!serviceManager) {
-      console.error('Missing service manager');
+    const isReady = await this._kernelManager?.ready();
+    if (!isReady) {
       return;
     }
-
     const rendermime = await this.resolveRequiredService(IRenderMimeRegistry);
     App.typesetMarkdown(rendermime);
-
-    await serviceManager.ready;
-    const sessionManager = serviceManager.sessions;
-    await sessionManager.ready;
 
     const notebookModel = new NotebookModel();
     notebookModel.fromString(PageConfig.getOption('notebookSrc'));
@@ -77,49 +70,13 @@ export class VoiciApp extends VoilaApp {
       };
     }
 
-    const specs = this._kernelspecs?.specs?.kernelspecs;
-    let spec;
-    if (!specs) {
-      console.error('No kernel available');
-      return;
-    }
-
-    // First look if the specified kernel is available
-    if (requestedKernelspec.name in specs) {
-      console.log(`${requestedKernelspec.name} kernel is available!`);
-      spec = specs[requestedKernelspec.name];
-    }
-    // Otherwise fallback to trying to find an available kernel for that language
-    else {
-      for (const name in specs) {
-        if (requestedKernelspec.language === specs[name]?.language) {
-          console.log(
-            `${requestedKernelspec.name} kernel is not available, fallback to using ${specs[name]?.name}`
-          );
-          spec = specs[name];
-          break;
-        }
-      }
-    }
-
-    if (!spec) {
-      console.error(`No kernel available for ${requestedKernelspec.language}`);
-      return;
-    }
-
-    const connection = await sessionManager.startNew({
-      // TODO Get these name and path information from the exporter
-      name: '',
-      path: '',
-      type: 'notebook',
-      kernel: spec,
-    });
-    const kernel = connection.kernel;
+    const kernel = await this._kernelManager!.connectKernel(
+      requestedKernelspec
+    );
     if (!kernel) {
       console.error('Can not start kernel');
       return;
     }
-
     kernel.connectionStatusChanged.connect(async (_, status) => {
       if (status === 'connected') {
         window.update_loading_text(0, 0, 'Starting up kernel...');
@@ -136,7 +93,7 @@ export class VoiciApp extends VoilaApp {
           -10
         );
         this.widgetManager = widgetManager;
-        if (!connection.kernel) {
+        if (!kernel) {
           return;
         }
         // Execute Notebook
@@ -161,8 +118,7 @@ export class VoiciApp extends VoilaApp {
     });
   }
 
-  private _serviceManager?: ServiceManager;
-  private _kernelspecs?: IKernelSpecs;
+  private _kernelManager: VoiciKernelManager | undefined;
 }
 
 /**
@@ -173,8 +129,7 @@ export namespace App {
    * The instantiation options for an App application.
    */
   export interface IOptions extends VoilaAppNameSpace.IOptions {
-    kernelspecs?: IKernelSpecs;
-    serviceManager?: ServiceManager;
+    kernelManager?: VoiciKernelManager;
   }
 
   export function typesetMarkdown(rendermime: IRenderMimeRegistry): void {
