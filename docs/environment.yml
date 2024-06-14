@@ -12,6 +12,5 @@ dependencies:
   - yarn=3
   - pip:
     - sphinxcontrib-video
-    - jupyterlite-xeus --pre
     - ../python/voici-core
     - ../python/voici
