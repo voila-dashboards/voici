@@ -3,6 +3,7 @@ channels:
   - conda-forge
   - conda
 dependencies:
+  - micromamba
   - myst-parser
   - nodejs=18
   - sphinx
