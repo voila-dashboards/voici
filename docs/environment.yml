@@ -3,13 +3,14 @@ channels:
   - conda-forge
   - conda
 dependencies:
+  - micromamba
   - myst-parser
   - nodejs=18
   - sphinx
+  - pip
   - pydata-sphinx-theme
   - yarn=3
   - pip:
     - sphinxcontrib-video
-    - jupyterlite-xeus
     - ../python/voici-core
     - ../python/voici

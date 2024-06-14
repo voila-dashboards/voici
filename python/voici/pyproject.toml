@@ -33,7 +33,7 @@ classifiers = [
 ]
 dependencies = [
     "voici-core",
-    "jupyterlite-xeus>=0.1.3",
+    "jupyterlite-xeus>=0.2.0a0",
 ]
 dynamic = [
     "version",
