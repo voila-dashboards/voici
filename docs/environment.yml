@@ -7,6 +7,7 @@ dependencies:
   - myst-parser
   - nodejs=18
   - sphinx
+  - pip
   - pydata-sphinx-theme
   - yarn=3
   - pip:
