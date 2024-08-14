@@ -6,7 +6,7 @@ dependencies:
   - micromamba
   - myst-parser
   - nodejs=18
-  - sphinx
+  - sphinx<8
   - pip
   - pydata-sphinx-theme
   - yarn=3
