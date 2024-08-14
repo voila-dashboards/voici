@@ -1,17 +1,4 @@
-# Voici Changelog
-
-## 0.5.0 - Highlights
-
-Below are the major highlights in Voici 0.5.0
-
-- Voici frontend is updated to JupyterLab 4, Voila 0.5.0 components.
-- Tree page is now a Lab remix app.
-- New argument `--classic-tree` to use the jinja2-based tree page instead of the Lab-based one.
-- Voici CLI can be used in the same way as Voila, e.g:
-  - `voici .`
-  - `voici notebook.ipynb`
-- Voici now supports the [`files` directory](https://jupyterlite.readthedocs.io/en/latest/howto/content/files.html#content-with-the-cli) to copy additional files to the Voici deployment.
-- Latex expressions are rendered by `@jupyterlab/mathjax-extension` instead of relying on MathJax 2 coming from CDN.
+# Changelog
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
@@ -77,6 +64,19 @@ Users can also depend on `voici-core` if they don't want to use features provide
 [@github-actions](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Agithub-actions+updated%3A2023-11-01..2024-01-30&type=Issues) | [@jtpio](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Ajtpio+updated%3A2023-11-01..2024-01-30&type=Issues) | [@martinRenou](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3AmartinRenou+updated%3A2023-11-01..2024-01-30&type=Issues) | [@trungleduc](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Atrungleduc+updated%3A2023-11-01..2024-01-30&type=Issues)
 
 ## 0.5.0
+
+### Highlights
+
+Below are the major highlights in Voici 0.5.0
+
+- Voici frontend is updated to JupyterLab 4, Voila 0.5.0 components.
+- Tree page is now a Lab remix app.
+- New argument `--classic-tree` to use the jinja2-based tree page instead of the Lab-based one.
+- Voici CLI can be used in the same way as Voila, e.g:
+  - `voici .`
+  - `voici notebook.ipynb`
+- Voici now supports the [`files` directory](https://jupyterlite.readthedocs.io/en/latest/howto/content/files.html#content-with-the-cli) to copy additional files to the Voici deployment.
+- Latex expressions are rendered by `@jupyterlab/mathjax-extension` instead of relying on MathJax 2 coming from CDN.
 
 ([Full Changelog](https://github.com/voila-dashboards/voici/compare/v0.5.0rc0...1129bbabcc4b3cbed390ecd8a311ae1f5fb6c5df))
 
