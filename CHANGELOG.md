@@ -2,6 +2,31 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 0.7.0
+
+([Full Changelog](https://github.com/voila-dashboards/voici/compare/v0.6.1...51703a7e9c4f487d73e6b2b1c9693951425a2c5d))
+
+### Enhancements made
+
+- Allow for JupyterLite 0.4.0 [#119](https://github.com/voila-dashboards/voici/pull/119) ([@jtpio](https://github.com/jtpio))
+
+### Maintenance and upkeep improvements
+
+- Update to JupyterLite 0.4.0 [#122](https://github.com/voila-dashboards/voici/pull/122) ([@jtpio](https://github.com/jtpio))
+- Fix docs build [#120](https://github.com/voila-dashboards/voici/pull/120) ([@jtpio](https://github.com/jtpio))
+
+### Documentation improvements
+
+- Move 0.5.0 highlights in the changelog [#123](https://github.com/voila-dashboards/voici/pull/123) ([@jtpio](https://github.com/jtpio))
+
+### Contributors to this release
+
+([GitHub contributors page for this release](https://github.com/voila-dashboards/voici/graphs/contributors?from=2024-04-23&to=2024-08-16&type=c))
+
+[@github-actions](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Agithub-actions+updated%3A2024-04-23..2024-08-16&type=Issues) | [@jtpio](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Ajtpio+updated%3A2024-04-23..2024-08-16&type=Issues)
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 0.6.1
 
 ([Full Changelog](https://github.com/voila-dashboards/voici/compare/v0.6.0...9f588308ea8a39aa0fc033f0f2595dd9b2b2f29b))
@@ -23,8 +48,6 @@
 ([GitHub contributors page for this release](https://github.com/voila-dashboards/voici/graphs/contributors?from=2024-01-30&to=2024-04-23&type=c))
 
 [@github-actions](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Agithub-actions+updated%3A2024-01-30..2024-04-23&type=Issues) | [@jtpio](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Ajtpio+updated%3A2024-01-30..2024-04-23&type=Issues) | [@martinRenou](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3AmartinRenou+updated%3A2024-01-30..2024-04-23&type=Issues)
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 0.6.0
 
