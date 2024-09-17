@@ -2,6 +2,23 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 0.7.1
+
+([Full Changelog](https://github.com/voila-dashboards/voici/compare/v0.7.0...7547f1e15194bfb9356a383eeb42d906e9a2fc17))
+
+### Maintenance and upkeep improvements
+
+- Update `jupyterlite-xeus` lower bound [#129](https://github.com/voila-dashboards/voici/pull/129) ([@jtpio](https://github.com/jtpio))
+- Update jupyterlite-xeus [#128](https://github.com/voila-dashboards/voici/pull/128) ([@martinRenou](https://github.com/martinRenou))
+
+### Contributors to this release
+
+([GitHub contributors page for this release](https://github.com/voila-dashboards/voici/graphs/contributors?from=2024-08-16&to=2024-09-17&type=c))
+
+[@github-actions](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Agithub-actions+updated%3A2024-08-16..2024-09-17&type=Issues) | [@jtpio](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Ajtpio+updated%3A2024-08-16..2024-09-17&type=Issues) | [@martinRenou](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3AmartinRenou+updated%3A2024-08-16..2024-09-17&type=Issues)
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 0.7.0
 
 ([Full Changelog](https://github.com/voila-dashboards/voici/compare/v0.6.1...51703a7e9c4f487d73e6b2b1c9693951425a2c5d))
@@ -24,8 +41,6 @@
 ([GitHub contributors page for this release](https://github.com/voila-dashboards/voici/graphs/contributors?from=2024-04-23&to=2024-08-16&type=c))
 
 [@github-actions](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Agithub-actions+updated%3A2024-04-23..2024-08-16&type=Issues) | [@jtpio](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Ajtpio+updated%3A2024-04-23..2024-08-16&type=Issues)
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 0.6.1
 
