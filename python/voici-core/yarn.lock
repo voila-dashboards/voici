@@ -2881,7 +2881,7 @@
     "@lumino/signaling" "^2.1.3"
     "@lumino/virtualdom" "^2.0.2"
 
-"@lumino/coreutils@^1.11.0 || ^2.0.0", "@lumino/coreutils@^1.11.0 || ^2.1.2", "@lumino/coreutils@^1.11.0 || ^2.2.0", "@lumino/coreutils@^1.11.1 || ^2", "@lumino/coreutils@^1.11.1 || ^2.1", "@lumino/coreutils@^2.0.0", "@lumino/coreutils@^2.1.0", "@lumino/coreutils@^2.1.2", "@lumino/coreutils@^2.2.0":
+"@lumino/coreutils@^1.11.0 || ^2.0.0", "@lumino/coreutils@^1.11.0 || ^2.2.0", "@lumino/coreutils@^1.11.1 || ^2", "@lumino/coreutils@^1.11.1 || ^2.1", "@lumino/coreutils@^2.0.0", "@lumino/coreutils@^2.1.0", "@lumino/coreutils@^2.1.2", "@lumino/coreutils@^2.2.0":
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/@lumino/coreutils/-/coreutils-2.2.0.tgz#3f9d5c36f2513f067b2563c7ad3b33f43905a4e2"
   integrity sha512-x5wnQ/GjWBayJ6vXVaUi6+Q6ETDdcUiH9eSfpRZFbgMQyyM6pi6baKqJBK2CHkCc/YbAEl6ipApTgm3KOJ/I3g==
@@ -2978,7 +2978,7 @@
   dependencies:
     "@lumino/algorithm" "^2.0.2"
 
-"@lumino/widgets@^1.30.0 || ^2.1", "@lumino/widgets@^1.37.2 || ^2.3.2", "@lumino/widgets@^1.37.2 || ^2.5.0", "@lumino/widgets@^2.0.0", "@lumino/widgets@^2.3.2", "@lumino/widgets@^2.5.0":
+"@lumino/widgets@^1.30.0 || ^2.1", "@lumino/widgets@^1.37.2 || ^2.5.0", "@lumino/widgets@^2.0.0", "@lumino/widgets@^2.3.2", "@lumino/widgets@^2.5.0":
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/@lumino/widgets/-/widgets-2.5.0.tgz#7e37d86dbbc4eed1f85aa199b9fffa4919aa1e3e"
   integrity sha512-RSRpc6aIEiuw79jqWUHYWXLJ2GBy7vhwuqgo94UVzg6oeh3XBECX0OvXGjK2k7N2BhmRrIs9bXky7Dm861S6mQ==
