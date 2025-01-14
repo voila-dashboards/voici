@@ -2,7 +2,7 @@ from copy import deepcopy
 from functools import partial
 from io import StringIO
 from pathlib import Path
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Any
 
 import jinja2
 from jupyter_server.utils import url_escape, url_path_join
@@ -38,29 +38,22 @@ def path_to_content(path: Path, relative_to: Path):
         )
     return None
 
-
 def patch_page_config(
     page_config: Dict, relative_path: Path, config: VoilaConfiguration
 ):
+
     page_config_copy = deepcopy(page_config)
 
-    # Align the base url with the relative path
-    page_config_copy["baseUrl"] = "../../" + "../" * len(relative_path.parts)
-
-    # Grabbing from the Voici static folder
-    page_config_copy["fullStaticUrl"] = f"../{'../' * len(relative_path.parts)}build"
-
-    # Grabbing from the jupyterlite static folders
-    page_config_copy["settingsUrl"] = (
-        f"../../{'../' * len(relative_path.parts)}build/schemas"
+    voici_url_prefix = "../" * (1 + len(relative_path.parts))
+    base_url_prefix = f"../{voici_url_prefix}"
+    page_config_copy.update(
+        # Align the base url with the relative path
+        baseUrl=base_url_prefix,
+        # Grabbing from the Voici static folder
+        fullStaticUrl=f"{voici_url_prefix}build"
     )
-    page_config_copy["fullLabextensionsUrl"] = (
-        f"../../{'../' * len(relative_path.parts)}extensions"
-    )
-
-    # The Themes URL will be joined with the base URL in the
-    # JupyterLite main application
-    page_config_copy["themesUrl"] = "./build/themes"
+    # emulate upstream ``config-utils.js``
+    patch_relative_urls(page_config_copy, base_url_prefix)
 
     if config.theme == "light":
         themeName = "JupyterLab Light"
@@ -82,6 +75,23 @@ def patch_page_config(
     )
     return page_config_copy
 
+
+def patch_relative_urls(config_dict: Dict[str, Any], path_prefix: str) -> None:
+    """Update one config object in place with relative URLs."""
+    for key, value in config_dict.items():
+        if key in ["licensesUrl", "themesUrl", "federated_extensions"]:
+            # these are left unchanged, as they are handled upstream JS code
+            continue
+        elif isinstance(value, dict):
+            # nested config objects may also contain relative paths
+            patch_relative_urls(value, path_prefix)
+        elif key.endswith("Url") and isinstance(value, str) and value.startswith("./"):
+            config_dict[key] = f"{path_prefix}{value[2:]}"
+        elif key.endswith("Urls") and isinstance(value, list):
+            config_dict[key] = [
+                f"{path_prefix}{v[2:]}" if v.startswith("./") else v
+                for v in value
+            ]
 
 class VoiciTreeExporter(HTMLExporter):
     def __init__(
