@@ -47,14 +47,17 @@ def patch_page_config(
 
     voici_url_prefix = "../" * (1 + len(relative_path.parts))
     base_url_prefix = f"../{voici_url_prefix}"
+    # emulate upstream ``config-utils.js``
+    patch_relative_urls(page_config_copy, base_url_prefix)
     page_config_copy.update(
         # Align the base url with the relative path
         baseUrl=base_url_prefix,
         # Grabbing from the Voici static folder
         fullStaticUrl=f"{voici_url_prefix}build",
+        # The Themes URL will be joined with the base URL in the
+        # JupyterLite main application
+        themesUrl="./build/themes",
     )
-    # emulate upstream ``config-utils.js``
-    patch_relative_urls(page_config_copy, base_url_prefix)
 
     if config.theme == "light":
         themeName = "JupyterLab Light"
