@@ -38,6 +38,7 @@ def path_to_content(path: Path, relative_to: Path):
         )
     return None
 
+
 def patch_page_config(
     page_config: Dict, relative_path: Path, config: VoilaConfiguration
 ):
@@ -50,7 +51,7 @@ def patch_page_config(
         # Align the base url with the relative path
         baseUrl=base_url_prefix,
         # Grabbing from the Voici static folder
-        fullStaticUrl=f"{voici_url_prefix}build"
+        fullStaticUrl=f"{voici_url_prefix}build",
     )
     # emulate upstream ``config-utils.js``
     patch_relative_urls(page_config_copy, base_url_prefix)
@@ -89,9 +90,9 @@ def patch_relative_urls(config_dict: Dict[str, Any], path_prefix: str) -> None:
             config_dict[key] = f"{path_prefix}{value[2:]}"
         elif key.endswith("Urls") and isinstance(value, list):
             config_dict[key] = [
-                f"{path_prefix}{v[2:]}" if v.startswith("./") else v
-                for v in value
+                f"{path_prefix}{v[2:]}" if v.startswith("./") else v for v in value
             ]
+
 
 class VoiciTreeExporter(HTMLExporter):
     def __init__(
