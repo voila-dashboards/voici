@@ -8,3 +8,4 @@ dependencies:
   - bqplot
   - ipycanvas
   - ipywidgets
+  - python=3.11
