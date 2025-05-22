@@ -1,4 +1,4 @@
-name: voici
+name: voici-demo
 channels:
   - https://repo.mamba.pm/emscripten-forge
   - conda-forge
