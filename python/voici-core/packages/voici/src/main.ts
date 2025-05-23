@@ -10,8 +10,8 @@
 import '@voila-dashboards/voila/style/index.js';
 import '@voila-dashboards/voila/lib/sharedscope';
 import { PageConfig, URLExt } from '@jupyterlab/coreutils';
-import { IKernelSpecs } from '@jupyterlite/kernel';
-import { IServiceWorkerManager, JupyterLiteServer } from '@jupyterlite/server';
+// import { IKernelSpecs } from '@jupyterlite/kernel';
+// import { IServiceWorkerManager } from '@jupyterlite/server';
 import {
   activePlugins,
   createModule,
@@ -22,8 +22,10 @@ import {
 
 import { VoiciApp } from './app';
 import plugins from './voiciplugins';
+import { PluginRegistry } from '@lumino/coreutils';
+import { ServiceManager } from '@jupyterlab/services';
 
-const serverExtensions = [import('@jupyterlite/server-extension')];
+const servicesExtensions = [import('@jupyterlite/services-extension')];
 
 /**
  * The main function
@@ -138,7 +140,7 @@ async function main() {
     });
 
   const litePluginsToRegister: any[] = [];
-  const baseServerExtensions = await Promise.all(serverExtensions);
+  const baseServerExtensions = await Promise.all(servicesExtensions);
   baseServerExtensions.forEach((p) => {
     for (const plugin of activePlugins(p, [])) {
       litePluginsToRegister.push(plugin);
@@ -159,21 +161,22 @@ async function main() {
     }
   });
 
-  // create the in-browser JupyterLite Server
-  const jupyterLiteServer = new JupyterLiteServer({ shell: null as never });
+  // 1. Create a plugin registry
+  const pluginRegistry = new PluginRegistry();
 
-  jupyterLiteServer.registerPluginModules(litePluginsToRegister);
-  // start the server
-  await jupyterLiteServer.start();
+  // 2. Register the plugins
+  pluginRegistry.registerPlugins(litePluginsToRegister);
 
-  const kernelspecs = await jupyterLiteServer.resolveRequiredService(
-    IKernelSpecs
-  );
-  const serviceManager = jupyterLiteServer.serviceManager;
+  // 3. Get and resolve the service manager and connection status plugins
+  const IServiceManager = require('@jupyterlab/services').IServiceManager;
+  const serviceManager = (await pluginRegistry.resolveRequiredService(
+    IServiceManager
+  )) as ServiceManager;
+  // const kernelspecs = await pluginRegistry.resolveRequiredService(IKernelSpecs);
 
   const app = new VoiciApp({
     serviceManager,
-    kernelspecs,
+    // kernelspecs,
     mimeExtensions,
     shell: new VoilaShell(),
   });
@@ -182,16 +185,14 @@ async function main() {
 
   await app.start();
 
-  const serviceWorkerManager = await jupyterLiteServer.resolveOptionalService(
-    IServiceWorkerManager
-  );
-  if (serviceWorkerManager) {
-    try {
-      await serviceWorkerManager.ready;
-    } catch (err) {
-      console.error(err);
-    }
-  }
+  // const serviceWorkerManager = await pluginRegistry.resolveOptionalService(IServiceWorkerManager);
+  // if (serviceWorkerManager) {
+  //   try {
+  //     await serviceWorkerManager.ready;
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // }
 
   await app.renderWidgets();
   window.jupyterapp = app;

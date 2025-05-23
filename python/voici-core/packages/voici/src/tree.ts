@@ -9,7 +9,6 @@
 import '@voila-dashboards/voila/style/index.js';
 
 import { PageConfig, URLExt } from '@jupyterlab/coreutils';
-import { JupyterLiteServer } from '@jupyterlite/server';
 import {
   activePlugins,
   createModule,
@@ -23,7 +22,7 @@ import { VoiciApp } from './app';
 import { themePlugin } from './plugins/themes';
 import { treeWidgetPlugin } from './plugins/tree';
 
-const serverExtensions = [import('@jupyterlite/server-extension')];
+const servicesExtensions = [import('@jupyterlite/services-extension')];
 
 /**
  * The main function
@@ -121,23 +120,14 @@ async function main() {
     });
 
   const litePluginsToRegister: any[] = [];
-  const baseServerExtensions = await Promise.all(serverExtensions);
+  const baseServerExtensions = await Promise.all(servicesExtensions);
   baseServerExtensions.forEach((p) => {
     for (const plugin of activePlugins(p, [])) {
       litePluginsToRegister.push(plugin);
     }
   });
 
-  // create the in-browser JupyterLite Server
-  const jupyterLiteServer = new JupyterLiteServer({ shell: null as never });
-
-  jupyterLiteServer.registerPluginModules(litePluginsToRegister);
-  // start the server
-  await jupyterLiteServer.start();
-
-  const serviceManager = jupyterLiteServer.serviceManager;
   const app = new VoiciApp({
-    serviceManager: serviceManager,
     shell: new VoilaShell(),
   });
 
