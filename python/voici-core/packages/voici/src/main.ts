@@ -52,6 +52,22 @@ async function main() {
     plugins,
   ];
 
+  const pluginsToRegister: any[] = [];
+
+  mods.forEach((mod) => {
+    let data = mod.default;
+    // Handle commonjs exports.
+    if (!Object.prototype.hasOwnProperty.call(mod, '__esModule')) {
+      data = mod as any;
+    }
+    if (!Array.isArray(data)) {
+      data = [data];
+    }
+    data.forEach((plugin: any) => {
+      pluginsToRegister.push(plugin);
+    });
+  });
+
   const mimeExtensions = [
     require('@jupyterlite/iframe-extension'),
     require('@jupyterlab/json-extension'),
@@ -109,7 +125,7 @@ async function main() {
   federatedExtensions.forEach((p) => {
     if (p.status === 'fulfilled') {
       for (const plugin of activePlugins(p.value, [])) {
-        mods.push(plugin);
+        pluginsToRegister.push(plugin);
       }
     } else {
       console.error(p.reason);
@@ -137,11 +153,10 @@ async function main() {
       console.error((p as PromiseRejectedResult).reason);
     });
 
-  const litePluginsToRegister: any[] = [];
   const baseServerExtensions = await Promise.all(servicesExtensions);
   baseServerExtensions.forEach((p) => {
     for (const plugin of activePlugins(p, [])) {
-      litePluginsToRegister.push(plugin);
+      pluginsToRegister.push(plugin);
     }
   });
 
@@ -149,7 +164,7 @@ async function main() {
   const pluginRegistry = new PluginRegistry();
 
   // 2. Register the plugins
-  pluginRegistry.registerPlugins(litePluginsToRegister);
+  pluginRegistry.registerPlugins(pluginsToRegister);
 
   // 3. Get and resolve the service manager and connection status plugins
   const IServiceManager = require('@jupyterlab/services').IServiceManager;
@@ -159,13 +174,12 @@ async function main() {
   const kernelspecs = await pluginRegistry.resolveRequiredService(IKernelSpecs);
 
   const app = new VoiciApp({
+    pluginRegistry,
     serviceManager,
     kernelspecs,
     mimeExtensions,
     shell: new VoilaShell(),
   });
-
-  app.registerPluginModules(mods);
 
   await app.start();
 

@@ -44,6 +44,22 @@ async function main() {
     treeWidgetPlugin,
   ];
 
+  const pluginsToRegister: any[] = [];
+
+  mods.forEach((mod) => {
+    let data = mod.default;
+    // Handle commonjs exports.
+    if (!Object.prototype.hasOwnProperty.call(mod, '__esModule')) {
+      data = mod as any;
+    }
+    if (!Array.isArray(data)) {
+      data = [data];
+    }
+    data.forEach((plugin: any) => {
+      pluginsToRegister.push(plugin);
+    });
+  });
+
   const mimeExtensions: any[] = [];
 
   const extensionData = JSON.parse(
@@ -96,7 +112,7 @@ async function main() {
   federatedExtensions.forEach((p) => {
     if (p.status === 'fulfilled') {
       for (const plugin of activePlugins(p.value, [])) {
-        mods.push(plugin);
+        pluginsToRegister.push(plugin);
       }
     } else {
       console.error(p.reason);
@@ -124,12 +140,10 @@ async function main() {
       console.error((p as PromiseRejectedResult).reason);
     });
 
-  // Collect plugins for service manager registration
-  const litePluginsToRegister: any[] = [];
   const baseServerExtensions = await Promise.all(servicesExtensions);
   baseServerExtensions.forEach((p) => {
     for (const plugin of activePlugins(p, [])) {
-      litePluginsToRegister.push(plugin);
+      pluginsToRegister.push(plugin);
     }
   });
 
@@ -137,7 +151,7 @@ async function main() {
   const pluginRegistry = new PluginRegistry();
 
   // 2. Register the plugins
-  pluginRegistry.registerPlugins(litePluginsToRegister);
+  pluginRegistry.registerPlugins(pluginsToRegister);
 
   // 3. Get and resolve the service manager and connection status plugins
   const IServiceManager = require('@jupyterlab/services').IServiceManager;
@@ -146,11 +160,11 @@ async function main() {
   )) as ServiceManager;
 
   const app = new VoiciApp({
+    pluginRegistry,
     serviceManager,
     shell: new VoilaShell(),
   });
 
-  app.registerPluginModules(mods);
   app.started.then(() => {
     const el = document.getElementById('voila-tree-main');
     if (el) {
