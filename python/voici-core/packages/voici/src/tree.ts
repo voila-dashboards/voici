@@ -21,6 +21,8 @@ import {
 import { VoiciApp } from './app';
 import { themePlugin } from './plugins/themes';
 import { treeWidgetPlugin } from './plugins/tree';
+import { PluginRegistry } from '@lumino/coreutils';
+import { ServiceManager } from '@jupyterlab/services';
 
 const servicesExtensions = [import('@jupyterlite/services-extension')];
 
@@ -119,6 +121,7 @@ async function main() {
       console.error((p as PromiseRejectedResult).reason);
     });
 
+  // Collect plugins for service manager registration
   const litePluginsToRegister: any[] = [];
   const baseServerExtensions = await Promise.all(servicesExtensions);
   baseServerExtensions.forEach((p) => {
@@ -127,7 +130,20 @@ async function main() {
     }
   });
 
+  // 1. Create a plugin registry
+  const pluginRegistry = new PluginRegistry();
+
+  // 2. Register the plugins
+  pluginRegistry.registerPlugins(litePluginsToRegister);
+
+  // 3. Get and resolve the service manager and connection status plugins
+  const IServiceManager = require('@jupyterlab/services').IServiceManager;
+  const serviceManager = (await pluginRegistry.resolveRequiredService(
+    IServiceManager
+  )) as ServiceManager;
+
   const app = new VoiciApp({
+    serviceManager,
     shell: new VoilaShell(),
   });
 

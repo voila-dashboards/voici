@@ -10,8 +10,8 @@
 import '@voila-dashboards/voila/style/index.js';
 import '@voila-dashboards/voila/lib/sharedscope';
 import { PageConfig, URLExt } from '@jupyterlab/coreutils';
-// import { IKernelSpecs } from '@jupyterlite/kernel';
-// import { IServiceWorkerManager } from '@jupyterlite/server';
+import { IKernelSpecs } from '@jupyterlite/kernel';
+import { IServiceWorkerManager } from '@jupyterlite/server';
 import {
   activePlugins,
   createModule,
@@ -172,11 +172,11 @@ async function main() {
   const serviceManager = (await pluginRegistry.resolveRequiredService(
     IServiceManager
   )) as ServiceManager;
-  // const kernelspecs = await pluginRegistry.resolveRequiredService(IKernelSpecs);
+  const kernelspecs = await pluginRegistry.resolveRequiredService(IKernelSpecs);
 
   const app = new VoiciApp({
     serviceManager,
-    // kernelspecs,
+    kernelspecs,
     mimeExtensions,
     shell: new VoilaShell(),
   });
@@ -185,14 +185,16 @@ async function main() {
 
   await app.start();
 
-  // const serviceWorkerManager = await pluginRegistry.resolveOptionalService(IServiceWorkerManager);
-  // if (serviceWorkerManager) {
-  //   try {
-  //     await serviceWorkerManager.ready;
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // }
+  const serviceWorkerManager = await pluginRegistry.resolveOptionalService(
+    IServiceWorkerManager
+  );
+  if (serviceWorkerManager) {
+    try {
+      await serviceWorkerManager.ready;
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   await app.renderWidgets();
   window.jupyterapp = app;
