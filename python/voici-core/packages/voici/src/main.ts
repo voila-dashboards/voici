@@ -48,6 +48,10 @@ async function main() {
     require('@jupyter-widgets/jupyterlab-manager/lib/plugin').default.filter(
       (p: any) => p.id !== '@jupyter-widgets/jupyterlab-manager:plugin'
     ),
+    require('@jupyterlite/application-extension').default.filter(
+      (p: any) =>
+        p.id === '@jupyterlite/application-extension:service-worker-manager'
+    ),
     themesManagerPlugin,
     plugins,
   ];

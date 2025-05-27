@@ -1637,7 +1637,7 @@
     y-protocols "^1.0.5"
     yjs "^13.5.40"
 
-"@jupyterlab/application@^3.0.0 || ^4.0.0", "@jupyterlab/application@^4.0.0", "@jupyterlab/application@^4.2.4", "@jupyterlab/application@^4.4.3":
+"@jupyterlab/application@^3.0.0 || ^4.0.0", "@jupyterlab/application@^4.0.0", "@jupyterlab/application@^4.2.4", "@jupyterlab/application@^4.4.3", "@jupyterlab/application@~4.4.2":
   version "4.4.3"
   resolved "https://registry.yarnpkg.com/@jupyterlab/application/-/application-4.4.3.tgz#273801904d82fa6908a45a1d1c815eaa71b80f25"
   integrity sha512-F0oxLyRXifQU5JCkc+7IpuwCf5NCjE2A0MnVXQR9IFqcBLV5LBKI92/0T9VXOvW0ipZ81wXY1mYy2KRsnM13Dg==
@@ -1692,7 +1692,7 @@
     react-dom "^18.2.0"
     react-toastify "^9.0.8"
 
-"@jupyterlab/apputils@^3.0.0 || ^4.0.0", "@jupyterlab/apputils@^4.0.0", "@jupyterlab/apputils@^4.3.4", "@jupyterlab/apputils@^4.5.3":
+"@jupyterlab/apputils@^3.0.0 || ^4.0.0", "@jupyterlab/apputils@^4.0.0", "@jupyterlab/apputils@^4.3.4", "@jupyterlab/apputils@^4.5.3", "@jupyterlab/apputils@~4.5.2":
   version "4.5.3"
   resolved "https://registry.yarnpkg.com/@jupyterlab/apputils/-/apputils-4.5.3.tgz#22a98937c2eb69ce4f47034627e6115da8fb67c4"
   integrity sha512-X+bEOZLHxfkEaCD1/xn7Sokh8bXxQHOKS02vOKccDtod286BYjHxdsh/T9pR+QYEblXIpzAkVdxRdQ1tu8MELA==
@@ -1924,7 +1924,7 @@
     path-browserify "^1.0.0"
     url-parse "~1.5.4"
 
-"@jupyterlab/docmanager@^4.4.3":
+"@jupyterlab/docmanager@^4.4.3", "@jupyterlab/docmanager@~4.4.2":
   version "4.4.3"
   resolved "https://registry.yarnpkg.com/@jupyterlab/docmanager/-/docmanager-4.4.3.tgz#2a4d70a207a3bd0d2bf81494345c81ef75f206d4"
   integrity sha512-p3Tk8NTdi+htbXGADVV9stXzPqqWg+m9L9YumCM02k/dNUGwZlqaZNledL6YEKIsXHJ3P5mhCGKTPtkFvzBgTA==
@@ -1988,7 +1988,7 @@
     "@lumino/widgets" "^2.7.1"
     react "^18.2.0"
 
-"@jupyterlab/filebrowser@^4.4.3":
+"@jupyterlab/filebrowser@^4.4.3", "@jupyterlab/filebrowser@~4.4.2":
   version "4.4.3"
   resolved "https://registry.yarnpkg.com/@jupyterlab/filebrowser/-/filebrowser-4.4.3.tgz#e52b9e71ae8aed7a0004bc126598af6d8e7df3a1"
   integrity sha512-XpZ93X6nyjLd1YV8ZcJU2f2mKMNEJJ4sVFKUa5hshacY63m/6xVOWFuqkKVZ4nz3aZ43lQqd0WSSQDhUP3bOyQ==
@@ -2059,7 +2059,7 @@
     "@lumino/signaling" "^2.1.4"
     "@lumino/widgets" "^2.7.1"
 
-"@jupyterlab/lsp@^4.4.3":
+"@jupyterlab/lsp@^4.4.3", "@jupyterlab/lsp@~4.4.2":
   version "4.4.3"
   resolved "https://registry.yarnpkg.com/@jupyterlab/lsp/-/lsp-4.4.3.tgz#85774e9175ec230b64c15b368befe22b17e01771"
   integrity sha512-wafs2oPiLf9lCFWgaHI9VcUQY8yivjPzoJvVI0Cyjh+wZHaEmjg/bJaeRyorLQ4utBEBS3xqZ7MLZF9KSQy+ow==
@@ -2080,7 +2080,7 @@
     vscode-languageserver-protocol "^3.17.0"
     vscode-ws-jsonrpc "~1.0.2"
 
-"@jupyterlab/mainmenu@^3.0.0 || ^4.0.0", "@jupyterlab/mainmenu@^4.0.0", "@jupyterlab/mainmenu@^4.4.3":
+"@jupyterlab/mainmenu@^3.0.0 || ^4.0.0", "@jupyterlab/mainmenu@^4.0.0", "@jupyterlab/mainmenu@^4.4.3", "@jupyterlab/mainmenu@~4.4.2":
   version "4.4.3"
   resolved "https://registry.yarnpkg.com/@jupyterlab/mainmenu/-/mainmenu-4.4.3.tgz#8623c8ed91a418a152ecc9135b8f70f608f462c5"
   integrity sha512-Q5TS2JpUdQFpErCw2T98VT5E7z8IuPAX9OU6kMnrD6CT3wn8lHjxxNRKTjEji+guUljBhCu0Rpmgq0DyAJxd+A==
@@ -2400,7 +2400,7 @@
     "@lumino/widgets" "^2.7.1"
     react "^18.2.0"
 
-"@jupyterlab/translation@^3.0.0 || ^4.0.0", "@jupyterlab/translation@^4.0.0", "@jupyterlab/translation@^4.2.4", "@jupyterlab/translation@^4.4.3":
+"@jupyterlab/translation@^3.0.0 || ^4.0.0", "@jupyterlab/translation@^4.0.0", "@jupyterlab/translation@^4.2.4", "@jupyterlab/translation@^4.4.3", "@jupyterlab/translation@~4.4.2":
   version "4.4.3"
   resolved "https://registry.yarnpkg.com/@jupyterlab/translation/-/translation-4.4.3.tgz#ea40f37ab07330ac5efd3411958382bc87f1f4b8"
   integrity sha512-AmSiVxnizQXFlfOamNfUzApgrQGFM+uBfxuOOMMBQzAcjTAZyL1T+iG4pTFaCeXXEaMYyN/8aPfDHbxmBlgR4A==
@@ -2411,7 +2411,7 @@
     "@jupyterlab/statedb" "^4.4.3"
     "@lumino/coreutils" "^2.2.1"
 
-"@jupyterlab/ui-components@^4.0.0", "@jupyterlab/ui-components@^4.2.4", "@jupyterlab/ui-components@^4.4.3":
+"@jupyterlab/ui-components@^4.0.0", "@jupyterlab/ui-components@^4.2.4", "@jupyterlab/ui-components@^4.4.3", "@jupyterlab/ui-components@~4.4.2":
   version "4.4.3"
   resolved "https://registry.yarnpkg.com/@jupyterlab/ui-components/-/ui-components-4.4.3.tgz#449cedbbcd9d09aa87e294c72ec158b2d0caba9a"
   integrity sha512-3IyUMgbdBkxUI/IT+FpOLQdpE04EaJhLgob9tJFsHFLiYFKn2/vDEubO157d2/F/9yt9DmZ4HxiXLyfxE+vipA==
@@ -2460,6 +2460,28 @@
     "@lumino/disposable" "^2.1.4"
     "@lumino/polling" "^2.1.4"
     "@lumino/signaling" "^2.1.4"
+
+"@jupyterlite/application-extension@^0.6.0-beta.1":
+  version "0.6.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@jupyterlite/application-extension/-/application-extension-0.6.0-beta.1.tgz#32234c1b8074c2eca01ca321e997dfcf6e82d7a8"
+  integrity sha512-Bpz8lsntuU70xUnR5ZnjOZKWr8YIh8LlYGAKsO2AR0/1mZSFeHyHmuWTPHz9Xc432QVYpt8oSamUut7IJDQngA==
+  dependencies:
+    "@jupyterlab/application" "~4.4.2"
+    "@jupyterlab/apputils" "~4.5.2"
+    "@jupyterlab/docmanager" "~4.4.2"
+    "@jupyterlab/filebrowser" "~4.4.2"
+    "@jupyterlab/lsp" "~4.4.2"
+    "@jupyterlab/mainmenu" "~4.4.2"
+    "@jupyterlab/services" "~7.4.2"
+    "@jupyterlab/settingregistry" "~4.4.2"
+    "@jupyterlab/translation" "~4.4.2"
+    "@jupyterlab/ui-components" "~4.4.2"
+    "@jupyterlite/contents" "^0.6.0-beta.1"
+    "@jupyterlite/server" "^0.6.0-beta.1"
+    "@jupyterlite/ui-components" "^0.6.0-beta.1"
+    "@lumino/algorithm" "^2.0.3"
+    "@lumino/coreutils" "^2.2.1"
+    "@lumino/widgets" "^2.7.1"
 
 "@jupyterlite/contents@^0.6.0-beta.1":
   version "0.6.0-beta.1"
@@ -2565,6 +2587,13 @@
     "@lumino/coreutils" "^2.2.1"
     json5 "^2.2.0"
     localforage "^1.9.0"
+
+"@jupyterlite/ui-components@^0.6.0-beta.1":
+  version "0.6.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@jupyterlite/ui-components/-/ui-components-0.6.0-beta.1.tgz#da7046bc2a943d8be6498ff204ec6640e15b72b4"
+  integrity sha512-BpoTG0nBtdraJRPsvVN7Cq+d/lGhf5q2cZcs7zrlbZm//NQqFavy+gp7NA3oYSAZKZ1RQVMdfjvwzuF2b4DJwA==
+  dependencies:
+    "@jupyterlab/ui-components" "~4.4.2"
 
 "@lerna/child-process@7.4.2":
   version "7.4.2"
