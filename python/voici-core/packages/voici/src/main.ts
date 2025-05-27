@@ -66,7 +66,6 @@ async function main() {
   const federatedExtensionPromises: any[] = [];
   const federatedMimeExtensionPromises: any[] = [];
   const federatedStylePromises: any[] = [];
-  const liteExtensionPromises: any[] = [];
 
   const extensions = await Promise.allSettled(
     extensionData.map(async (data: any) => {
@@ -90,10 +89,6 @@ async function main() {
     }
 
     const data = p.value;
-    if (data.liteExtension) {
-      liteExtensionPromises.push(createModule(data.name, data.extension));
-      return;
-    }
     if (data.extension) {
       federatedExtensionPromises.push(createModule(data.name, data.extension));
     }
@@ -147,20 +142,6 @@ async function main() {
   baseServerExtensions.forEach((p) => {
     for (const plugin of activePlugins(p, [])) {
       litePluginsToRegister.push(plugin);
-    }
-  });
-
-  // Add the serverlite federated extensions.
-  const federatedLiteExtensions = await Promise.allSettled(
-    liteExtensionPromises
-  );
-  federatedLiteExtensions.forEach((p) => {
-    if (p.status === 'fulfilled') {
-      for (const plugin of activePlugins(p.value, [])) {
-        litePluginsToRegister.push(plugin);
-      }
-    } else {
-      console.error(p.reason);
     }
   });
 
