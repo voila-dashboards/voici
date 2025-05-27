@@ -2296,6 +2296,14 @@
     "@lumino/widgets" "^2.7.1"
     lodash.escape "^4.0.1"
 
+"@jupyterlab/services-extension@^4.4.3":
+  version "4.4.3"
+  resolved "https://registry.yarnpkg.com/@jupyterlab/services-extension/-/services-extension-4.4.3.tgz#cfc8d0c0554114bf4037f45b900771edbfad93f0"
+  integrity sha512-jeetkNo6ouP7cnTCbVc3CiBtrKOd/q1drmYxPFsO7ss6SKtrpaMUDMWf0mxkerPokUlwOHZnAdvewLsLuUCDKg==
+  dependencies:
+    "@jupyterlab/services" "^7.4.3"
+    "@lumino/coreutils" "^2.2.1"
+
 "@jupyterlab/services@^6.0.0 || ^7.0.0", "@jupyterlab/services@^7.0.0", "@jupyterlab/services@^7.2.4", "@jupyterlab/services@^7.4.3", "@jupyterlab/services@~7.4.2":
   version "7.4.3"
   resolved "https://registry.yarnpkg.com/@jupyterlab/services/-/services-7.4.3.tgz#61751a8aec1cd201cd2752241a0acf1a8547a7a4"

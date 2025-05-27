@@ -42,6 +42,7 @@
     "@jupyterlab/rendermime": "^4.4.3",
     "@jupyterlab/rendermime-extension": "^4.4.3",
     "@jupyterlab/services": "^7.4.3",
+    "@jupyterlab/services-extension": "^4.4.3",
     "@jupyterlab/settingregistry": "^4.4.3",
     "@jupyterlab/theme-dark-extension": "^4.4.3",
     "@jupyterlab/theme-light-extension": "^4.4.3",

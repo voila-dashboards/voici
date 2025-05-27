@@ -39,9 +39,7 @@ def path_to_content(path: Path, relative_to: Path):
     return None
 
 
-def patch_page_config(
-    page_config: Dict, relative_path: Path, config: VoilaConfiguration
-):
+def patch_page_config(page_config: Dict, relative_path: Path, config: VoilaConfiguration):
     page_config_copy = deepcopy(page_config)
 
     # Align the base url with the relative path
@@ -51,12 +49,8 @@ def patch_page_config(
     page_config_copy["fullStaticUrl"] = f"../{'../' * len(relative_path.parts)}build"
 
     # Grabbing from the jupyterlite static folders
-    page_config_copy["settingsUrl"] = (
-        f"../../{'../' * len(relative_path.parts)}build/schemas"
-    )
-    page_config_copy["fullLabextensionsUrl"] = (
-        f"../../{'../' * len(relative_path.parts)}extensions"
-    )
+    page_config_copy["settingsUrl"] = f"../../{'../' * len(relative_path.parts)}build/schemas"
+    page_config_copy["fullLabextensionsUrl"] = f"../../{'../' * len(relative_path.parts)}extensions"
 
     # The Themes URL will be joined with the base URL in the
     # JupyterLite main application
@@ -75,6 +69,16 @@ def patch_page_config(
         "@voila-dashboards/jupyterlab-preview",
         "@jupyter/collaboration-extension",
         "@jupyter-widgets/jupyterlab-manager",
+        "@jupyterlab/services-extension:config-section-manager",
+        "@jupyterlab/services-extension:connection-status",
+        "@jupyterlab/services-extension:default-drive",
+        "@jupyterlab/services-extension:event-manager",
+        "@jupyterlab/services-extension:kernel-manager",
+        "@jupyterlab/services-extension:kernel-spec-manager",
+        "@jupyterlab/services-extension:nbconvert-manager",
+        "@jupyterlab/services-extension:session-manager",
+        "@jupyterlab/services-extension:setting-manager",
+        "@jupyterlab/services-extension:user-manager",
     ]
     page_config_copy["federated_extensions"] = filter_extension(
         federated_extensions=federated_extensions,
@@ -135,15 +139,11 @@ class VoiciTreeExporter(HTMLExporter):
         else:
             return "Voici Home"
 
-    def will_render_tree(
-        self, template, contents, page_title, breadcrumbs, relative_path
-    ):
+    def will_render_tree(self, template, contents, page_title, breadcrumbs, relative_path):
         """Return a function that will render the tree into a StringIO and return it."""
 
         def render_tree(page_config) -> StringIO:
-            page_config = patch_page_config(
-                page_config, relative_path, self.voici_configuration
-            )
+            page_config = patch_page_config(page_config, relative_path, self.voici_configuration)
             return StringIO(
                 template.render(
                     frontend="voici",
@@ -162,9 +162,7 @@ class VoiciTreeExporter(HTMLExporter):
         """Return a function that will render the notebook into a StringIO and return it."""
 
         def render_notebook(page_config) -> StringIO:
-            page_config = patch_page_config(
-                page_config, relative_path, self.voici_configuration
-            )
+            page_config = patch_page_config(page_config, relative_path, self.voici_configuration)
 
             voici_exporter = VoiciExporter(
                 voici_config=self.voici_configuration,
@@ -188,9 +186,7 @@ class VoiciTreeExporter(HTMLExporter):
             breadcrumbs = []
         else:
             relative_path = path.relative_to(relative_to)
-            breadcrumbs = self.generate_breadcrumbs(
-                relative_path, len(relative_path.parts)
-            )
+            breadcrumbs = self.generate_breadcrumbs(relative_path, len(relative_path.parts))
         classic_tree = self.voici_configuration.classic_tree
         template_name = "tree-lab.html" if not classic_tree else "tree.html"
 
@@ -205,9 +201,7 @@ class VoiciTreeExporter(HTMLExporter):
 
         yield (
             Path("tree") / relative_path / "index.html",
-            self.will_render_tree(
-                template, contents, page_title, breadcrumbs, relative_path
-            ),
+            self.will_render_tree(template, contents, page_title, breadcrumbs, relative_path),
         )
 
         for file in contents.get("content", []):
@@ -230,9 +224,7 @@ class VoiciTreeExporter(HTMLExporter):
         if classic_tree:
             supported_themes = ["dark", "light", "JupyterLab Dark", "JupyterLab Light"]
             if theme not in supported_themes:
-                self.log.warn(
-                    "Custom JupyterLab theme is not supported in the classic tree"
-                )
+                self.log.warn("Custom JupyterLab theme is not supported in the classic tree")
                 return "light"
             else:
                 if theme == "JupyterLab Dark":

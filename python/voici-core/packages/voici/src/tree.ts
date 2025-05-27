@@ -24,7 +24,10 @@ import { treeWidgetPlugin } from './plugins/tree';
 import { PluginRegistry } from '@lumino/coreutils';
 import { ServiceManager } from '@jupyterlab/services';
 
-const servicesExtensions = [import('@jupyterlite/services-extension')];
+const servicesExtensions = [
+  import('@jupyterlab/services-extension'),
+  import('@jupyterlite/services-extension'),
+];
 
 /**
  * The main function
