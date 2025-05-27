@@ -25,17 +25,27 @@ import plugins from './voiciplugins';
 import { PluginRegistry } from '@lumino/coreutils';
 import { ServiceManager } from '@jupyterlab/services';
 
-const servicesExtensions = [
-  import('@jupyterlab/services-extension'),
-  import('@jupyterlite/services-extension'),
-];
-
 /**
  * The main function
  */
 async function main() {
   const mods = [
     // @jupyterlab plugins
+    require('@jupyterlab/services-extension').default.filter((p: any) => {
+      const excludedServices = [
+        '@jupyterlab/services-extension:config-section-manager',
+        '@jupyterlab/services-extension:connection-status',
+        '@jupyterlab/services-extension:default-drive',
+        '@jupyterlab/services-extension:event-manager',
+        '@jupyterlab/services-extension:kernel-manager',
+        '@jupyterlab/services-extension:kernel-spec-manager',
+        '@jupyterlab/services-extension:nbconvert-manager',
+        '@jupyterlab/services-extension:session-manager',
+        '@jupyterlab/services-extension:setting-manager',
+        '@jupyterlab/services-extension:user-manager',
+      ];
+      return !excludedServices.includes(p.id);
+    }),
     require('@jupyterlab/codemirror-extension').default.filter(
       (p: any) => p.id === '@jupyterlab/codemirror-extension:languages'
     ),
@@ -52,6 +62,7 @@ async function main() {
       (p: any) =>
         p.id === '@jupyterlite/application-extension:service-worker-manager'
     ),
+    require('@jupyterlite/services-extension'),
     themesManagerPlugin,
     plugins,
   ];
@@ -156,13 +167,6 @@ async function main() {
     .forEach((p) => {
       console.error((p as PromiseRejectedResult).reason);
     });
-
-  const baseServerExtensions = await Promise.all(servicesExtensions);
-  baseServerExtensions.forEach((p) => {
-    for (const plugin of activePlugins(p, [])) {
-      pluginsToRegister.push(plugin);
-    }
-  });
 
   // 1. Create a plugin registry
   const pluginRegistry = new PluginRegistry();

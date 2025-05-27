@@ -69,16 +69,6 @@ def patch_page_config(page_config: Dict, relative_path: Path, config: VoilaConfi
         "@voila-dashboards/jupyterlab-preview",
         "@jupyter/collaboration-extension",
         "@jupyter-widgets/jupyterlab-manager",
-        "@jupyterlab/services-extension:config-section-manager",
-        "@jupyterlab/services-extension:connection-status",
-        "@jupyterlab/services-extension:default-drive",
-        "@jupyterlab/services-extension:event-manager",
-        "@jupyterlab/services-extension:kernel-manager",
-        "@jupyterlab/services-extension:kernel-spec-manager",
-        "@jupyterlab/services-extension:nbconvert-manager",
-        "@jupyterlab/services-extension:session-manager",
-        "@jupyterlab/services-extension:setting-manager",
-        "@jupyterlab/services-extension:user-manager",
     ]
     page_config_copy["federated_extensions"] = filter_extension(
         federated_extensions=federated_extensions,
