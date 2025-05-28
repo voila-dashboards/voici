@@ -87,5 +87,5 @@ before-bump-version = [
 ignore = ["W002"]
 
 [tool.ruff]
-target-version = "py38"
+target-version = "py39"
 line-length = 100
