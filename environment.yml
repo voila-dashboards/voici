@@ -3,7 +3,6 @@ channels:
   - conda-forge
 dependencies:
   - pip
-  - black
   - ruff
   - pytest
   - yarn=3
