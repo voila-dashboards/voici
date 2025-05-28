@@ -44,7 +44,6 @@ file = "LICENSE"
 
 [project.optional-dependencies]
 dev = [
-    "black",
     "ruff==0.0.258",
     "hatch",
 ]
@@ -90,3 +89,9 @@ ignore = ["W002"]
 [tool.ruff]
 target-version = "py38"
 line-length = 100
+
+[tool.ruff.format]
+docstring-code-format = true
+quote-style = "single"
+indent-style = "space"
+line-ending = "lf"
