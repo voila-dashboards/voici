@@ -11,7 +11,7 @@ import '@voila-dashboards/voila/style/index.js';
 import '@voila-dashboards/voila/lib/sharedscope';
 import { PageConfig, URLExt } from '@jupyterlab/coreutils';
 import { IKernelSpecs } from '@jupyterlite/kernel';
-import { IServiceWorkerManager, JupyterLiteServer } from '@jupyterlite/server';
+import { IServiceWorkerManager } from '@jupyterlite/server';
 import {
   activePlugins,
   createModule,
@@ -22,8 +22,8 @@ import {
 
 import { VoiciApp } from './app';
 import plugins from './voiciplugins';
-
-const serverExtensions = [import('@jupyterlite/server-extension')];
+import { PluginRegistry } from '@lumino/coreutils';
+import { ServiceManager } from '@jupyterlab/services';
 
 /**
  * The main function
@@ -31,6 +31,21 @@ const serverExtensions = [import('@jupyterlite/server-extension')];
 async function main() {
   const mods = [
     // @jupyterlab plugins
+    require('@jupyterlab/services-extension').default.filter((p: any) => {
+      const excludedServices = [
+        '@jupyterlab/services-extension:config-section-manager',
+        '@jupyterlab/services-extension:connection-status',
+        '@jupyterlab/services-extension:default-drive',
+        '@jupyterlab/services-extension:event-manager',
+        '@jupyterlab/services-extension:kernel-manager',
+        '@jupyterlab/services-extension:kernel-spec-manager',
+        '@jupyterlab/services-extension:nbconvert-manager',
+        '@jupyterlab/services-extension:session-manager',
+        '@jupyterlab/services-extension:setting-manager',
+        '@jupyterlab/services-extension:user-manager',
+      ];
+      return !excludedServices.includes(p.id);
+    }),
     require('@jupyterlab/codemirror-extension').default.filter(
       (p: any) => p.id === '@jupyterlab/codemirror-extension:languages'
     ),
@@ -43,9 +58,30 @@ async function main() {
     require('@jupyter-widgets/jupyterlab-manager/lib/plugin').default.filter(
       (p: any) => p.id !== '@jupyter-widgets/jupyterlab-manager:plugin'
     ),
+    require('@jupyterlite/application-extension').default.filter(
+      (p: any) =>
+        p.id === '@jupyterlite/application-extension:service-worker-manager'
+    ),
+    require('@jupyterlite/services-extension'),
     themesManagerPlugin,
     plugins,
   ];
+
+  const pluginsToRegister: any[] = [];
+
+  mods.forEach((mod) => {
+    let data = mod.default;
+    // Handle commonjs exports.
+    if (!Object.prototype.hasOwnProperty.call(mod, '__esModule')) {
+      data = mod as any;
+    }
+    if (!Array.isArray(data)) {
+      data = [data];
+    }
+    data.forEach((plugin: any) => {
+      pluginsToRegister.push(plugin);
+    });
+  });
 
   const mimeExtensions = [
     require('@jupyterlite/iframe-extension'),
@@ -61,7 +97,6 @@ async function main() {
   const federatedExtensionPromises: any[] = [];
   const federatedMimeExtensionPromises: any[] = [];
   const federatedStylePromises: any[] = [];
-  const liteExtensionPromises: any[] = [];
 
   const extensions = await Promise.allSettled(
     extensionData.map(async (data: any) => {
@@ -85,10 +120,6 @@ async function main() {
     }
 
     const data = p.value;
-    if (data.liteExtension) {
-      liteExtensionPromises.push(createModule(data.name, data.extension));
-      return;
-    }
     if (data.extension) {
       federatedExtensionPromises.push(createModule(data.name, data.extension));
     }
@@ -109,7 +140,7 @@ async function main() {
   federatedExtensions.forEach((p) => {
     if (p.status === 'fulfilled') {
       for (const plugin of activePlugins(p.value, [])) {
-        mods.push(plugin);
+        pluginsToRegister.push(plugin);
       }
     } else {
       console.error(p.reason);
@@ -137,52 +168,30 @@ async function main() {
       console.error((p as PromiseRejectedResult).reason);
     });
 
-  const litePluginsToRegister: any[] = [];
-  const baseServerExtensions = await Promise.all(serverExtensions);
-  baseServerExtensions.forEach((p) => {
-    for (const plugin of activePlugins(p, [])) {
-      litePluginsToRegister.push(plugin);
-    }
-  });
+  // 1. Create a plugin registry
+  const pluginRegistry = new PluginRegistry();
 
-  // Add the serverlite federated extensions.
-  const federatedLiteExtensions = await Promise.allSettled(
-    liteExtensionPromises
-  );
-  federatedLiteExtensions.forEach((p) => {
-    if (p.status === 'fulfilled') {
-      for (const plugin of activePlugins(p.value, [])) {
-        litePluginsToRegister.push(plugin);
-      }
-    } else {
-      console.error(p.reason);
-    }
-  });
+  // 2. Register the plugins
+  pluginRegistry.registerPlugins(pluginsToRegister);
 
-  // create the in-browser JupyterLite Server
-  const jupyterLiteServer = new JupyterLiteServer({ shell: null as never });
-
-  jupyterLiteServer.registerPluginModules(litePluginsToRegister);
-  // start the server
-  await jupyterLiteServer.start();
-
-  const kernelspecs = await jupyterLiteServer.resolveRequiredService(
-    IKernelSpecs
-  );
-  const serviceManager = jupyterLiteServer.serviceManager;
+  // 3. Get and resolve the service manager and connection status plugins
+  const IServiceManager = require('@jupyterlab/services').IServiceManager;
+  const serviceManager = (await pluginRegistry.resolveRequiredService(
+    IServiceManager
+  )) as ServiceManager;
+  const kernelspecs = await pluginRegistry.resolveRequiredService(IKernelSpecs);
 
   const app = new VoiciApp({
+    pluginRegistry,
     serviceManager,
     kernelspecs,
     mimeExtensions,
     shell: new VoilaShell(),
   });
 
-  app.registerPluginModules(mods);
-
   await app.start();
 
-  const serviceWorkerManager = await jupyterLiteServer.resolveOptionalService(
+  const serviceWorkerManager = await pluginRegistry.resolveOptionalService(
     IServiceWorkerManager
   );
   if (serviceWorkerManager) {

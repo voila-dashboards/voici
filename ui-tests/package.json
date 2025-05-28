@@ -20,7 +20,7 @@
   "author": "Project Jupyter",
   "license": "BSD-3-Clause",
   "dependencies": {
-    "@playwright/test": "^1.31.0",
+    "@playwright/test": "^1.52.0",
     "copyfiles": "^2.4.1",
     "rimraf": "^4.1.2"
   }

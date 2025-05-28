@@ -31,8 +31,8 @@ Voici is split between two Python packages:
 ```yml
 name: my-dashboard-env
 channels:
-  - https://repo.mamba.pm/emscripten-forge
-  - conda-forge
+  - https://repo.prefix.dev/emscripten-forge-dev
+  - https://repo.prefix.dev/conda-forge
 dependencies:
   - xeus-python
   - matplotlib

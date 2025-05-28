@@ -46,3 +46,4 @@ ui-tests/material
 .jupyterlite.doit.db
 
 .yarn/
+.pnp*
