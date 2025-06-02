@@ -2,6 +2,24 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 0.9.0a0
+
+([Full Changelog](https://github.com/voila-dashboards/voici/compare/v0.8.0...33e0bd63f3b65df0a56ddd013c2c16a93c315bc4))
+
+### Maintenance and upkeep improvements
+
+- feat:-removing black and using ruff indelibly [#150](https://github.com/voila-dashboards/voici/pull/150) ([@nakul-py](https://github.com/nakul-py))
+- Update GitHub Actions [#143](https://github.com/voila-dashboards/voici/pull/143) ([@jtpio](https://github.com/jtpio))
+- Update to JupyterLite 0.6.0rc0 [#142](https://github.com/voila-dashboards/voici/pull/142) ([@jtpio](https://github.com/jtpio))
+
+### Contributors to this release
+
+([GitHub contributors page for this release](https://github.com/voila-dashboards/voici/graphs/contributors?from=2025-01-09&to=2025-06-02&type=c))
+
+[@github-actions](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Agithub-actions+updated%3A2025-01-09..2025-06-02&type=Issues) | [@jtpio](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Ajtpio+updated%3A2025-01-09..2025-06-02&type=Issues) | [@martinRenou](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3AmartinRenou+updated%3A2025-01-09..2025-06-02&type=Issues) | [@nakul-py](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Anakul-py+updated%3A2025-01-09..2025-06-02&type=Issues)
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 0.8.0
 
 ([Full Changelog](https://github.com/voila-dashboards/voici/compare/v0.7.1...cdbb6eed7853d429815c473a485ea882173cfde4))
@@ -15,8 +33,6 @@
 ([GitHub contributors page for this release](https://github.com/voila-dashboards/voici/graphs/contributors?from=2024-09-17&to=2025-01-09&type=c))
 
 [@jtpio](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Ajtpio+updated%3A2024-09-17..2025-01-09&type=Issues) | [@trungleduc](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Atrungleduc+updated%3A2024-09-17..2025-01-09&type=Issues)
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 0.7.1
 
