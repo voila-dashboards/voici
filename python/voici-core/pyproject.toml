@@ -9,7 +9,7 @@ build-backend = "hatchling.build"
 name = "voici-core"
 description = "Voici turns Jupyter notebooks into static web applications"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 authors = [
     { name = "Voila Development Team" },
 ]
@@ -33,7 +33,7 @@ classifiers = [
 ]
 dependencies = [
     "voila>=0.5.5,<0.6",
-    "jupyterlite-core>=0.6.0rc0,<0.7.0",
+    "jupyterlite-core>=0.6.0,<0.7.0",
 ]
 dynamic = [
     "version",
