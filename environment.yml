@@ -6,9 +6,9 @@ dependencies:
   - ruff
   - pytest
   - yarn=3
-  - nodejs=18
+  - nodejs=22
   - pip:
     - ruff==0.0.258
     - voila>=0.5.5
     - voila-material>=0.4.3
-    - jupyterlite-core[lab]>=0.6.0rc0,<0.7.0
+    - jupyterlite-core[lab]>=0.6.0,<0.7.0
