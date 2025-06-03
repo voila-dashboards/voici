@@ -1,6 +1,6 @@
 # Changelog
 
-<!-- <START NEW CHANGELOG ENTRY> -->
+<!-- <START NEW CHANGELOG ENTRY>  -->
 
 ## 0.9.0a0
 
