@@ -23,15 +23,21 @@ pip install -e python/voici-core
 pip install -e python/voici
 ```
 
-`voici` follows a monorepo structure. To build all the packages at once:
+`voici` follows a monorepo structure. To build all the packages at once you can run the following command:
 
 ```bash
+cd python/voici-core
+
+# install dependencies
 yarn build
 ```
 
 Then go to the `demo` folder and run the following command to build the demo application with Voici:
 
 ```bash
+cd ../../demo
+
+# build the demo
 voici build --contents notebooks
 ```
 
@@ -73,7 +79,7 @@ Often a PR might make changes to the user interface, which can cause the visual 
 
 If you want to update the reference snapshots while working on a PR you can post the following sentence as a GitHub comment:
 
-```
+```bash
 bot please update playwright snapshots
 ```
 
