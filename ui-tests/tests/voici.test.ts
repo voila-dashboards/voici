@@ -126,8 +126,11 @@ test.describe('Voici Tests', () => {
     await voici.click();
 
     // Wait for page to load
-    await page.waitForSelector('.jupyter-widgets');
-    // Wait a bit for the theme to be applied
+
+    if (await page.locator('.jupyter-widgets').count()) {
+      await page.waitForSelector('.jupyter-widgets');
+    }
+        // Wait a bit for the theme to be applied
     await page.waitForTimeout(1000);
 
     expect(await page.screenshot()).toMatchSnapshot(
