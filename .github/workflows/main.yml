@@ -54,8 +54,19 @@ jobs:
         yarn install --immutable
         yarn run build
 
+    - name: Build JupyterLite app
+      run: |
+        jupyter lite build --output-dir ui-tests/material
+      
+
     - name: Voici Test
       run: pytest tests/
+
+    - name: List kernelspecs
+      run: |
+        echo "Listing kernelspecs:"
+        jupyter kernelspec list
+        find ui-tests/material -name kernel.json
 
     - name: UI Test
       run: yarn run test
