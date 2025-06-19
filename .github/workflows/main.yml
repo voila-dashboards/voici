@@ -54,11 +54,6 @@ jobs:
         yarn install --immutable
         yarn run build
 
-    - name: Build JupyterLite app
-      run: |
-        jupyter lite build --output-dir ui-tests/material
-      
-
     - name: Voici Test
       run: pytest tests/
 
