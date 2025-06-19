@@ -5,8 +5,8 @@
   "private": true,
   "scripts": {
     "build:base": "yarn run clean && cd ../demo && voici build --contents notebooks --config jupyter-lite.json",
-    "build:default": "yarn run build:base --output-dir ../ui-tests/lite",
-    "build:material": "yarn run build:base --output-dir ../ui-tests/material --template material --classic-tree true",
+    "build:default": "mkdir -p ../ui-tests/lite/_output && yarn run build:base --output-dir ../ui-tests/lite",
+    "build:material": "mkdir -p ../ui-tests/material/_output && yarn run build:base --output-dir ../ui-tests/material --template material --classic-tree true",
     "build": "yarn run clean:dist && yarn run build:default && yarn run build:material",
     "clean": "rimraf ../demo/.jupyterlite.doit.db",
     "clean:dist": "rimraf ./lite ./material",
