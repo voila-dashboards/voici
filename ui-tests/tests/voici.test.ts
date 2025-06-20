@@ -127,16 +127,19 @@ test.describe('Voici Tests', () => {
 
     // Wait for page to load
 
-    for (let i = 0; i < 5; i++) {
-      const running = await page.locator('.jupyter-widgets').count();
-      if (running > 0) break;
-      await page.waitForTimeout(2000);
-    }    
+    const widgetSelector = '.jupyter-widgets';
+  const maxTries = 10;
+  for (let i = 0; i < maxTries; i++) {
+    const count = await page.locator(widgetSelector).count();
+    if (count > 0) break;
+    await page.waitForTimeout(1000);
+  }
         // Wait a bit for the theme to be applied
     await page.waitForTimeout(1000);
 
     expect(await page.screenshot()).toMatchSnapshot(
       'voici-simple-material.png'
     );
+    await page.waitForTimeout(1000);
   });
 });
