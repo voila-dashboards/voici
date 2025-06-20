@@ -127,9 +127,11 @@ test.describe('Voici Tests', () => {
 
     // Wait for page to load
 
-    if (await page.locator('.jupyter-widgets').count()) {
-      await page.waitForSelector('.jupyter-widgets');
-    }
+    for (let i = 0; i < 5; i++) {
+      const running = await page.locator('.jupyter-widgets').count();
+      if (running > 0) break;
+      await page.waitForTimeout(2000);
+    }    
         // Wait a bit for the theme to be applied
     await page.waitForTimeout(1000);
 
