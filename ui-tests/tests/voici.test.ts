@@ -99,7 +99,6 @@ test.describe('Voici Tests', () => {
   });
 
   test.skip('Render material template', async ({ page, context }, testInfo) => {
-    console.log('Navigating to material...');
     await page.goto('material');
 
     const widget = await page.getByText('widgets');
@@ -127,20 +126,10 @@ test.describe('Voici Tests', () => {
     await voici.click();
 
     // Wait for page to load
-    console.log('Waiting for .jupyter-widgets...');
     await page.waitForSelector('.jupyter-widgets');
     // Wait a bit for the theme to be applied
     await page.waitForTimeout(1000);
 
-    const widgetCount = await page.evaluate(() => {
-      return document.querySelectorAll('.jupyter-widgets').length;
-    });
-    console.log(`Found ${widgetCount} widgets`);
-        if (widgetCount === 0) {
-      console.warn('⚠️ No widgets found. Comms may have failed.');
-    }
-    
-    console.log('Capturing screenshot...');
     expect(await page.screenshot()).toMatchSnapshot(
       'voici-simple-material.png'
     );
