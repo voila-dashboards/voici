@@ -44,7 +44,7 @@ file = "LICENSE"
 
 [project.optional-dependencies]
 dev = [
-    "ruff==0.0.258",
+    "ruff>=0.11,<0.12",
     "hatch",
 ]
 
