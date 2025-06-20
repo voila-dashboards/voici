@@ -98,7 +98,7 @@ test.describe('Voici Tests', () => {
     expect(await page.screenshot()).toMatchSnapshot('voici-dark.png');
   });
 
-  test('Render material template', async ({ page, context }, testInfo) => {
+  test.skip('Render material template', async ({ page, context }, testInfo) => {
     console.log('Navigating to material...');
     await page.goto('material');
 

@@ -67,7 +67,6 @@ def patch_page_config(page_config: Dict, relative_path: Path, config: VoilaConfi
     federated_extensions = page_config_copy['federated_extensions']
     disabled_extensions = [
         '@voila-dashboards/jupyterlab-preview',
-        '@jupyter-notebook/lab-extension:interface-switcher',
         '@jupyter/collaboration-extension',
         '@jupyter-widgets/jupyterlab-manager',
     ]

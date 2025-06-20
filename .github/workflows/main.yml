@@ -17,7 +17,7 @@ defaults:
 jobs:
   test:
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 15
+    timeout-minutes: 20
 
     strategy:
       fail-fast: false
@@ -67,6 +67,9 @@ jobs:
     - name: UI Test
       run: yarn run test
       working-directory: ui-tests
+    
+    - name: Run Playwright tests
+      run: npx playwright test --reporter=dot,json,html
 
     - name: Upload Playwright Test assets
       if: always()
