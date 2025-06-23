@@ -5,7 +5,7 @@ channels:
 dependencies:
   - micromamba
   - myst-parser
-  - nodejs=20
+  - nodejs=22
   - sphinx<8
   - pip
   - pydata-sphinx-theme
