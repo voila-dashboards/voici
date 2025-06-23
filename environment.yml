@@ -8,7 +8,7 @@ dependencies:
   - yarn=3
   - nodejs=18
   - pip:
-    - ruff>=0.11,<0.12,
+    - ruff>=0.11,<0.12
     - voila>=0.5.5
     - voila-material>=0.4.3
     - jupyterlite-core[lab]>=0.6.0,<0.7.0
