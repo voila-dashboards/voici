@@ -92,13 +92,9 @@ test.describe('Voici Tests', () => {
     await page.goto('lite/voici/render/widgets/bqplot.html?theme=dark');
 
     // Wait for page to load
-    await page.waitForSelector('.jupyter-widgets', { timeout: 30000 });
-    await page.waitForFunction(() => {
-      return !!document.querySelector('.jupyter-widgets');
-    }, { timeout: 30000 });
-
+    await page.waitForSelector('.jupyter-widgets');
     await page.waitForTimeout(1000);
-    
+
     expect(await page.screenshot()).toMatchSnapshot('voici-dark.png');
   });
 
@@ -130,11 +126,9 @@ test.describe('Voici Tests', () => {
     await voici.click();
 
     // Wait for page to load
-    await page.waitForSelector('.jupyter-widgets', { timeout: 30000 });
+    await page.waitForSelector('.jupyter-widgets');
     // Wait a bit for the theme to be applied
-    await page.waitForFunction(() => {
-      return !!document.querySelector('.jupyter-widgets');
-    }, { timeout: 30000 });
+    await page.waitForTimeout(1000);
 
     expect(await page.screenshot()).toMatchSnapshot(
       'voici-simple-material.png'
