@@ -60,7 +60,7 @@ jobs:
     - name: UI Test
       run: yarn run test
       working-directory: ui-tests
-
+    
     - name: Upload Playwright Test assets
       if: always()
       uses: actions/upload-artifact@v4
