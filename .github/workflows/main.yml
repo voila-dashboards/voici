@@ -57,20 +57,10 @@ jobs:
     - name: Voici Test
       run: pytest tests/
 
-    - name: List kernelspecs
-      run: |
-        echo "Listing kernelspecs:"
-        jupyter kernelspec list
-        find ui-tests/material -name kernel.json
-
-
     - name: UI Test
       run: yarn run test
       working-directory: ui-tests
     
-    - name: Run Playwright tests
-      run: npx playwright test --reporter=dot,json,html
-
     - name: Upload Playwright Test assets
       if: always()
       uses: actions/upload-artifact@v4
