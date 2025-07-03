@@ -6,7 +6,7 @@ dependencies:
   - ruff
   - pytest
   - yarn=3
-  - nodejs=18
+  - nodejs=22
   - pip:
     - ruff>=0.11,<0.12
     - voila>=0.5.5
