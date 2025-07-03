@@ -22,7 +22,6 @@
   "dependencies": {
     "@playwright/test": "1.53.1",
     "copyfiles": "^2.4.1",
-    "playwright": "^1.53.1",
     "rimraf": "^4.1.2"
   }
 }

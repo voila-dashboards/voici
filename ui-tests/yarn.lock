@@ -815,7 +815,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright@npm:1.53.1, playwright@npm:^1.53.1":
+"playwright@npm:1.53.1":
   version: 1.53.1
   resolution: "playwright@npm:1.53.1"
   dependencies:
@@ -1124,7 +1124,6 @@ __metadata:
   dependencies:
     "@playwright/test": "npm:1.53.1"
     copyfiles: "npm:^2.4.1"
-    playwright: "npm:^1.53.1"
     rimraf: "npm:^4.1.2"
   languageName: unknown
   linkType: soft
