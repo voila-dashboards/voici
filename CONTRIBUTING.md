@@ -9,16 +9,6 @@ for a friendly and welcoming collaborative environment.
 
 Note: You will need NodeJS to build the extension package.
 
-Since we are using `jlpm` (JupyterLab's bundled version of `yarn`) to build dependencies, you need to install **JupyterLab** first, which provides `jlpm`.
-
-```bash
-# Install JupyterLab (which includes jlpm)
-pip install jupyterlab
-
-# Verify that jlpm is available
-jlpm --version
-```
-
 **Note**: we recommend using `mamba` to speed the creating of the environment.
 
 ```bash

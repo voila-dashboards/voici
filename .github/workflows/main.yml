@@ -44,21 +44,21 @@ jobs:
 
     - name: Install browser
       run: |
-        yarn
-        yarn playwright install chromium
+        jlpm
+        jlpm playwright install chromium
       working-directory: ui-tests
 
     - name: Install dependencies and build tests
       run: |
         cd ui-tests
-        yarn install --immutable
-        yarn run build
+        jlpm install --immutable
+        jlpm run build
 
     - name: Voici Test
       run: pytest tests/
 
     - name: UI Test
-      run: yarn run test
+      run: jlpm run test
       working-directory: ui-tests
     
     - name: Upload Playwright Test assets
