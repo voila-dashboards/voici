@@ -19,7 +19,7 @@ jobs:
           environment-name: voici-dev
           create-args: >-
             python=3.9
-            yarn=3
+            jupyterlab=4
             pip
             jupyter-releaser
 
