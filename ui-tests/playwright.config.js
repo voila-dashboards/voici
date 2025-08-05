@@ -14,7 +14,7 @@ module.exports = {
   },
   webServer: [
     {
-      command: 'yarn start',
+      command: 'jlpm start',
       port: 8866,
       timeout: 120 * 1000,
       reuseExistingServer: true,

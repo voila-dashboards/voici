@@ -28,8 +28,8 @@ jobs:
 
     - name: Lint
       run: |
-        yarn
-        yarn run eslint:check
-        yarn run prettier:check
+        jlpm
+        jlpm run eslint:check
+        jlpm run prettier:check
       working-directory:
         python/voici-core

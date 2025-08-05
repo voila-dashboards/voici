@@ -29,7 +29,7 @@ pip install -e python/voici
 cd python/voici-core
 
 # install dependencies
-yarn build
+jlpm build
 ```
 
 Then go to the `demo` folder and run the following command to build the demo application with Voici:
@@ -57,16 +57,16 @@ There are also end to end tests to cover higher level user interactions, located
 cd ui-tests
 
 # install dependencies
-yarn
+jlpm
 
 # install a browser
-yarn playwright install chromium
+jlpm playwright install chromium
 
 # start the application
-yarn start
+jlpm start
 
 # in another terminal, run the tests
-yarn test
+jlpm test
 ```
 
 The `test` script calls the Playwright test runner. You can pass additional arguments to `playwright` by appending parameters to the command. For example to run the test in headed mode, `jlpm test --headed`.
