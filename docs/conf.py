@@ -41,4 +41,6 @@ pygments_style = "sphinx"
 todo_include_todos = False
 htmlhelp_basename = "voicidoc"
 
-intersphinx_mapping = {"https://docs.python.org/": None}
+intersphinx_mapping = { 
+    "python": ("https://docs.python.org/3", None)
+}
