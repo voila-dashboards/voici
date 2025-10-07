@@ -2,6 +2,26 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 0.9.0
+
+([Full Changelog](https://github.com/voila-dashboards/voici/compare/v0.9.0a0...1aee7f0a15acd6023ddf97ab455e4c3cdd348583))
+
+### Maintenance and upkeep improvements
+
+- fixing docs build [#163](https://github.com/voila-dashboards/voici/pull/163) ([@nakul-py](https://github.com/nakul-py))
+- feat: Using `jlpm` [#158](https://github.com/voila-dashboards/voici/pull/158) ([@nakul-py](https://github.com/nakul-py))
+- feat: update Node.js version to 22 and playwright [#156](https://github.com/voila-dashboards/voici/pull/156) ([@nakul-py](https://github.com/nakul-py))
+- feat:- Updating Contribution guide, `ruff`, package version [#155](https://github.com/voila-dashboards/voici/pull/155) ([@nakul-py](https://github.com/nakul-py))
+- Update to JupyterLite 0.6.0 final [#152](https://github.com/voila-dashboards/voici/pull/152) ([@jtpio](https://github.com/jtpio))
+
+### Contributors to this release
+
+([GitHub contributors page for this release](https://github.com/voila-dashboards/voici/graphs/contributors?from=2025-06-02&to=2025-10-07&type=c))
+
+[@github-actions](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Agithub-actions+updated%3A2025-06-02..2025-10-07&type=Issues) | [@jtpio](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Ajtpio+updated%3A2025-06-02..2025-10-07&type=Issues) | [@nakul-py](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Anakul-py+updated%3A2025-06-02..2025-10-07&type=Issues)
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 0.9.0a0
 
 ([Full Changelog](https://github.com/voila-dashboards/voici/compare/v0.8.0...33e0bd63f3b65df0a56ddd013c2c16a93c315bc4))
@@ -17,8 +37,6 @@
 ([GitHub contributors page for this release](https://github.com/voila-dashboards/voici/graphs/contributors?from=2025-01-09&to=2025-06-02&type=c))
 
 [@github-actions](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Agithub-actions+updated%3A2025-01-09..2025-06-02&type=Issues) | [@jtpio](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Ajtpio+updated%3A2025-01-09..2025-06-02&type=Issues) | [@martinRenou](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3AmartinRenou+updated%3A2025-01-09..2025-06-02&type=Issues) | [@nakul-py](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Anakul-py+updated%3A2025-01-09..2025-06-02&type=Issues)
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 0.8.0
 
