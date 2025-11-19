@@ -42,6 +42,7 @@ def path_to_content(path: Path, relative_to: Path):
 def patch_page_config(
     page_config: Dict, relative_path: Path, config: VoilaConfiguration
 ):
+    """Update page config JSON to use ``voici` paths."""
     page_config_copy = deepcopy(page_config)
 
     voici_prefix = '../' * (1 + len(relative_path.parts))
@@ -51,7 +52,7 @@ def patch_page_config(
     patch_relative_urls(page_config_copy, base_prefix)
 
     page_config_copy.update(
-        # Align the base url with the relative path
+        # Align the base URL with the relative path
         baseUrl=base_prefix,
         # Grabbing from the Voici static folder
         fullStaticUrl=f'{voici_prefix}build',
@@ -85,10 +86,13 @@ def patch_page_config(
 
 
 def patch_relative_urls(config_dict: Dict[str, Any], path_prefix: str) -> None:
-    """Update one config object in place with relative URLs."""
+    """Update one ``page_config`` object in place with relative URLs.
+
+    See: https://github.com/jupyterlite/jupyterlite/blame/v0.7.0b1/app/config-utils.js
+    """
     for key, value in config_dict.items():
         if key in ['licensesUrl', 'themesUrl', 'federated_extensions']:
-            # these are left unchanged, as they are handled upstream JS code
+            # these are left unchanged, as they are handled in upstream JS code
             continue
         elif isinstance(value, dict):
             # nested config objects may also contain relative paths
