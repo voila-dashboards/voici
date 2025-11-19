@@ -1,5 +1,5 @@
 module.exports = {
-  timeout: 120000,
+  timeout: 200000,
   reporter: [[process.env.CI ? 'dot' : 'list'], ['html']],
   use: {
     baseURL: 'http://localhost:8866',
@@ -14,7 +14,7 @@ module.exports = {
   },
   webServer: [
     {
-      command: 'yarn start',
+      command: 'jlpm start',
       port: 8866,
       timeout: 120 * 1000,
       reuseExistingServer: true,

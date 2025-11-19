@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Install Micromamba
       uses: mamba-org/setup-micromamba@v1
@@ -28,8 +28,8 @@ jobs:
 
     - name: Lint
       run: |
-        yarn
-        yarn run eslint:check
-        yarn run prettier:check
+        jlpm
+        jlpm run eslint:check
+        jlpm run prettier:check
       working-directory:
         python/voici-core

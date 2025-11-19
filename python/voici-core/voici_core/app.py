@@ -20,25 +20,25 @@ from ._version import __version__
 
 voici_aliases = dict(
     **lite_aliases,
-    show_tracebacks="VoilaConfiguration.show_tracebacks",
-    strip_sources="VoilaConfiguration.strip_sources",
-    template="VoilaConfiguration.template",
-    theme="VoilaConfiguration.theme",
-    **{"classic-tree": "VoilaConfiguration.classic_tree"},
+    show_tracebacks='VoilaConfiguration.show_tracebacks',
+    strip_sources='VoilaConfiguration.strip_sources',
+    template='VoilaConfiguration.template',
+    theme='VoilaConfiguration.theme',
+    **{'classic-tree': 'VoilaConfiguration.classic_tree'},
 )
 
 
 class VoiciAppMixin(ManagedApp):
-    @default("lite_manager")
+    @default('lite_manager')
     def _default_manager(self):
         manager = super()._default_manager()
 
         # If "apps" is not user-specified, we build only voici
         if not manager.apps:
-            manager.apps = ["voici"]
+            manager.apps = ['voici']
         # If it is specified, we make sure voici is included
-        elif "voici" not in manager.apps:
-            manager.apps = list(manager.apps) + ["voici"]
+        elif 'voici' not in manager.apps:
+            manager.apps = list(manager.apps) + ['voici']
 
         return manager
 
@@ -107,22 +107,16 @@ class VoiciApp(LiteApp):
         archive=VoiciArchiveApp,
     )
 
-    subcommands = {
-        k: (v, v.__doc__.splitlines()[0].strip()) for k, v in __sub_apps.items()
-    }
+    subcommands = {k: (v, v.__doc__.splitlines()[0].strip()) for k, v in __sub_apps.items()}
 
     def initialize(self, argv=None):
         arg_list = sys.argv[1:]
-        sub_app = (
-            arg_list[0]
-            if len(arg_list) > 0 and not arg_list[0].startswith("-")
-            else None
-        )
+        sub_app = arg_list[0] if len(arg_list) > 0 and not arg_list[0].startswith('-') else None
         if sub_app is None or sub_app in self.__sub_apps:
             super().initialize(argv)
         else:
             new_args = deepcopy(arg_list)
-            new_args.insert(0, "build")
+            new_args.insert(0, 'build')
 
             super().initialize(new_args)
 
@@ -132,10 +126,10 @@ class VoiciApp(LiteApp):
                 content_path = subapp.extra_args[0]
                 subapp.contents = subapp.contents + (os.path.abspath(content_path),)
             elif len(extra_args) != 0:
-                raise ValueError(f"Provided more than 1 argument: {extra_args}")
+                raise ValueError(f'Provided more than 1 argument: {extra_args}')
 
 
 main = launch_new_instance = VoiciApp.launch_instance
 
-if __name__ == "__main__":  # pragma: nocover
+if __name__ == '__main__':  # pragma: nocover
     main()

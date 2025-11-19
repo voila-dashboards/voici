@@ -59,7 +59,7 @@ def test_initialize(argv, voici_app, expected):
     "argv, notebooks, static_file",
     [
         (
-            ["voici", "build", "--contents", f"{CWD / 'voici.ipynb' }"],
+            ["voici", "build", "--contents", f"{CWD / 'voici.ipynb'}"],
             ["voici.ipynb"],
             False,
         ),

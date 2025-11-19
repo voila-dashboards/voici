@@ -3,13 +3,12 @@ channels:
   - conda-forge
 dependencies:
   - pip
-  - black
   - ruff
   - pytest
-  - yarn=3
-  - nodejs=18
+  - jupyterlab=4
+  - nodejs=22
   - pip:
-    - ruff==0.0.258
+    - ruff>=0.11,<0.12
     - voila>=0.5.5
     - voila-material>=0.4.3
-    - jupyterlite-core[lab]>=0.2.0,<0.6.0
+    - jupyterlite-core[lab]>=0.6.0,<0.7.0

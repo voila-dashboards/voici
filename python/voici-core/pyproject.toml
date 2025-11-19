@@ -2,6 +2,7 @@
 requires = [
     "hatchling>=1.8.1",
     "jupyter_core",
+    "jupyterlab>=4.0.0,<5",
 ]
 build-backend = "hatchling.build"
 
@@ -9,7 +10,7 @@ build-backend = "hatchling.build"
 name = "voici-core"
 description = "Voici turns Jupyter notebooks into static web applications"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 authors = [
     { name = "Voila Development Team" },
 ]
@@ -25,15 +26,15 @@ classifiers = [
     "License :: OSI Approved :: BSD License",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
 ]
 dependencies = [
     "voila>=0.5.5,<0.6",
-    "jupyterlite-core>=0.2.0,<0.6.0",
+    "jupyterlite-core>=0.6.0,<0.7.0",
 ]
 dynamic = [
     "version",
@@ -44,8 +45,7 @@ file = "LICENSE"
 
 [project.optional-dependencies]
 dev = [
-    "black",
-    "ruff==0.0.258",
+    "ruff>=0.11,<0.12",
     "hatch",
 ]
 
@@ -87,14 +87,14 @@ skip-if-exists = [
 [tool.hatch.build.hooks.jupyter-builder.editable-build-kwargs]
 build_cmd = "build"
 npm = [
-    "yarn",
+    "jlpm",
 ]
 force = true
 
 [tool.hatch.build.hooks.jupyter-builder.build-kwargs]
 build_cmd = "build:prod"
 npm = [
-    "yarn",
+    "jlpm",
 ]
 
 [tool.jupyter-releaser]
@@ -107,17 +107,17 @@ before-bump-version = [
     "python -m pip install hatch",
 ]
 before-build-npm = [
-    "yarn",
-    "yarn clean",
-    "yarn build:prod",
+    "jlpm",
+    "jlpm clean",
+    "jlpm build:prod",
 ]
 before-build-python = [
-    "yarn clean",
+    "jlpm clean",
 ]
 
 [tool.check-wheel-contents]
 ignore = ["W002"]
 
 [tool.ruff]
-target-version = "py38"
+target-version = "py39"
 line-length = 100

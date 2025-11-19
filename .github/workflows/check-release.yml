@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install Conda environment with Micromamba
         uses: mamba-org/setup-micromamba@v1
@@ -19,7 +19,7 @@ jobs:
           environment-name: voici-dev
           create-args: >-
             python=3.9
-            yarn=3
+            jupyterlab=4
             pip
             jupyter-releaser
 
@@ -31,7 +31,7 @@ jobs:
           shell: bash -l {0}
 
       - name: Upload Distributions
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: voici-releaser-dist-${{ github.run_number }}
           path: .jupyter_releaser_checkout/dist

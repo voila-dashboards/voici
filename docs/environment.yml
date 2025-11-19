@@ -5,11 +5,11 @@ channels:
 dependencies:
   - micromamba
   - myst-parser
-  - nodejs=18
+  - nodejs=22
   - sphinx<8
   - pip
   - pydata-sphinx-theme
-  - yarn=3
+  - jupyterlab=4
   - pip:
     - sphinxcontrib-video
     - ../python/voici-core

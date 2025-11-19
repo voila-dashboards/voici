@@ -4,14 +4,14 @@
   "description": "Voici UI Tests",
   "private": true,
   "scripts": {
-    "build:base": "yarn run clean && cd ../demo && voici build --contents notebooks --config jupyter-lite.json",
-    "build:default": "yarn run build:base --output-dir ../ui-tests/lite",
-    "build:material": "yarn run build:base --output-dir ../ui-tests/material --template material --classic-tree true",
-    "build": "yarn run clean:dist && yarn run build:default && yarn run build:material",
+    "build:base": "jlpm run clean && cd ../demo && voici build --contents notebooks --config jupyter-lite.json",
+    "build:default": "jlpm run build:base --output-dir ../ui-tests/lite",
+    "build:material": "jlpm run build:base --output-dir ../ui-tests/material --template material --classic-tree true",
+    "build": "jlpm run clean:dist && jlpm run build:default && jlpm run build:material",
     "clean": "rimraf ../demo/.jupyterlite.doit.db",
     "clean:dist": "rimraf ./lite ./material",
     "start": "python -m http.server 8866",
-    "start:detached": "yarn run start&",
+    "start:detached": "jlpm run start&",
     "test": "playwright test",
     "test:debug": "PWDEBUG=1 playwright test",
     "test:report": "http-server ./playwright-report -a localhost -o",
@@ -20,7 +20,7 @@
   "author": "Project Jupyter",
   "license": "BSD-3-Clause",
   "dependencies": {
-    "@playwright/test": "^1.31.0",
+    "@playwright/test": "1.53.1",
     "copyfiles": "^2.4.1",
     "rimraf": "^4.1.2"
   }
