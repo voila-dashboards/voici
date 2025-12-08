@@ -16,6 +16,8 @@ from jupyterlite_core.app import (
     lite_aliases,
 )
 from traitlets import default
+from voila.configuration import VoilaConfiguration
+
 from ._version import __version__
 
 voici_aliases = dict(
@@ -29,6 +31,8 @@ voici_aliases = dict(
 
 
 class VoiciAppMixin(ManagedApp):
+    classes = [VoilaConfiguration]
+
     @default('lite_manager')
     def _default_manager(self):
         manager = super()._default_manager()
