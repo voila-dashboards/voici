@@ -10,8 +10,8 @@
 import '@voila-dashboards/voila/style/index.js';
 import '@voila-dashboards/voila/lib/sharedscope';
 import { PageConfig, URLExt } from '@jupyterlab/coreutils';
-import { IKernelSpecs } from '@jupyterlite/kernel';
-import { IServiceWorkerManager } from '@jupyterlite/server';
+import { IKernelSpecs } from '@jupyterlite/services';
+import { IServiceWorkerManager } from '@jupyterlite/apputils';
 import {
   activePlugins,
   createModule,

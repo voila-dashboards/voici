@@ -18,8 +18,8 @@ jobs:
         with:
           environment-name: voici-dev
           create-args: >-
-            python=3.9
-            jupyterlab=4
+            python=3.10
+            jupyterlab=4.5
             pip
             jupyter-releaser
 
