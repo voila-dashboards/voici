@@ -38,7 +38,7 @@ jobs:
         python -m ruff check .
     - name: Install voici
       run: |
-        python -m pip install "jupyterlite-xeus>=4.0.0,<5"
+        python -m pip install "jupyterlite-xeus>=4.3.4,<5"
         python -m pip install python/voici-core
         python -m pip install python/voici
 
