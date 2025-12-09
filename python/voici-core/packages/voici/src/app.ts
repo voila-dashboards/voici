@@ -13,7 +13,7 @@ import {
 import { IRenderMimeRegistry } from '@jupyterlab/rendermime';
 import { ServiceManager } from '@jupyterlab/services';
 import { IKernelConnection } from '@jupyterlab/services/lib/kernel/kernel';
-import { IKernelSpecs } from '@jupyterlite/kernel';
+import { IKernelSpecs } from '@jupyterlite/services';
 import { Widget } from '@lumino/widgets';
 import {
   App as VoilaAppNameSpace,

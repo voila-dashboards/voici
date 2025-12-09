@@ -5,10 +5,10 @@ dependencies:
   - pip
   - ruff
   - pytest
-  - jupyterlab=4
+  - jupyterlab=4.5
   - nodejs=22
   - pip:
     - ruff>=0.11,<0.12
     - voila>=0.5.5
     - voila-material>=0.4.3
-    - jupyterlite-core[lab]>=0.6.0,<0.7.0
+    - jupyterlite-core[lab]>=0.7.0,<0.8.0
