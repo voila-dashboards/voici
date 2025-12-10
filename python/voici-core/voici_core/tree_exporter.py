@@ -57,8 +57,8 @@ def patch_page_config(
         # Grabbing from the Voici static folder
         fullStaticUrl=f'{voici_prefix}build',
         # Grabbing from the jupyterlite static folders
-        settingsUrl=f'{voici_prefix}build/schemas',
-        fullLabextensionsUrl=f'{voici_prefix}extensions',
+        settingsUrl=f'{base_prefix}build/schemas',
+        fullLabextensionsUrl=f'{base_prefix}extensions',
         # The Themes URL will be joined with the base URL in the
         # JupyterLite main application
         themesUrl='./build/themes',
