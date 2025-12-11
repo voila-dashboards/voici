@@ -62,7 +62,7 @@ export const treeWidgetPlugin: JupyterFrontEndPlugin<void> = {
 
     // Navigate to the root directory to load the initial listing.
     app.started.then(() => {
-      void fbModel.cd('');
+      void fbModel.refresh();
     });
 
     const spacerTop = new Widget();
