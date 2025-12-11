@@ -60,7 +60,6 @@ export const treeWidgetPlugin: JupyterFrontEndPlugin<void> = {
     fb.showFileCheckboxes = false;
     fb.showLastModifiedColumn = false;
 
-    // Navigate to the root directory to load the initial listing.
     app.started.then(() => {
       void fbModel.refresh();
     });
