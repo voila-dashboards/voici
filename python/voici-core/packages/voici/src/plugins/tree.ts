@@ -60,9 +60,10 @@ export const treeWidgetPlugin: JupyterFrontEndPlugin<void> = {
     fb.showFileCheckboxes = false;
     fb.showLastModifiedColumn = false;
 
-    // Explicitly refresh to load the initial directory listing
-    // (JupyterLab does this after browser.model.restore())
-    void fbModel.refresh();
+    // Navigate to the root directory to load the initial listing.
+    app.started.then(() => {
+      void fbModel.cd('');
+    });
 
     const spacerTop = new Widget();
     spacerTop.addClass('spacer-top-widget');
