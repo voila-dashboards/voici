@@ -10,7 +10,7 @@ dependencies:
   - pip
   - pydata-sphinx-theme
   - jupyterlab=4
-  - jupyterlite-pyodide-kernel
   - pip:
     - sphinxcontrib-video
     - ../python/voici-core
+    - ../python/voici
