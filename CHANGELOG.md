@@ -2,6 +2,31 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 0.10.0a0
+
+([Full Changelog](https://github.com/voila-dashboards/voici/compare/v0.9.0...26a308a3de4793f030db7100cd79c9679a842862))
+
+### Enhancements made
+
+- Update to JupyterLite 0.7.0, drop Python 3.9 [#169](https://github.com/voila-dashboards/voici/pull/169) ([@jtpio](https://github.com/jtpio))
+- emulate upstream config-utils relative path rewriting [#138](https://github.com/voila-dashboards/voici/pull/138) ([@bollwyvl](https://github.com/bollwyvl), [@jtpio](https://github.com/jtpio))
+
+### Bugs fixed
+
+- Refresh file browser on app started [#173](https://github.com/voila-dashboards/voici/pull/173) ([@jtpio](https://github.com/jtpio), [@martinRenou](https://github.com/martinRenou), [@nakul-py](https://github.com/nakul-py))
+- Fix `voici build --help` [#171](https://github.com/voila-dashboards/voici/pull/171) ([@jtpio](https://github.com/jtpio), [@martinRenou](https://github.com/martinRenou))
+
+### Contributors to this release
+
+The following people contributed discussions, new ideas, code and documentation contributions, and review.
+See [our definition of contributors](https://github-activity.readthedocs.io/en/latest/#how-does-this-tool-define-contributions-in-the-reports).
+
+([GitHub contributors page for this release](https://github.com/voila-dashboards/voici/graphs/contributors?from=2025-10-07&to=2025-12-12&type=c))
+
+@bollwyvl ([activity](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Abollwyvl+updated%3A2025-10-07..2025-12-12&type=Issues)) | @jtpio ([activity](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Ajtpio+updated%3A2025-10-07..2025-12-12&type=Issues)) | @martinRenou ([activity](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3AmartinRenou+updated%3A2025-10-07..2025-12-12&type=Issues)) | @nakul-py ([activity](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Anakul-py+updated%3A2025-10-07..2025-12-12&type=Issues))
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 0.9.0
 
 ([Full Changelog](https://github.com/voila-dashboards/voici/compare/v0.9.0a0...1aee7f0a15acd6023ddf97ab455e4c3cdd348583))
@@ -19,8 +44,6 @@
 ([GitHub contributors page for this release](https://github.com/voila-dashboards/voici/graphs/contributors?from=2025-06-02&to=2025-10-07&type=c))
 
 [@github-actions](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Agithub-actions+updated%3A2025-06-02..2025-10-07&type=Issues) | [@jtpio](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Ajtpio+updated%3A2025-06-02..2025-10-07&type=Issues) | [@nakul-py](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Anakul-py+updated%3A2025-06-02..2025-10-07&type=Issues)
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 0.9.0a0
 
