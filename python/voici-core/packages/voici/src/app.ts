@@ -2,7 +2,7 @@ import {
   KernelWidgetManager,
   WidgetRenderer,
 } from '@jupyter-widgets/jupyterlab-manager';
-import { PageConfig } from '@jupyterlab/coreutils';
+import { PageConfig, PathExt } from '@jupyterlab/coreutils';
 import { IKernelspecMetadata } from '@jupyterlab/nbformat';
 import { NotebookModel } from '@jupyterlab/notebook';
 import {
@@ -107,10 +107,13 @@ export class VoiciApp extends VoilaApp {
       return;
     }
 
+    // Get the notebook path from the page config to set the correct working directory
+    const notebookPath = PageConfig.getOption('notebookPath') || '';
+    const notebookName = PathExt.basename(notebookPath);
+
     const connection = await sessionManager.startNew({
-      // TODO Get these name and path information from the exporter
-      name: '',
-      path: '',
+      name: notebookName,
+      path: notebookPath,
       type: 'notebook',
       kernel: spec,
     });
