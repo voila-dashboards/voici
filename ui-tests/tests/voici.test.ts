@@ -98,6 +98,23 @@ test.describe('Voici Tests', () => {
     expect(await page.screenshot()).toMatchSnapshot('voici-dark.png');
   });
 
+  test('Local module imports', async ({ page, context }, testInfo) => {
+    await page.goto('lite');
+
+    const localModule = page.getByText('local_module');
+    await localModule.click();
+
+    // Open the local_imports notebook
+    const notebook = page.getByText('local_imports.ipynb');
+    [page] = await Promise.all([context.waitForEvent('page'), notebook.click()]);
+
+    // Verify clean_column_names computed correctly
+    await page.waitForSelector("text=['first_name', 'last_name', 'email_address']", { timeout: 60000 });
+
+    // Verify filter_outliers removed the outlier (100)
+    await expect(page.locator('text=[10, 12, 11, 13, 12, 11, 14, 12]')).toBeVisible();
+  });
+
   test('Render material template', async ({ page, context }, testInfo) => {
     await page.goto('material');
 
