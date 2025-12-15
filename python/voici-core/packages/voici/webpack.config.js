@@ -8,9 +8,16 @@ const webpack = require('webpack');
 const merge = require('webpack-merge').default;
 const { ModuleFederationPlugin } = webpack.container;
 const Build = require('@jupyterlab/builder').Build;
+const WPPlugin = require('@jupyterlab/builder').WPPlugin;
 const baseConfig = require('@jupyterlab/builder/lib/webpack.config.base');
 
 const data = require('./package.json');
+
+const licensePlugins = [];
+
+if (!process.env.NO_WEBPACK_LICENSES) {
+  licensePlugins.push(new WPPlugin.JSONLicenseWebpackPlugin({}));
+}
 
 /**
  * A helper for filtering deprecated webpack loaders, to be replaced with assets
@@ -110,6 +117,7 @@ module.exports = [
       ],
     },
     plugins: [
+      ...licensePlugins,
       new webpack.DefinePlugin({
         // Needed for Blueprint. See https://github.com/palantir/blueprint/issues/4393
         'process.env': '{}',
