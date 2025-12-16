@@ -176,11 +176,13 @@ class VoiciTreeExporter(HTMLExporter):
 
         return render_tree
 
-    def will_render_notebook(self, notebook_path, relative_path):
+    def will_render_notebook(self, notebook_path, relative_path, notebook_file_path):
         """Return a function that will render the notebook into a StringIO and return it."""
 
         def render_notebook(page_config) -> StringIO:
             page_config = patch_page_config(page_config, relative_path, self.voici_configuration)
+            # Pass the notebook path to the frontend so the kernel can set the correct working directory
+            page_config['notebookPath'] = notebook_file_path
 
             voici_exporter = VoiciExporter(
                 voici_config=self.voici_configuration,
@@ -224,11 +226,13 @@ class VoiciTreeExporter(HTMLExporter):
 
         for file in contents.get('content', []):
             if file['type'] == 'notebook':
+                notebook_file_path = file['path'].replace('.html', '.ipynb')
                 yield (
                     Path('render') / file['path'],
                     self.will_render_notebook(
-                        lite_files_output / file['path'].replace('.html', '.ipynb'),
+                        lite_files_output / notebook_file_path,
                         relative_path,
+                        notebook_file_path,
                     ),
                 )
             elif file['type'] == 'directory':
