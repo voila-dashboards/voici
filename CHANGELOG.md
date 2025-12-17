@@ -2,6 +2,29 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 0.10.0a1
+
+([Full Changelog](https://github.com/voila-dashboards/voici/compare/v0.10.0a0...19f1a9b796d5ac7449d938b4d7f2d31877f8b652))
+
+### Bugs fixed
+
+- Handle notebook path [#174](https://github.com/voila-dashboards/voici/pull/174) ([@jtpio](https://github.com/jtpio), [@martinRenou](https://github.com/martinRenou))
+
+### Maintenance and upkeep improvements
+
+- add webpack licenses plugin [#175](https://github.com/voila-dashboards/voici/pull/175) ([@bollwyvl](https://github.com/bollwyvl), [@martinRenou](https://github.com/martinRenou), [@trungleduc](https://github.com/trungleduc))
+
+### Contributors to this release
+
+The following people contributed discussions, new ideas, code and documentation contributions, and review.
+See [our definition of contributors](https://github-activity.readthedocs.io/en/latest/#how-does-this-tool-define-contributions-in-the-reports).
+
+([GitHub contributors page for this release](https://github.com/voila-dashboards/voici/graphs/contributors?from=2025-12-12&to=2025-12-17&type=c))
+
+@bollwyvl ([activity](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Abollwyvl+updated%3A2025-12-12..2025-12-17&type=Issues)) | @jtpio ([activity](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Ajtpio+updated%3A2025-12-12..2025-12-17&type=Issues)) | @martinRenou ([activity](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3AmartinRenou+updated%3A2025-12-12..2025-12-17&type=Issues)) | @trungleduc ([activity](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Atrungleduc+updated%3A2025-12-12..2025-12-17&type=Issues))
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 0.10.0a0
 
 ([Full Changelog](https://github.com/voila-dashboards/voici/compare/v0.9.0...26a308a3de4793f030db7100cd79c9679a842862))
@@ -24,8 +47,6 @@ See [our definition of contributors](https://github-activity.readthedocs.io/en/l
 ([GitHub contributors page for this release](https://github.com/voila-dashboards/voici/graphs/contributors?from=2025-10-07&to=2025-12-12&type=c))
 
 @bollwyvl ([activity](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Abollwyvl+updated%3A2025-10-07..2025-12-12&type=Issues)) | @jtpio ([activity](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Ajtpio+updated%3A2025-10-07..2025-12-12&type=Issues)) | @martinRenou ([activity](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3AmartinRenou+updated%3A2025-10-07..2025-12-12&type=Issues)) | @nakul-py ([activity](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Anakul-py+updated%3A2025-10-07..2025-12-12&type=Issues))
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 0.9.0
 
