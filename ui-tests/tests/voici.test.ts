@@ -115,6 +115,26 @@ test.describe('Voici Tests', () => {
     await expect(page.locator('text=[10, 12, 11, 13, 12, 11, 14, 12]')).toBeVisible();
   });
 
+  test('Navigate via relative notebook link', async ({ page, context }, testInfo) => {
+    await page.goto('lite');
+
+    // Open the main voici.ipynb notebook which contains markdown links to other notebooks
+    const voici = page.getByText('voici.ipynb');
+    [page] = await Promise.all([context.waitForEvent('page'), voici.click()]);
+
+    await page.waitForSelector('.jupyter-widgets');
+    await page.waitForTimeout(1000);
+
+    const bqplotLink = page.locator('a', { hasText: 'bqplot' }).first();
+    await bqplotLink.click();
+
+    await page.waitForSelector('.jupyter-widgets');
+    await page.waitForTimeout(1000);
+
+    // Verify the URL changed to the bqplot.html page
+    expect(page.url()).toContain('bqplot.html');
+  });
+
   test('Render material template', async ({ page, context }, testInfo) => {
     await page.goto('material');
 
