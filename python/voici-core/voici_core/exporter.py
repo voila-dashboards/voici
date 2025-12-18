@@ -8,8 +8,12 @@
 #############################################################################
 
 
+import re
 from copy import deepcopy
 from functools import partial
+from typing import Optional
+from urllib.parse import urlparse
+
 from voila.utils import include_lab_theme
 from jupyter_server.services.contents.largefilemanager import LargeFileManager
 
@@ -17,13 +21,47 @@ from nbconvert.exporters.templateexporter import TemplateExporter
 from nbconvert.filters.highlight import Highlight2HTML
 from nbconvert.preprocessors.clearoutput import ClearOutputPreprocessor
 
+import traitlets
 from traitlets import default
+from traitlets.config import Config
 
-from voila.exporter import VoilaExporter
+from voila.exporter import VoilaExporter, VoilaMarkdownRenderer
 from voila.paths import collect_template_paths
 
 
+class VoiciMarkdownRenderer(VoilaMarkdownRenderer):
+    """Custom markdown renderer that rewrites .ipynb links to .html"""
+
+    # Pattern to match .ipynb extension, optionally followed by anchor or query string
+    IPYNB_PATTERN = re.compile(r'\.ipynb(#.*)?(\?.*)?$')
+
+    def link(self, text: str, url: str, title: Optional[str] = None) -> str:
+        # Only rewrite relative URLs (not absolute URLs with scheme)
+        parsed = urlparse(url)
+        if not parsed.scheme and not parsed.netloc:
+            url = self.IPYNB_PATTERN.sub(r'.html\1\2', url)
+        return super().link(text, url, title)
+
+
 class VoiciExporter(VoilaExporter):
+    markdown_renderer_class = traitlets.Type(
+        default_value=VoiciMarkdownRenderer,
+        klass=VoilaMarkdownRenderer,
+        help="Custom markdown renderer that rewrites .ipynb links to .html",
+    ).tag(config=True)
+
+    @property
+    def default_config(self):
+        c = Config(
+            {
+                "VoiciExporter": {
+                    "markdown_renderer_class": "voici_core.exporter.VoiciMarkdownRenderer"
+                }
+            }
+        )
+        c.merge(super().default_config)
+        return c
+
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('contents_manager', LargeFileManager())
 
