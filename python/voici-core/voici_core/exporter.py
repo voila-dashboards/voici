@@ -11,6 +11,7 @@
 import re
 from copy import deepcopy
 from functools import partial
+from pathlib import Path
 from typing import Optional
 from urllib.parse import urlparse
 
@@ -19,28 +20,53 @@ from jupyter_server.services.contents.largefilemanager import LargeFileManager
 
 from nbconvert.exporters.templateexporter import TemplateExporter
 from nbconvert.filters.highlight import Highlight2HTML
+from nbconvert.filters.markdown_mistune import MarkdownWithMath
 from nbconvert.preprocessors.clearoutput import ClearOutputPreprocessor
 
 import traitlets
 from traitlets import default
 from traitlets.config import Config
 
-from voila.exporter import VoilaExporter, VoilaMarkdownRenderer
+from voila.exporter import VoilaExporter, VoilaMarkdownRenderer, pass_context
 from voila.paths import collect_template_paths
 
 
 class VoiciMarkdownRenderer(VoilaMarkdownRenderer):
-    """Custom markdown renderer that rewrites .ipynb links to .html"""
+    """Custom markdown renderer"""
 
     # Pattern to match .ipynb extension, optionally followed by anchor or query string
     IPYNB_PATTERN = re.compile(r'\.ipynb(#.*)?(\?.*)?$')
 
+    def __init__(self, *args, files_url_prefix: str = '', **kwargs):
+        """Initialize the renderer.
+
+        Args:
+            files_url_prefix: The URL prefix to prepend to relative non-notebook URLs
+                              to make them point to the files/ directory.
+                              e.g., '../../files/' for a notebook at the root level.
+        """
+        super().__init__(*args, **kwargs)
+        self.files_url_prefix = files_url_prefix
+
     def link(self, text: str, url: str, title: Optional[str] = None) -> str:
-        # Only rewrite relative URLs (not absolute URLs with scheme)
+        # Only rewrite relative URLs (not absolute URLs with scheme or protocol-relative)
         parsed = urlparse(url)
-        if not parsed.scheme and not parsed.netloc:
-            url = self.IPYNB_PATTERN.sub(r'.html\1\2', url)
+        if not parsed.scheme and not parsed.netloc and url and not url.startswith('/'):
+            if self.IPYNB_PATTERN.search(url):
+                # Rewrite .ipynb links to .html
+                url = self.IPYNB_PATTERN.sub(r'.html\1\2', url)
+            elif self.files_url_prefix:
+                # Rewrite other relative URLs to point to the files/ directory
+                url = self.files_url_prefix + url
         return super().link(text, url, title)
+
+    def image(self, text: str, url: str, title: Optional[str] = None):
+        if self.files_url_prefix and not self.contents_manager.file_exists(url):
+            parsed = urlparse(url)
+            if not parsed.scheme and not parsed.netloc and not url.startswith('/'):
+                url = self.files_url_prefix + url
+
+        return super().image(text, url, title)
 
 
 class VoiciExporter(VoilaExporter):
@@ -63,7 +89,15 @@ class VoiciExporter(VoilaExporter):
         return c
 
     def __init__(self, *args, **kwargs):
-        kwargs.setdefault('contents_manager', LargeFileManager())
+        notebook_path = kwargs.pop('notebook_path', None)
+        self.files_url_prefix = kwargs.pop('files_url_prefix', '')
+
+        if notebook_path and 'contents_manager' not in kwargs:
+            cm = LargeFileManager()
+            cm.root_dir = str(Path(notebook_path).parent)
+            kwargs['contents_manager'] = cm
+        else:
+            kwargs.setdefault('contents_manager', LargeFileManager())
 
         self.voici_configuration = kwargs.pop('voici_config')
         self.page_config = kwargs.pop('page_config', {})
@@ -76,6 +110,21 @@ class VoiciExporter(VoilaExporter):
             self.exclude_input = True
             self.exclude_output_prompt = True
             self.exclude_input_prompt = True
+
+    @pass_context
+    def markdown2html(self, context, source):
+        """Override to pass files_url_prefix to the markdown renderer."""
+        cell = context["cell"]
+        attachments = cell.get("attachments", {})
+        cls = self.markdown_renderer_class
+        renderer = cls(
+            escape=False,
+            attachments=attachments,
+            contents_manager=self.contents_manager,
+            anchor_link_text=self.anchor_link_text,
+            files_url_prefix=self.files_url_prefix,
+        )
+        return MarkdownWithMath(renderer=renderer).render(source)
 
     @default('template_paths')
     def _template_paths(self, prune=True, root_dirs=None):
