@@ -8,6 +8,7 @@
 #############################################################################
 
 
+import posixpath
 import re
 from copy import deepcopy
 from functools import partial
@@ -48,6 +49,20 @@ class VoiciMarkdownRenderer(VoilaMarkdownRenderer):
         super().__init__(*args, **kwargs)
         self.files_url_prefix = files_url_prefix
 
+    def _normalize_relative_path(self, path: str) -> Optional[str]:
+        """Normalize a relative path, returning None if it would escape the directory.
+
+        Args:
+            path: The relative path to normalize (URL-style with forward slashes)
+
+        Returns:
+            The normalized path, or None if it escapes the directory via '..'.
+        """
+        normalized = posixpath.normpath(path)
+        if normalized == '..' or normalized.startswith('../') or normalized == '.':
+            return None
+        return normalized
+
     def link(self, text: str, url: str, title: Optional[str] = None) -> str:
         # Only rewrite relative URLs (not absolute URLs with scheme or protocol-relative)
         parsed = urlparse(url)
@@ -57,14 +72,19 @@ class VoiciMarkdownRenderer(VoilaMarkdownRenderer):
                 url = self.IPYNB_PATTERN.sub(r'.html\1\2', url)
             elif self.files_url_prefix:
                 # Rewrite other relative URLs to point to the files/ directory
-                url = self.files_url_prefix + url
+                normalized = self._normalize_relative_path(url)
+                if normalized is not None:
+                    url = posixpath.join(self.files_url_prefix, normalized)
         return super().link(text, url, title)
 
     def image(self, text: str, url: str, title: Optional[str] = None):
         if self.files_url_prefix and not self.contents_manager.file_exists(url):
             parsed = urlparse(url)
             if not parsed.scheme and not parsed.netloc and not url.startswith('/'):
-                url = self.files_url_prefix + url
+                # Rewrite to files/ directory if path is safe
+                normalized = self._normalize_relative_path(url)
+                if normalized is not None:
+                    url = posixpath.join(self.files_url_prefix, normalized)
 
         return super().image(text, url, title)
 
