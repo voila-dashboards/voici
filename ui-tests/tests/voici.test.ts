@@ -135,6 +135,42 @@ test.describe('Voici Tests', () => {
     expect(page.url()).toContain('bqplot.html');
   });
 
+  test('Navigate via relative file link', async ({ page, context }, testInfo) => {
+    await page.goto('lite');
+
+    const voici = page.getByText('voici.ipynb');
+    [page] = await Promise.all([context.waitForEvent('page'), voici.click()]);
+
+    await page.waitForSelector('.jupyter-widgets');
+    await page.waitForTimeout(1000);
+
+    const readmeLink = page.locator('a', { hasText: 'README' }).first();
+    await readmeLink.click();
+
+    await page.waitForURL(/README\.md/);
+
+    // Verify the URL changed to the README.md page
+    expect(page.url()).toContain('README.md');
+  });
+
+  test('Download file via relative link', async ({ page, context }, testInfo) => {
+    await page.goto('lite');
+
+    const voici = page.getByText('voici.ipynb');
+    [page] = await Promise.all([context.waitForEvent('page'), voici.click()]);
+
+    await page.waitForSelector('.jupyter-widgets');
+    await page.waitForTimeout(1000);
+
+    const downloadPromise = page.waitForEvent('download');
+    const csvLink = page.locator('a', { hasText: 'Download the data' }).first();
+    await csvLink.click();
+
+    const download = await downloadPromise;
+
+    expect(download.suggestedFilename()).toBe('indicators.csv');
+  });
+
   test('Render material template', async ({ page, context }, testInfo) => {
     await page.goto('material');
 
