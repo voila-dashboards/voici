@@ -2,6 +2,25 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 0.10.0a2
+
+([Full Changelog](https://github.com/voila-dashboards/voici/compare/v0.10.0a1...8d6606b423a0f3ec6391d4196044dc8481465d4f))
+
+### Bugs fixed
+
+- Fix handling of relative links [#177](https://github.com/voila-dashboards/voici/pull/177) ([@jtpio](https://github.com/jtpio), [@bollwyvl](https://github.com/bollwyvl), [@trungleduc](https://github.com/trungleduc))
+
+### Contributors to this release
+
+The following people contributed discussions, new ideas, code and documentation contributions, and review.
+See [our definition of contributors](https://github-activity.readthedocs.io/en/latest/#how-does-this-tool-define-contributions-in-the-reports).
+
+([GitHub contributors page for this release](https://github.com/voila-dashboards/voici/graphs/contributors?from=2025-12-17&to=2025-12-24&type=c))
+
+@bollwyvl ([activity](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Abollwyvl+updated%3A2025-12-17..2025-12-24&type=Issues)) | @jtpio ([activity](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Ajtpio+updated%3A2025-12-17..2025-12-24&type=Issues)) | @trungleduc ([activity](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Atrungleduc+updated%3A2025-12-17..2025-12-24&type=Issues))
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 0.10.0a1
 
 ([Full Changelog](https://github.com/voila-dashboards/voici/compare/v0.10.0a0...19f1a9b796d5ac7449d938b4d7f2d31877f8b652))
@@ -22,8 +41,6 @@ See [our definition of contributors](https://github-activity.readthedocs.io/en/l
 ([GitHub contributors page for this release](https://github.com/voila-dashboards/voici/graphs/contributors?from=2025-12-12&to=2025-12-17&type=c))
 
 @bollwyvl ([activity](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Abollwyvl+updated%3A2025-12-12..2025-12-17&type=Issues)) | @jtpio ([activity](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Ajtpio+updated%3A2025-12-12..2025-12-17&type=Issues)) | @martinRenou ([activity](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3AmartinRenou+updated%3A2025-12-12..2025-12-17&type=Issues)) | @trungleduc ([activity](https://github.com/search?q=repo%3Avoila-dashboards%2Fvoici+involves%3Atrungleduc+updated%3A2025-12-12..2025-12-17&type=Issues))
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 0.10.0a0
 
