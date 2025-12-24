@@ -184,10 +184,17 @@ class VoiciTreeExporter(HTMLExporter):
             # Pass the notebook path to the frontend so the kernel can set the correct working directory
             page_config['notebookPath'] = notebook_file_path
 
+            depth = len(relative_path.parts) if str(relative_path) != '.' else 0
+            files_url_prefix = '../' * (2 + depth) + 'files/'
+            if str(relative_path) != '.':
+                files_url_prefix += str(relative_path) + '/'
+
             voici_exporter = VoiciExporter(
                 voici_config=self.voici_configuration,
                 page_config=page_config,
                 base_url=page_config['baseUrl'],
+                notebook_path=str(notebook_path),
+                files_url_prefix=files_url_prefix,
             )
 
             return StringIO(voici_exporter.from_filename(notebook_path)[0])

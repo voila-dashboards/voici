@@ -115,6 +115,62 @@ test.describe('Voici Tests', () => {
     await expect(page.locator('text=[10, 12, 11, 13, 12, 11, 14, 12]')).toBeVisible();
   });
 
+  test('Navigate via relative notebook link', async ({ page, context }, testInfo) => {
+    await page.goto('lite');
+
+    // Open the main voici.ipynb notebook which contains markdown links to other notebooks
+    const voici = page.getByText('voici.ipynb');
+    [page] = await Promise.all([context.waitForEvent('page'), voici.click()]);
+
+    await page.waitForSelector('.jupyter-widgets');
+    await page.waitForTimeout(1000);
+
+    const bqplotLink = page.locator('a', { hasText: 'bqplot' }).first();
+    await bqplotLink.click();
+
+    await page.waitForSelector('.jupyter-widgets');
+    await page.waitForTimeout(1000);
+
+    // Verify the URL changed to the bqplot.html page
+    expect(page.url()).toContain('bqplot.html');
+  });
+
+  test('Navigate via relative file link', async ({ page, context }, testInfo) => {
+    await page.goto('lite');
+
+    const voici = page.getByText('voici.ipynb');
+    [page] = await Promise.all([context.waitForEvent('page'), voici.click()]);
+
+    await page.waitForSelector('.jupyter-widgets');
+    await page.waitForTimeout(1000);
+
+    const readmeLink = page.locator('a', { hasText: 'README' }).first();
+    await readmeLink.click();
+
+    await page.waitForURL(/README\.md/);
+
+    // Verify the URL changed to the README.md page
+    expect(page.url()).toContain('README.md');
+  });
+
+  test('Download file via relative link', async ({ page, context }, testInfo) => {
+    await page.goto('lite');
+
+    const voici = page.getByText('voici.ipynb');
+    [page] = await Promise.all([context.waitForEvent('page'), voici.click()]);
+
+    await page.waitForSelector('.jupyter-widgets');
+    await page.waitForTimeout(1000);
+
+    const downloadPromise = page.waitForEvent('download');
+    const csvLink = page.locator('a', { hasText: 'Download the data' }).first();
+    await csvLink.click();
+
+    const download = await downloadPromise;
+
+    expect(download.suggestedFilename()).toBe('indicators.csv');
+  });
+
   test('Render material template', async ({ page, context }, testInfo) => {
     await page.goto('material');
 

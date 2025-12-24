@@ -8,24 +8,116 @@
 #############################################################################
 
 
+import posixpath
+import re
 from copy import deepcopy
 from functools import partial
+from pathlib import Path
+from typing import Optional
+from urllib.parse import urlparse
+
 from voila.utils import include_lab_theme
 from jupyter_server.services.contents.largefilemanager import LargeFileManager
 
 from nbconvert.exporters.templateexporter import TemplateExporter
 from nbconvert.filters.highlight import Highlight2HTML
+from nbconvert.filters.markdown_mistune import MarkdownWithMath
 from nbconvert.preprocessors.clearoutput import ClearOutputPreprocessor
 
+import traitlets
 from traitlets import default
+from traitlets.config import Config
 
-from voila.exporter import VoilaExporter
+from voila.exporter import VoilaExporter, VoilaMarkdownRenderer, pass_context
 from voila.paths import collect_template_paths
 
 
+class VoiciMarkdownRenderer(VoilaMarkdownRenderer):
+    """Custom markdown renderer"""
+
+    # Pattern to match .ipynb extension, optionally followed by anchor or query string
+    IPYNB_PATTERN = re.compile(r'\.ipynb(#.*)?(\?.*)?$')
+
+    def __init__(self, *args, files_url_prefix: str = '', **kwargs):
+        """Initialize the renderer.
+
+        Args:
+            files_url_prefix: The URL prefix to prepend to relative non-notebook URLs
+                              to make them point to the files/ directory.
+                              e.g., '../../files/' for a notebook at the root level.
+        """
+        super().__init__(*args, **kwargs)
+        self.files_url_prefix = files_url_prefix
+
+    def _normalize_relative_path(self, path: str) -> Optional[str]:
+        """Normalize a relative path, returning None if it would escape the directory.
+
+        Args:
+            path: The relative path to normalize (URL-style with forward slashes)
+
+        Returns:
+            The normalized path, or None if it escapes the directory via '..'.
+        """
+        normalized = posixpath.normpath(path)
+        if normalized == '..' or normalized.startswith('../') or normalized == '.':
+            return None
+        return normalized
+
+    def link(self, text: str, url: str, title: Optional[str] = None) -> str:
+        # Only rewrite relative URLs (not absolute URLs with scheme or protocol-relative)
+        parsed = urlparse(url)
+        if not parsed.scheme and not parsed.netloc and url and not url.startswith('/'):
+            if self.IPYNB_PATTERN.search(url):
+                # Rewrite .ipynb links to .html
+                url = self.IPYNB_PATTERN.sub(r'.html\1\2', url)
+            elif self.files_url_prefix:
+                # Rewrite other relative URLs to point to the files/ directory
+                normalized = self._normalize_relative_path(url)
+                if normalized is not None:
+                    url = posixpath.join(self.files_url_prefix, normalized)
+        return super().link(text, url, title)
+
+    def image(self, text: str, url: str, title: Optional[str] = None):
+        if self.files_url_prefix and not self.contents_manager.file_exists(url):
+            parsed = urlparse(url)
+            if not parsed.scheme and not parsed.netloc and not url.startswith('/'):
+                # Rewrite to files/ directory if path is safe
+                normalized = self._normalize_relative_path(url)
+                if normalized is not None:
+                    url = posixpath.join(self.files_url_prefix, normalized)
+
+        return super().image(text, url, title)
+
+
 class VoiciExporter(VoilaExporter):
+    markdown_renderer_class = traitlets.Type(
+        default_value=VoiciMarkdownRenderer,
+        klass=VoilaMarkdownRenderer,
+        help="Custom markdown renderer that rewrites .ipynb links to .html",
+    ).tag(config=True)
+
+    @property
+    def default_config(self):
+        c = Config(
+            {
+                "VoiciExporter": {
+                    "markdown_renderer_class": "voici_core.exporter.VoiciMarkdownRenderer"
+                }
+            }
+        )
+        c.merge(super().default_config)
+        return c
+
     def __init__(self, *args, **kwargs):
-        kwargs.setdefault('contents_manager', LargeFileManager())
+        notebook_path = kwargs.pop('notebook_path', None)
+        self.files_url_prefix = kwargs.pop('files_url_prefix', '')
+
+        if notebook_path and 'contents_manager' not in kwargs:
+            cm = LargeFileManager()
+            cm.root_dir = str(Path(notebook_path).parent)
+            kwargs['contents_manager'] = cm
+        else:
+            kwargs.setdefault('contents_manager', LargeFileManager())
 
         self.voici_configuration = kwargs.pop('voici_config')
         self.page_config = kwargs.pop('page_config', {})
@@ -38,6 +130,21 @@ class VoiciExporter(VoilaExporter):
             self.exclude_input = True
             self.exclude_output_prompt = True
             self.exclude_input_prompt = True
+
+    @pass_context
+    def markdown2html(self, context, source):
+        """Override to pass files_url_prefix to the markdown renderer."""
+        cell = context["cell"]
+        attachments = cell.get("attachments", {})
+        cls = self.markdown_renderer_class
+        renderer = cls(
+            escape=False,
+            attachments=attachments,
+            contents_manager=self.contents_manager,
+            anchor_link_text=self.anchor_link_text,
+            files_url_prefix=self.files_url_prefix,
+        )
+        return MarkdownWithMath(renderer=renderer).render(source)
 
     @default('template_paths')
     def _template_paths(self, prune=True, root_dirs=None):
